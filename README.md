@@ -30,14 +30,14 @@ https://docs.google.com/spreadsheets/d/1GzQstlgXm6m5HMJf4LhcsFIQ4RywcgLOGv2dTBg9
 
 ## Contributors
 <a href="https://github.com/wesleypayton">
-  <img src="https://avatars.githubusercontent.com/u/80854811?v=4" alt="wesleypayton" width="150" height="150" style="border-radius: 50%;">
+  <img src="https://avatars.githubusercontent.com/u/80854811?v=4" alt="wesleypayton" width="50" height="50" style="border-radius: 50%;">
 </a>
 <a href="https://github.com/JohnParks032">
-  <img src="https://avatars.githubusercontent.com/u/80427077?v=4" alt="johnparks032" width="150" height="150" style="border-radius: 50%;">
+  <img src="https://avatars.githubusercontent.com/u/80427077?v=4" alt="johnparks032" width="50" height="50" style="border-radius: 50%;">
 </a>
 <a href="https://github.com/j-w-s">
-  <img src="https://avatars.githubusercontent.com/u/69388380?v=4" alt="j-w-s" width="150" height="150" style="border-radius: 50%;">
+  <img src="https://avatars.githubusercontent.com/u/69388380?v=4" alt="j-w-s" width="50" height="50" style="border-radius: 50%;">
 </a>
 <a href="https://github.com/chrispypeaches">
-  <img src="https://avatars.githubusercontent.com/u/26045099?v=4" alt="chrispypeaches" width="150" height="150" style="border-radius: 50%;">
+  <img src="https://avatars.githubusercontent.com/u/26045099?v=4" alt="chrispypeaches" width="50" height="50" style="border-radius: 50%;">
 </a>
