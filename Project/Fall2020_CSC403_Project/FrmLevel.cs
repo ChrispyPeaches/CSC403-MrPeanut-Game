@@ -1,5 +1,8 @@
 ﻿using Fall2020_CSC403_Project.code;
+using Fall2020_CSC403_Project.OpenAIApi;
+using Refit;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -17,13 +20,19 @@ namespace Fall2020_CSC403_Project
         private DateTime timeBegin;
         private FrmBattle frmBattle;
 
-        public FrmLevel()
+        public IOpenAIApi _openAIApi;
+
+        public FrmLevel(IOpenAIApi openAIApi)
         {
             InitializeComponent();
+            _openAIApi = openAIApi;
         }
 
         private void FrmLevel_Load(object sender, EventArgs e)
         {
+            IList<ChatMessage> messages = new List<ChatMessage>()
+            {
+                new ChatMessage
             const int PADDING = 7;
             const int NUM_WALLS = 13;
 
