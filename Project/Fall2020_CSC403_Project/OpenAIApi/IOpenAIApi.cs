@@ -11,7 +11,6 @@ namespace Fall2020_CSC403_Project
     {
         [Post("/v1/chat/completions")]
         Task<ApiResponse<IOpenAIApi>> GetChatCompletion(
-            IList<ChatMessage> messages,
-            string model = "gpt-3.5-turbo");
+            ChatCompletionQuery query);
     }
 }
