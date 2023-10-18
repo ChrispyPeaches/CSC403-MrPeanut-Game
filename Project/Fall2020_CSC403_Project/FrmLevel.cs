@@ -1,6 +1,5 @@
 ﻿using Fall2020_CSC403_Project.code;
 using Fall2020_CSC403_Project.OpenAIApi;
-using Refit;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

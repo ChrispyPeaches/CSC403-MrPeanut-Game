@@ -1,12 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fall2020_CSC403_Project.OpenAIApi
 {
@@ -28,6 +23,7 @@ namespace Fall2020_CSC403_Project.OpenAIApi
             [JsonProperty(PropertyName = "content")]
             public string Content { get; set; }
         }
+
         public enum RoleType
         {
             System,
