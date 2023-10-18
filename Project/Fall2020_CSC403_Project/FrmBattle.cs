@@ -117,5 +117,11 @@ namespace Fall2020_CSC403_Project
         {
 
         }
+
+        private void btnFlee_Click(object sender, EventArgs e)
+        {
+            instance = null;
+            Close();
+        }
     }
 }
