@@ -60,7 +60,7 @@
       <DependentUpon>FrmLevel.cs</DependentUpon>
     </Compile>
     <Compile Include="OpenAIApi\IOpenAIApi.cs" />
-    <Compile Include="OpenAIApi\ChatMessage.cs" />
+    <Compile Include="OpenAIApi\ChatCompletionQuery.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmBattle.resx">

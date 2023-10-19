@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using static Fall2020_CSC403_Project.OpenAIApi.ChatCompletionQuery;
 
 namespace Fall2020_CSC403_Project
 {
@@ -30,9 +31,7 @@ namespace Fall2020_CSC403_Project
 
         private void FrmLevel_Load(object sender, EventArgs e)
         {
-            IList<ChatMessage> messages = new List<ChatMessage>()
             {
-                new ChatMessage
             const int PADDING = 7;
             const int NUM_WALLS = 13;
 
