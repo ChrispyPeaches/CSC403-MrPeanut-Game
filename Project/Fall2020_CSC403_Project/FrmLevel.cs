@@ -1,7 +1,11 @@
 ﻿using Fall2020_CSC403_Project.code;
+using Fall2020_CSC403_Project.OpenAIApi;
+using Refit;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using static Fall2020_CSC403_Project.OpenAIApi.ChatCompletionQuery;
 
 namespace Fall2020_CSC403_Project
 {
@@ -17,9 +21,12 @@ namespace Fall2020_CSC403_Project
         private DateTime timeBegin;
         private FrmBattle frmBattle;
 
-        public FrmLevel()
+        public IOpenAIApi _openAIApi;
+
+        public FrmLevel(IOpenAIApi openAIApi)
         {
             InitializeComponent();
+            _openAIApi = openAIApi;
         }
 
         private void FrmLevel_Load(object sender, EventArgs e)
