@@ -118,6 +118,7 @@ namespace Fall2020_CSC403_Project
 
         }
 
+        // Links to flee button on battle form; Closes Battle form
         private void btnFlee_Click(object sender, EventArgs e)
         {
             instance = null;
