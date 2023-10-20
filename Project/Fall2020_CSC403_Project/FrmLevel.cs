@@ -159,6 +159,10 @@ namespace Fall2020_CSC403_Project
             {
                 isRightPressed = true;
             }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                Environment.Exit(0);
+            }
 
             HandleMovement(); // handle pressed input
         }
