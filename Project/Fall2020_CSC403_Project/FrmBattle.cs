@@ -105,17 +105,27 @@ namespace Fall2020_CSC403_Project
 
         private void btnChat_Click(object sender, EventArgs e)
         {
-            // Display chat in player dialog
+            // Disable chat button while retrieving message
+            btnChat.Enabled = false;
 
+            // Display chat in player dialog
+            string message = "";
+            foreach (var i in textBox1.Lines)
+            {
+                message += i + "\n";
+            }
+
+            listView1.Items.Add(
+                new ListViewItem(new string[] { player.Name, message }));
+            textBox1.Text = String.Empty;
 
             // Send chat to ChatGPT
 
-            // Display enemy's response in enemy dialog
-        }
+            // Display enemy's response in enemy dialogue
 
-        private void btnPlayerDialog_Click(object sender, EventArgs e)
-        {
 
+            // Enable chat button
+            btnChat.Enabled = true;
         }
 
         private void btnFlee_Click(object sender, EventArgs e)

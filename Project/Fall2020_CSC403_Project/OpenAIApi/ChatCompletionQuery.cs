@@ -28,11 +28,8 @@ namespace Fall2020_CSC403_Project.OpenAIApi
         {
             System,
             User,
-            Assistant
+            Assistant,
+            Function
         }
     }
-
-    
-
-
 }
