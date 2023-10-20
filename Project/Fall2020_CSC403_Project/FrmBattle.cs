@@ -113,10 +113,9 @@ namespace Fall2020_CSC403_Project
             // Display enemy's response in enemy dialog
         }
 
-        private void btnFlee_Click(object sender, EventArgs e)
+        private void btnPlayerDialog_Click(object sender, EventArgs e)
         {
-            instance = null;
-            Close();
+
         }
     }
 }
