@@ -17,6 +17,11 @@ namespace Fall2020_CSC403_Project
         private DateTime timeBegin;
         private FrmBattle frmBattle;
 
+        private bool isUpPressed = false;
+        private bool isDownPressed = false;
+        private bool isLeftPressed = false;
+        private bool isRightPressed = false;
+
         public FrmLevel()
         {
             InitializeComponent();
@@ -61,11 +66,11 @@ namespace Fall2020_CSC403_Project
             Rectangle rect = new Rectangle(pic.Location, new Size(pic.Size.Width - padding, pic.Size.Height - padding));
             return new Collider(rect);
         }
-
+        /*
         private void FrmLevel_KeyUp(object sender, KeyEventArgs e)
         {
             player.ResetMoveSpeed();
-        }
+        }*/
 
         private void tmrUpdateInGameTime_Tick(object sender, EventArgs e)
         {
@@ -135,29 +140,90 @@ namespace Fall2020_CSC403_Project
             }
         }
 
+        // detect input
         private void FrmLevel_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode)
+            if (e.KeyCode == Keys.Up)
             {
-                case Keys.Left:
-                    player.GoLeft();
-                    break;
+                isUpPressed = true;
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                isDownPressed = true;
+            }
+            else if (e.KeyCode == Keys.Left)
+            {
+                isLeftPressed = true;
+            }
+            else if (e.KeyCode == Keys.Right)
+            {
+                isRightPressed = true;
+            }
 
-                case Keys.Right:
-                    player.GoRight();
-                    break;
+            HandleMovement(); // handle pressed input
+        }
 
-                case Keys.Up:
-                    player.GoUp();
-                    break;
+        // detect release of input
+        private void FrmLevel_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Up)
+            {
+                isUpPressed = false;
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                isDownPressed = false;
+            }
+            else if (e.KeyCode == Keys.Left)
+            {
+                isLeftPressed = false;
+            }
+            else if (e.KeyCode == Keys.Right)
+            {
+                isRightPressed = false;
+            }
 
-                case Keys.Down:
-                    player.GoDown();
-                    break;
+            HandleMovement(); // handle released input
+        }
 
-                default:
-                    player.ResetMoveSpeed();
-                    break;
+        // handle directional movement
+        private void HandleMovement()
+        {
+            if (isUpPressed && isRightPressed)
+            {
+                player.GoUpRight();
+            }
+            else if (isUpPressed && isLeftPressed)
+            {
+                player.GoUpLeft();
+            }
+            else if (isDownPressed && isRightPressed)
+            {
+                player.GoDownRight();
+            }
+            else if (isDownPressed && isLeftPressed)
+            {
+                player.GoDownLeft();
+            }
+            else if (isUpPressed)
+            {
+                player.GoUp();
+            }
+            else if (isDownPressed)
+            {
+                player.GoDown();
+            }
+            else if (isLeftPressed)
+            {
+                player.GoLeft();
+            }
+            else if (isRightPressed)
+            {
+                player.GoRight();
+            }
+            else
+            {
+                player.ResetMoveSpeed();
             }
         }
 

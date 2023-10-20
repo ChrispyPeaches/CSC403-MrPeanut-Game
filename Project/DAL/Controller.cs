@@ -43,7 +43,7 @@ namespace Fall2020_CSC403_Project
                         Console.WriteLine("Error reading JSON file: " + ex.Message);
                     }
 
-                    return null; // You should return a value for all code paths
+                    return null;
                 }
             }
         }
