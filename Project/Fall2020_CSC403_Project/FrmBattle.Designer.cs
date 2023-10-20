@@ -160,6 +160,7 @@
             this.BackColor = System.Drawing.Color.Green;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1096, 742);
+            this.ControlBox = false;
             this.Controls.Add(this.picBossBattle);
             this.Controls.Add(this.btnFlee);
             this.Controls.Add(this.lblEnemyHealthFull);
@@ -170,6 +171,7 @@
             this.Controls.Add(this.picEnemy);
             this.Controls.Add(this.picPlayer);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmBattle";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
