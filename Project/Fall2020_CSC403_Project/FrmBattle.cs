@@ -118,5 +118,13 @@ namespace Fall2020_CSC403_Project
             instance = null;
             Close();
         }
+
+        private void FrmBattle_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+
+            }
+        }
     }
 }
