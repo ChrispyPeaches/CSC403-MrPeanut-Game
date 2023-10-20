@@ -117,5 +117,14 @@ namespace Fall2020_CSC403_Project
         {
 
         }
+
+        // detect input
+        private void FrmBattle_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                Environment.Exit(0);
+            }
+        }
     }
 }
