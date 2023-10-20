@@ -2,10 +2,12 @@
 using Fall2020_CSC403_Project.OpenAIApi;
 using Refit;
 using System;
+using System.Media;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using static Fall2020_CSC403_Project.OpenAIApi.ChatCompletionQuery;
+using Fall2020_CSC403_Project.Properties;
 
 namespace Fall2020_CSC403_Project
 {
@@ -33,6 +35,9 @@ namespace Fall2020_CSC403_Project
         {
             const int PADDING = 7;
             const int NUM_WALLS = 13;
+
+            SoundPlayer overworldTheme = new SoundPlayer(Resources.overworld_theme);
+            overworldTheme.PlayLooping();
 
             player = new Player(CreatePosition(picPlayer), CreateCollider(picPlayer, PADDING));
             bossKoolaid = new Enemy(CreatePosition(picBossKoolAid), CreateCollider(picBossKoolAid, PADDING));

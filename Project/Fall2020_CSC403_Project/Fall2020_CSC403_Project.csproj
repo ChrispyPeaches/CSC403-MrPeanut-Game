@@ -132,5 +132,11 @@
       <Version>7.0.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="data\overworld_theme.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\boss_music.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
