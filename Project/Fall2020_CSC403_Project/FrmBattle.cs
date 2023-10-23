@@ -41,10 +41,13 @@ namespace Fall2020_CSC403_Project
             picBossBattle.Size = ClientSize;
             picBossBattle.Visible = true;
 
-            SoundPlayer simpleSound = new SoundPlayer(Resources.final_battle);
-            simpleSound.Play();
-
             tmrFinalBattle.Enabled = true;
+
+            SoundPlayer simpleSound = new SoundPlayer(Resources.final_battle);
+            simpleSound.PlaySync();
+
+            SoundPlayer bossMusic = new SoundPlayer(Resources.boss_music);
+            bossMusic.PlayLooping();
         }
 
         public static FrmBattle GetInstance(Enemy enemy)
