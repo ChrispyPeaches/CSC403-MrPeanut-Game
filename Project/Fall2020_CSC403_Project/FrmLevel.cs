@@ -132,7 +132,7 @@ namespace Fall2020_CSC403_Project
         {
             player.ResetMoveSpeed();
             player.MoveBack();
-            frmBattle = FrmBattle.GetInstance(enemy);
+            frmBattle = FrmBattle.GetInstance(enemy, _openAIApi);
             frmBattle.Show();
 
             if (enemy == bossKoolaid)

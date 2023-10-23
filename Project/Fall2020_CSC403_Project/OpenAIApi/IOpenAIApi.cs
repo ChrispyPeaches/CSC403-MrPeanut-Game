@@ -8,6 +8,6 @@ namespace Fall2020_CSC403_Project
     public interface IOpenAIApi
     {
         [Post("/v1/chat/completions")]
-        Task<string> GetChatCompletion(ChatCompletionQuery query);
+        Task<ChatCompletionResponse> GetChatCompletion(ChatCompletionQuery query);
     }
 }
