@@ -113,13 +113,18 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="code\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyGameLibrary\MyGameLibrary.csproj">
       <Project>{F1E60F80-1868-4FE5-991B-FDDCFAF9B16B}</Project>
       <Name>MyGameLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coin.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\coin.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
