@@ -28,7 +28,7 @@
             this.lblInGameTime = new System.Windows.Forms.Label();
             this.tmrUpdateInGameTime = new System.Windows.Forms.Timer(this.components);
             this.tmrPlayerMove = new System.Windows.Forms.Timer(this.components);
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.picCoin1 = new System.Windows.Forms.PictureBox();
             this.picWall11 = new System.Windows.Forms.PictureBox();
             this.picWall2 = new System.Windows.Forms.PictureBox();
             this.picWall8 = new System.Windows.Forms.PictureBox();
@@ -46,16 +46,12 @@
             this.picWall3 = new System.Windows.Forms.PictureBox();
             this.picBossKoolAid = new System.Windows.Forms.PictureBox();
             this.picPlayer = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.pictureBox9 = new System.Windows.Forms.PictureBox();
-            this.pictureBox10 = new System.Windows.Forms.PictureBox();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.picCoin2 = new System.Windows.Forms.PictureBox();
+            this.picCoin3 = new System.Windows.Forms.PictureBox();
+            this.picCoin4 = new System.Windows.Forms.PictureBox();
+            this.picCoin5 = new System.Windows.Forms.PictureBox();
+            this.lblCoins = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.picCoin1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picWall11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picWall2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picWall8)).BeginInit();
@@ -73,15 +69,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.picWall3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBossKoolAid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPlayer)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCoin2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCoin3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCoin4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCoin5)).BeginInit();
             this.SuspendLayout();
             // 
             // lblInGameTime
@@ -109,16 +100,17 @@
             this.tmrPlayerMove.Interval = 10;
             this.tmrPlayerMove.Tick += new System.EventHandler(this.tmrPlayerMove_Tick);
             // 
-            // pictureBox1
+            // picCoin1
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.coin1;
-            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox1.Location = new System.Drawing.Point(569, 1017);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(130, 121);
-            this.pictureBox1.TabIndex = 18;
-            this.pictureBox1.TabStop = false;
+            this.picCoin1.BackColor = System.Drawing.Color.Transparent;
+            this.picCoin1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picCoin1.BackgroundImage")));
+            this.picCoin1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picCoin1.Location = new System.Drawing.Point(825, 1015);
+            this.picCoin1.Margin = new System.Windows.Forms.Padding(6);
+            this.picCoin1.Name = "picCoin1";
+            this.picCoin1.Size = new System.Drawing.Size(130, 121);
+            this.picCoin1.TabIndex = 18;
+            this.picCoin1.TabStop = false;
             // 
             // picWall11
             // 
@@ -324,104 +316,62 @@
             this.picPlayer.TabIndex = 0;
             this.picPlayer.TabStop = false;
             // 
-            // pictureBox2
+            // picCoin2
             // 
-            this.pictureBox2.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox2.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.coin1;
-            this.pictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox2.Location = new System.Drawing.Point(884, 1017);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(130, 121);
-            this.pictureBox2.TabIndex = 19;
-            this.pictureBox2.TabStop = false;
+            this.picCoin2.BackColor = System.Drawing.Color.Transparent;
+            this.picCoin2.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picCoin2.BackgroundImage")));
+            this.picCoin2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picCoin2.Location = new System.Drawing.Point(1496, 896);
+            this.picCoin2.Name = "picCoin2";
+            this.picCoin2.Size = new System.Drawing.Size(130, 121);
+            this.picCoin2.TabIndex = 24;
+            this.picCoin2.TabStop = false;
             // 
-            // pictureBox3
+            // picCoin3
             // 
-            this.pictureBox3.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox3.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.coin1;
-            this.pictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox3.Location = new System.Drawing.Point(954, 188);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(130, 121);
-            this.pictureBox3.TabIndex = 20;
-            this.pictureBox3.TabStop = false;
+            this.picCoin3.BackColor = System.Drawing.Color.Transparent;
+            this.picCoin3.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picCoin3.BackgroundImage")));
+            this.picCoin3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picCoin3.Location = new System.Drawing.Point(220, 567);
+            this.picCoin3.Name = "picCoin3";
+            this.picCoin3.Size = new System.Drawing.Size(130, 121);
+            this.picCoin3.TabIndex = 25;
+            this.picCoin3.TabStop = false;
             // 
-            // pictureBox4
+            // picCoin4
             // 
-            this.pictureBox4.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox4.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.coin1;
-            this.pictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox4.Location = new System.Drawing.Point(1156, 188);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(130, 121);
-            this.pictureBox4.TabIndex = 21;
-            this.pictureBox4.TabStop = false;
+            this.picCoin4.BackColor = System.Drawing.Color.Transparent;
+            this.picCoin4.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picCoin4.BackgroundImage")));
+            this.picCoin4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picCoin4.Location = new System.Drawing.Point(1300, 567);
+            this.picCoin4.Name = "picCoin4";
+            this.picCoin4.Size = new System.Drawing.Size(130, 121);
+            this.picCoin4.TabIndex = 26;
+            this.picCoin4.TabStop = false;
             // 
-            // pictureBox5
+            // picCoin5
             // 
-            this.pictureBox5.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox5.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.coin1;
-            this.pictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox5.Location = new System.Drawing.Point(954, 394);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(130, 121);
-            this.pictureBox5.TabIndex = 22;
-            this.pictureBox5.TabStop = false;
+            this.picCoin5.BackColor = System.Drawing.Color.Transparent;
+            this.picCoin5.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picCoin5.BackgroundImage")));
+            this.picCoin5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.picCoin5.Location = new System.Drawing.Point(1048, 264);
+            this.picCoin5.Name = "picCoin5";
+            this.picCoin5.Size = new System.Drawing.Size(130, 121);
+            this.picCoin5.TabIndex = 27;
+            this.picCoin5.TabStop = false;
             // 
-            // pictureBox6
+            // lblCoins
             // 
-            this.pictureBox6.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox6.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.coin1;
-            this.pictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox6.Location = new System.Drawing.Point(1156, 394);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(130, 121);
-            this.pictureBox6.TabIndex = 23;
-            this.pictureBox6.TabStop = false;
-            // 
-            // pictureBox7
-            // 
-            this.pictureBox7.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox7.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.coin1;
-            this.pictureBox7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox7.Location = new System.Drawing.Point(1551, 859);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(130, 121);
-            this.pictureBox7.TabIndex = 24;
-            this.pictureBox7.TabStop = false;
-            // 
-            // pictureBox8
-            // 
-            this.pictureBox8.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox8.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.coin1;
-            this.pictureBox8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox8.Location = new System.Drawing.Point(220, 567);
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(130, 121);
-            this.pictureBox8.TabIndex = 25;
-            this.pictureBox8.TabStop = false;
-            // 
-            // pictureBox9
-            // 
-            this.pictureBox9.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox9.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.coin1;
-            this.pictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox9.Location = new System.Drawing.Point(1962, 567);
-            this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(130, 121);
-            this.pictureBox9.TabIndex = 26;
-            this.pictureBox9.TabStop = false;
-            // 
-            // pictureBox10
-            // 
-            this.pictureBox10.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox10.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.coin1;
-            this.pictureBox10.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.pictureBox10.Location = new System.Drawing.Point(1128, 595);
-            this.pictureBox10.Name = "pictureBox10";
-            this.pictureBox10.Size = new System.Drawing.Size(130, 121);
-            this.pictureBox10.TabIndex = 27;
-            this.pictureBox10.TabStop = false;
+            this.lblCoins.AutoSize = true;
+            this.lblCoins.BackColor = System.Drawing.Color.Black;
+            this.lblCoins.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblCoins.ForeColor = System.Drawing.Color.White;
+            this.lblCoins.Location = new System.Drawing.Point(24, 75);
+            this.lblCoins.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.lblCoins.Name = "lblCoins";
+            this.lblCoins.Size = new System.Drawing.Size(125, 36);
+            this.lblCoins.TabIndex = 28;
+            this.lblCoins.Text = "Coins: 0";
             // 
             // FrmLevel
             // 
@@ -430,16 +380,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(2352, 1396);
-            this.Controls.Add(this.pictureBox10);
-            this.Controls.Add(this.pictureBox9);
-            this.Controls.Add(this.pictureBox8);
-            this.Controls.Add(this.pictureBox7);
-            this.Controls.Add(this.pictureBox6);
-            this.Controls.Add(this.pictureBox5);
-            this.Controls.Add(this.pictureBox4);
-            this.Controls.Add(this.pictureBox3);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.lblCoins);
             this.Controls.Add(this.picWall11);
             this.Controls.Add(this.picWall2);
             this.Controls.Add(this.picWall8);
@@ -458,15 +399,20 @@
             this.Controls.Add(this.picWall3);
             this.Controls.Add(this.picBossKoolAid);
             this.Controls.Add(this.picPlayer);
+            this.Controls.Add(this.picCoin3);
+            this.Controls.Add(this.picCoin5);
+            this.Controls.Add(this.picCoin2);
+            this.Controls.Add(this.picCoin4);
+            this.Controls.Add(this.picCoin1);
             this.DoubleBuffered = true;
-            this.Margin = new System.Windows.Forms.Padding(6, 6, 6, 6);
+            this.Margin = new System.Windows.Forms.Padding(6);
             this.Name = "FrmLevel";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Explore";
             this.Load += new System.EventHandler(this.FrmLevel_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmLevel_KeyDown);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.FrmLevel_KeyUp);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCoin1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picWall11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picWall2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picWall8)).EndInit();
@@ -484,15 +430,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.picWall3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picBossKoolAid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPlayer)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCoin2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCoin3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCoin4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picCoin5)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -520,16 +461,12 @@
     private System.Windows.Forms.PictureBox picWall1;
     private System.Windows.Forms.PictureBox picWall2;
     private System.Windows.Forms.PictureBox picWall11;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.PictureBox pictureBox7;
-        private System.Windows.Forms.PictureBox pictureBox8;
-        private System.Windows.Forms.PictureBox pictureBox9;
-        private System.Windows.Forms.PictureBox pictureBox10;
+        private System.Windows.Forms.PictureBox picCoin1;
+        private System.Windows.Forms.PictureBox picCoin2;
+        private System.Windows.Forms.PictureBox picCoin3;
+        private System.Windows.Forms.PictureBox picCoin4;
+        private System.Windows.Forms.PictureBox picCoin5;
+        private System.Windows.Forms.Label lblCoins;
     }
 }
 

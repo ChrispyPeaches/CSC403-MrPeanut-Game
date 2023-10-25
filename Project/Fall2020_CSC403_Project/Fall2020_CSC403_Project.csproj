@@ -126,5 +126,8 @@
   <ItemGroup>
     <None Include="data\coin.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="data\transparent.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

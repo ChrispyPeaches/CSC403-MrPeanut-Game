@@ -19,7 +19,11 @@ namespace Fall2020_CSC403_Project.code {
     }
 
     public bool Intersects(Collider c) {
-      return rect.IntersectsWith(c.rect);
+      if (c != null)
+       {
+         return rect.IntersectsWith(c.rect);
+       }
+            return false;
     }
   }
 }
