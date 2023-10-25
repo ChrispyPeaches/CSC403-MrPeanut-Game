@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -58,6 +59,10 @@
     <Compile Include="FrmLevel.Designer.cs">
       <DependentUpon>FrmLevel.cs</DependentUpon>
     </Compile>
+    <Compile Include="OpenAIApi\ChatCompletionResponse.cs" />
+    <Compile Include="OpenAIApi\ChatMessage.cs" />
+    <Compile Include="OpenAIApi\IOpenAIApi.cs" />
+    <Compile Include="OpenAIApi\ChatCompletionQuery.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FrmBattle.resx">
@@ -128,6 +133,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="data\transparent.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Refit">
+      <Version>7.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Refit.Newtonsoft.Json">
+      <Version>7.0.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
