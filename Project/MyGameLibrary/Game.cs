@@ -30,7 +30,7 @@ namespace Fall2020_CSC403_Project.code
         {
             if (instance == null)
             {
-                instance = this; // Set the instance to the current object
+                instance = this;
             }
             InitializeGameEntities(save);
         }

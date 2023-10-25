@@ -30,7 +30,6 @@ namespace Fall2020_CSC403_Project
             {
                 if (mainMenuForm.ShowDialog() == DialogResult.OK)
                 {
-                    // FrmLevel will be started from MainMenu form
                 }
             }
         }

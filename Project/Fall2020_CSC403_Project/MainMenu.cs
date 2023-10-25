@@ -30,6 +30,9 @@ namespace Fall2020_CSC403_Project
         private void btnNew_Click(object sender, EventArgs e)
         {
             SavesSelect savesSelectForm = new SavesSelect(false);
+            savesSelectForm.StartPosition = FormStartPosition.Manual;
+            savesSelectForm.Left = this.Left + (this.Width - savesSelectForm.Width) / 2;
+            savesSelectForm.Top = this.Top + (this.Height - savesSelectForm.Height) / 2;
             savesSelectForm.ShowDialog();
 
             FrmLevel frmLevel = new FrmLevel(openAiApi);
@@ -43,6 +46,9 @@ namespace Fall2020_CSC403_Project
             if (Directory.Exists(savesDirectory))
             {
                 SavesSelect savesSelectForm = new SavesSelect(true);
+                savesSelectForm.StartPosition = FormStartPosition.Manual;
+                savesSelectForm.Left = this.Left + (this.Width - savesSelectForm.Width) / 2;
+                savesSelectForm.Top = this.Top + (this.Height - savesSelectForm.Height) / 2;
                 savesSelectForm.ShowDialog();
             }
 
@@ -53,6 +59,11 @@ namespace Fall2020_CSC403_Project
         private void btnExit_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void MainMenu_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

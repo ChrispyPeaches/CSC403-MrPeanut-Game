@@ -41,6 +41,8 @@ namespace Fall2020_CSC403_Project
             // 
             // btnNew
             // 
+            this.btnNew.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btnNew.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNew.Location = new System.Drawing.Point(576, 271);
             this.btnNew.Name = "btnNew";
@@ -52,6 +54,7 @@ namespace Fall2020_CSC403_Project
             // 
             // btnContinue
             // 
+            this.btnContinue.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnContinue.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnContinue.Location = new System.Drawing.Point(576, 354);
             this.btnContinue.Name = "btnContinue";
@@ -63,6 +66,7 @@ namespace Fall2020_CSC403_Project
             // 
             // btnExit
             // 
+            this.btnExit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExit.Location = new System.Drawing.Point(576, 437);
             this.btnExit.Name = "btnExit";
@@ -76,12 +80,15 @@ namespace Fall2020_CSC403_Project
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.wall;
             this.ClientSize = new System.Drawing.Size(1342, 777);
             this.Controls.Add(this.btnNew);
             this.Controls.Add(this.btnContinue);
             this.Controls.Add(this.btnExit);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "MainMenu";
             this.Text = "Main Menu";
+            this.Load += new System.EventHandler(this.MainMenu_Load);
             this.ResumeLayout(false);
 
         }

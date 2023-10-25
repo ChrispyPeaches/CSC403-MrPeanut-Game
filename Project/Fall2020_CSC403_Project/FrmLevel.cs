@@ -173,6 +173,9 @@ namespace Fall2020_CSC403_Project
                     {
                         frmBattle.SetupForBossBattle();
                     }
+                    frmBattle.StartPosition = FormStartPosition.Manual;
+                    frmBattle.Left = this.Left + (this.Width - frmBattle.Width) / 2;
+                    frmBattle.Top = this.Top + (this.Height - frmBattle.Height) / 2;
                     frmBattle.Show();
                 }
                 else{
