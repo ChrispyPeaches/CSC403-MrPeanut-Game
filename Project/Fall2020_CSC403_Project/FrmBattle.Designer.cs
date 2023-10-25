@@ -112,7 +112,7 @@
             this.picEnemy.BackColor = System.Drawing.Color.Transparent;
             this.picEnemy.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.enemy_koolaid;
             this.picEnemy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.picEnemy.Location = new System.Drawing.Point(772, 46);
+            this.picEnemy.Location = new System.Drawing.Point(772, 232);
             this.picEnemy.Name = "picEnemy";
             this.picEnemy.Size = new System.Drawing.Size(229, 267);
             this.picEnemy.TabIndex = 1;
@@ -123,7 +123,7 @@
             this.picPlayer.BackColor = System.Drawing.Color.Transparent;
             this.picPlayer.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.player;
             this.picPlayer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.picPlayer.Location = new System.Drawing.Point(10, 46);
+            this.picPlayer.Location = new System.Drawing.Point(8, 232);
             this.picPlayer.Name = "picPlayer";
             this.picPlayer.Size = new System.Drawing.Size(229, 267);
             this.picPlayer.TabIndex = 0;
@@ -148,7 +148,7 @@
             // textboxChatHistory
             // 
             this.textboxChatHistory.Location = new System.Drawing.Point(244, 5);
-            this.textboxChatHistory.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textboxChatHistory.Margin = new System.Windows.Forms.Padding(2);
             this.textboxChatHistory.Name = "textboxChatHistory";
             this.textboxChatHistory.Size = new System.Drawing.Size(524, 535);
             this.textboxChatHistory.TabIndex = 9;
@@ -157,7 +157,7 @@
             // textboxChatInput
             // 
             this.textboxChatInput.Location = new System.Drawing.Point(244, 544);
-            this.textboxChatInput.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textboxChatInput.Margin = new System.Windows.Forms.Padding(2);
             this.textboxChatInput.Name = "textboxChatInput";
             this.textboxChatInput.Size = new System.Drawing.Size(438, 48);
             this.textboxChatInput.TabIndex = 10;
@@ -179,6 +179,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Green;
+            this.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.brick_battleground;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1010, 603);
             this.ControlBox = false;
