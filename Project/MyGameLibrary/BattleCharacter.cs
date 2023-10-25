@@ -10,17 +10,20 @@ namespace Fall2020_CSC403_Project.code
 {
     public class BattleCharacter : Character
     {
+        public string Name { get; set; }
         public int Health { get; private set; }
         public int MaxHealth { get; private set; }
         private float strength;
         
         public event Action<int> AttackEvent;
 
-        public BattleCharacter(Vector2 initPos, Collider collider) : base(initPos, collider)
+        public BattleCharacter(Vector2 initPos, Collider collider, string name) 
+            : base(initPos, collider)
         {
             MaxHealth = 20;
             strength = 2;
             Health = MaxHealth;
+            Name = name;
         }
 
         public void OnAttack(int amount)
