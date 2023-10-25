@@ -13,6 +13,11 @@ namespace Fall2020_CSC403_Project
         private Enemy enemy;
         private Player player;
 
+        SoundPlayer bossMusic = new SoundPlayer(Resources.boss_music);
+        SoundPlayer finalBattleClip = new SoundPlayer(Resources.final_battle);
+        SoundPlayer overworldTheme = new SoundPlayer(Resources.overworld_theme);
+        SoundPlayer battleMusic = new SoundPlayer(Resources.battle_music);
+
         private FrmBattle()
         {
             InitializeComponent();
@@ -21,6 +26,9 @@ namespace Fall2020_CSC403_Project
 
         public void Setup()
         {
+            // play battle music
+            battleMusic.PlayLooping();
+
             // update for this enemy
             picEnemy.BackgroundImage = enemy.Img;
             picEnemy.Refresh();
@@ -40,14 +48,8 @@ namespace Fall2020_CSC403_Project
             picBossBattle.Location = Point.Empty;
             picBossBattle.Size = ClientSize;
             picBossBattle.Visible = true;
-
+            finalBattleClip.Play();
             tmrFinalBattle.Enabled = true;
-
-            SoundPlayer simpleSound = new SoundPlayer(Resources.final_battle);
-            simpleSound.PlaySync();
-
-            SoundPlayer bossMusic = new SoundPlayer(Resources.boss_music);
-            bossMusic.PlayLooping();
         }
 
         public static FrmBattle GetInstance(Enemy enemy)
@@ -104,6 +106,7 @@ namespace Fall2020_CSC403_Project
         {
             picBossBattle.Visible = false;
             tmrFinalBattle.Enabled = false;
+            bossMusic.PlayLooping();
         }
 
         private void btnChat_Click(object sender, EventArgs e)
@@ -123,6 +126,7 @@ namespace Fall2020_CSC403_Project
 
         private void btnFlee_Click(object sender, EventArgs e)
         {
+            overworldTheme.PlayLooping();
             instance = null;
             Close();
         }

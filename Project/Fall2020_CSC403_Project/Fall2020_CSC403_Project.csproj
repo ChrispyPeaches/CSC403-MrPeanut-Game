@@ -138,5 +138,8 @@
   <ItemGroup>
     <None Include="data\boss_music.wav" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="data\battle_music.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
