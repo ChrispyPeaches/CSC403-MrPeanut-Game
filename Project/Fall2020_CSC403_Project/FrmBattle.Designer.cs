@@ -109,10 +109,9 @@
             // 
             // picEnemy
             // 
-            this.picEnemy.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.picEnemy.BackColor = System.Drawing.Color.Transparent;
             this.picEnemy.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.enemy_koolaid;
             this.picEnemy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.picEnemy.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.picEnemy.Location = new System.Drawing.Point(772, 46);
             this.picEnemy.Name = "picEnemy";
             this.picEnemy.Size = new System.Drawing.Size(229, 267);
@@ -121,10 +120,9 @@
             // 
             // picPlayer
             // 
-            this.picPlayer.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.picPlayer.BackColor = System.Drawing.Color.Transparent;
             this.picPlayer.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.player;
             this.picPlayer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.picPlayer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.picPlayer.Location = new System.Drawing.Point(10, 46);
             this.picPlayer.Name = "picPlayer";
             this.picPlayer.Size = new System.Drawing.Size(229, 267);
