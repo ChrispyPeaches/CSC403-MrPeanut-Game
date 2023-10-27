@@ -39,6 +39,9 @@
             this.picPlayer = new System.Windows.Forms.PictureBox();
             this.tmrFinalBattle = new System.Windows.Forms.Timer(this.components);
             this.btnFlee = new System.Windows.Forms.Button();
+            this.textboxChatHistory = new System.Windows.Forms.RichTextBox();
+            this.textboxChatInput = new System.Windows.Forms.RichTextBox();
+            this.btnChat = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picBossBattle)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEnemy)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPlayer)).BeginInit();
@@ -153,6 +156,34 @@
             this.btnFlee.UseVisualStyleBackColor = true;
             this.btnFlee.Click += new System.EventHandler(this.btnFlee_Click);
             // 
+            // textboxChatHistory
+            // 
+            this.textboxChatHistory.Location = new System.Drawing.Point(325, 6);
+            this.textboxChatHistory.Name = "textboxChatHistory";
+            this.textboxChatHistory.Size = new System.Drawing.Size(697, 657);
+            this.textboxChatHistory.TabIndex = 9;
+            this.textboxChatHistory.Text = "";
+            // 
+            // textboxChatInput
+            // 
+            this.textboxChatInput.Location = new System.Drawing.Point(325, 669);
+            this.textboxChatInput.Name = "textboxChatInput";
+            this.textboxChatInput.Size = new System.Drawing.Size(582, 58);
+            this.textboxChatInput.TabIndex = 10;
+            this.textboxChatInput.Text = "";
+            // 
+            // btnChat
+            // 
+            this.btnChat.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnChat.Location = new System.Drawing.Point(914, 669);
+            this.btnChat.Margin = new System.Windows.Forms.Padding(4);
+            this.btnChat.Name = "btnChat";
+            this.btnChat.Size = new System.Drawing.Size(108, 58);
+            this.btnChat.TabIndex = 11;
+            this.btnChat.Text = "Chat";
+            this.btnChat.UseVisualStyleBackColor = true;
+            this.btnChat.Click += new System.EventHandler(this.btnChat_Click);
+            // 
             // FrmBattle
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -160,6 +191,9 @@
             this.BackColor = System.Drawing.Color.Green;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1096, 742);
+            this.Controls.Add(this.btnChat);
+            this.Controls.Add(this.textboxChatInput);
+            this.Controls.Add(this.textboxChatHistory);
             this.Controls.Add(this.picBossBattle);
             this.Controls.Add(this.btnFlee);
             this.Controls.Add(this.lblEnemyHealthFull);
@@ -195,5 +229,8 @@
         private System.Windows.Forms.PictureBox picBossBattle;
         private System.Windows.Forms.Timer tmrFinalBattle;
         private System.Windows.Forms.Button btnFlee;
+        private System.Windows.Forms.RichTextBox textboxChatHistory;
+        private System.Windows.Forms.RichTextBox textboxChatInput;
+        private System.Windows.Forms.Button btnChat;
     }
 }

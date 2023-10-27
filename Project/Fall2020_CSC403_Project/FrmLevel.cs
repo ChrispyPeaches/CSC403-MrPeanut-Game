@@ -13,13 +13,12 @@ namespace Fall2020_CSC403_Project
         private Character[] walls;
         private DateTime timeBegin;
         private FrmBattle frmBattle;
+        public IOpenAIApi _openAIApi;
 
         private bool isUpPressed = false;
         private bool isDownPressed = false;
         private bool isLeftPressed = false;
         private bool isRightPressed = false;
-
-        public IOpenAIApi _openAIApi;
 
         public FrmLevel(IOpenAIApi openAIApi)
         {
@@ -166,7 +165,7 @@ namespace Fall2020_CSC403_Project
             player.MoveBack();
             try
             {
-                frmBattle = FrmBattle.GetInstance(enemy);
+                frmBattle = FrmBattle.GetInstance(enemy, _openAIApi);
                 if (!(frmBattle == null))
                 {
                     if (enemy == game.bossKoolaid)

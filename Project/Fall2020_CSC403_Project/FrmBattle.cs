@@ -1,7 +1,10 @@
 ﻿using Fall2020_CSC403_Project.code;
+using Fall2020_CSC403_Project.OpenAIApi;
 using Fall2020_CSC403_Project.Properties;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Media;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,11 +17,14 @@ namespace Fall2020_CSC403_Project
         private Enemy enemy = null;
         private Player player = null;
         public string enemyName = "";
+        private IOpenAIApi _openAIApi;
+        private IList<ChatCompletionQuery.ChatMessage> chats;
 
-        private FrmBattle()
+        private FrmBattle(IOpenAIApi openAIApi)
         {
             InitializeComponent();
             KeyPreview = true;
+            _openAIApi = openAIApi;
         }
 
         public void Setup()
@@ -38,6 +44,18 @@ namespace Fall2020_CSC403_Project
 
             // show health
             UpdateHealthBars();
+
+            // Setup OpenAI
+            chats = new List<ChatCompletionQuery.ChatMessage>()
+            {
+                new ChatCompletionQuery.ChatMessage()
+                {
+                    Role = ChatCompletionQuery.RoleType.System,
+                    Content = $"We are in a battle to the death." +
+                                $"You are playing the role of {enemy.Name}. I am playing the role of {Game.Instance.player.Name}." +
+                                $"We will each send one message at a time to create a dialogue. "
+                }
+            };
         }
 
         public void SetupForBossBattle()
@@ -52,12 +70,12 @@ namespace Fall2020_CSC403_Project
             tmrFinalBattle.Enabled = true;
         }
 
-        public static FrmBattle GetInstance(Enemy enemy)
+        public static FrmBattle GetInstance(Enemy enemy, IOpenAIApi openAIApi)
         {
             Boolean check = CheckFlag(enemy);
             if (instance == null && !check)
             {
-                instance = new FrmBattle();
+                instance = new FrmBattle(openAIApi);
                 instance.enemy = enemy;
                 instance.enemyName = enemy.Name;
                 instance.Setup();
@@ -114,7 +132,7 @@ namespace Fall2020_CSC403_Project
         private void btnAttack_Click(object sender, EventArgs e)
         {
             Game game = Game.Instance;
-            FrmBattle battleForm = GetInstance(enemy);
+            FrmBattle battleForm = GetInstance(enemy, this._openAIApi);
             if (game.player.Health > 0)
             {
                 // update hp
@@ -199,6 +217,59 @@ namespace Fall2020_CSC403_Project
                 instance = null;
                 Close();
             }
+        }
+
+        private async void btnChat_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textboxChatInput.Text))
+            {
+                return;
+            }
+
+            // Disable chat button while retrieving message
+            btnChat.Enabled = false;
+
+            // Display chat in chat history
+            List<string> chatHistory = textboxChatHistory.Lines.ToList();
+            chatHistory.Add($"\n{Game.Instance.player.Name}:");
+            chatHistory.AddRange(textboxChatInput.Lines);
+            textboxChatHistory.Lines = chatHistory.ToArray();
+            textboxChatInput.Text = String.Empty;
+
+            // Format message for OpenAI
+            string message = "";
+            message = chatHistory.Aggregate(
+                (combinedString, currentString) =>
+                    combinedString = $"{combinedString}\n{currentString}");
+
+            chats.Add(new ChatCompletionQuery.ChatMessage()
+            {
+                Role = ChatCompletionQuery.RoleType.User,
+                Content = message
+            });
+
+            // Send to OpenAI
+            ChatCompletionResponse response = await _openAIApi.GetChatCompletion(new ChatCompletionQuery()
+            {
+                Messages = chats
+            });
+
+            // Display enemy's response in chat history
+            chats.Add(new ChatCompletionQuery.ChatMessage()
+            {
+                Role = ChatCompletionQuery.RoleType.Assistant,
+                Content = response.Choices.First().Message.Content
+            });
+
+            // Display enemy name and message content
+            chatHistory.Add($"\n{enemy.Name}:");
+            chatHistory.Add(chats.Last().Content
+                .Substring(chats.Last().Content.IndexOf(':') + 1)
+                .TrimStart('\n'));
+            textboxChatHistory.Lines = chatHistory.ToArray();
+
+            // Enable chat button
+            btnChat.Enabled = true;
         }
 
     }

@@ -129,7 +129,7 @@
             // picBossKoolAid
             // 
             this.picBossKoolAid.BackColor = System.Drawing.Color.Transparent;
-            this.picBossKoolAid.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.enemy_koolaid;
+            this.picBossKoolAid.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("picBossKoolAid.BackgroundImage")));
             this.picBossKoolAid.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.picBossKoolAid.Location = new System.Drawing.Point(971, 74);
             this.picBossKoolAid.Name = "picBossKoolAid";
