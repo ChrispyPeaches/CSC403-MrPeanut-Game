@@ -168,7 +168,7 @@ namespace Fall2020_CSC403_Project
                     {
                         playerData = new PlayerData
                         {
-                            name = pathToFile,
+                            name = player.Name,
                             MaxHealth = player.MaxHealth,
                             strength = player.strength,
                             Health = player.Health,

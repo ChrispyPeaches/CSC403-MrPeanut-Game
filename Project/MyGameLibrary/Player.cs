@@ -15,7 +15,7 @@ namespace Fall2020_CSC403_Project.code
             int health = playerData.Value<int>("Health");
             int maxHealth = playerData.Value<int>("MaxHealth");
             float strength = playerData.Value<float>("strength");
-            this.Name = playerData.Value<string>("Name"); 
+            this.Name = playerData.Value<string>("name"); 
             this.ChangeHealthAndStrength(health, maxHealth, strength);
         }
     }

@@ -36,7 +36,6 @@ namespace Fall2020_CSC403_Project
         private void btnExit_Click(object sender, EventArgs e)
         {
             this.Close();
-            System.Environment.Exit(0);
         }
     }
 }
