@@ -220,6 +220,7 @@ namespace Fall2020_CSC403_Project
                 await Task.Delay(50);
                 player.ResetMoveSpeed();
                 // battle instance
+                overworldTheme.PlayLooping();
                 instance = null;
                 Close();
             }
