@@ -36,6 +36,8 @@ namespace Fall2020_CSC403_Project
             savesSelectForm.ShowDialog();
 
             FrmLevel frmLevel = new FrmLevel(openAiApi);
+            this.ShowInTaskbar = false;
+            this.Opacity = 0;
             frmLevel.ShowDialog();
         }
 
@@ -53,6 +55,8 @@ namespace Fall2020_CSC403_Project
             }
 
             FrmLevel frmLevel = new FrmLevel(openAiApi);
+            this.ShowInTaskbar = false;
+            this.Opacity = 0;
             frmLevel.ShowDialog();
         }
 

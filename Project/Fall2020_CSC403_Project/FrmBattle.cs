@@ -235,9 +235,13 @@ namespace Fall2020_CSC403_Project
             // Disable chat button while retrieving message
             btnChat.Enabled = false;
 
+            // initialize game instance
+            Game game = Game.Instance;
+            Player player = game.player;
+
             // Display chat in chat history
             List<string> chatHistory = textboxChatHistory.Lines.ToList();
-            chatHistory.Add($"\n{Game.Instance.player.Name}:");
+            chatHistory.Add($"\n{player.Name}:");
             chatHistory.AddRange(textboxChatInput.Lines);
             textboxChatHistory.Lines = chatHistory.ToArray();
             textboxChatInput.Text = String.Empty;

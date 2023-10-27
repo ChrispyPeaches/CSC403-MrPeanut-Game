@@ -184,6 +184,11 @@ namespace Fall2020_CSC403_Project
                     frmBattle.StartPosition = FormStartPosition.Manual;
                     frmBattle.Left = this.Left + (this.Width - frmBattle.Width) / 2;
                     frmBattle.Top = this.Top + (this.Height - frmBattle.Height) / 2;
+                    game.player.ResetMoveSpeed();
+                    isUpPressed = false;
+                    isRightPressed = false;
+                    isDownPressed = false;
+                    isLeftPressed = false;
                     frmBattle.Show();
                 }
                 else{
