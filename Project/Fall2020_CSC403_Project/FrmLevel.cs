@@ -12,17 +12,15 @@ namespace Fall2020_CSC403_Project
 {
     public partial class FrmLevel : Form
     {
-        private Player player;
-
-        private Enemy enemyPoisonPacket;
-        private Enemy bossKoolaid;
-        private Enemy enemyCheeto;
         private Character[] walls;
-
         private DateTime timeBegin;
         private FrmBattle frmBattle;
-
         public IOpenAIApi _openAIApi;
+
+        private bool isUpPressed = false;
+        private bool isDownPressed = false;
+        private bool isLeftPressed = false;
+        private bool isRightPressed = false;
 
         public FrmLevel(IOpenAIApi openAIApi)
         {
@@ -30,26 +28,47 @@ namespace Fall2020_CSC403_Project
             _openAIApi = openAIApi;
         }
 
+        public void ResetMovementBooleans()
+        {
+            isUpPressed = false;
+            isDownPressed = false;
+            isRightPressed = false;
+            isLeftPressed = false;
+        }
+
         private void FrmLevel_Load(object sender, EventArgs e)
         {
             const int PADDING = 7;
             const int NUM_WALLS = 13;
 
+            Game game = Game.Instance;
             SoundPlayer overworldTheme = new SoundPlayer(Resources.overworld_theme);
             overworldTheme.PlayLooping();
 
-            player = new Player(CreatePosition(picPlayer), CreateCollider(picPlayer, PADDING), "Mr.Peanut");
-            bossKoolaid = new Enemy(CreatePosition(picBossKoolAid), CreateCollider(picBossKoolAid, PADDING), "Kool-Aid Man");
-            enemyPoisonPacket = new Enemy(CreatePosition(picEnemyPoisonPacket), CreateCollider(picEnemyPoisonPacket, PADDING), "Poison Kool-Aid Packet");
-            enemyCheeto = new Enemy(CreatePosition(picEnemyCheeto), CreateCollider(picEnemyCheeto, PADDING), "Violent Cheeto");
+            if (game == null)
+            {
+                System.Environment.Exit(0);
+            }
 
-            bossKoolaid.Img = picBossKoolAid.BackgroundImage;
-            enemyPoisonPacket.Img = picEnemyPoisonPacket.BackgroundImage;
-            enemyCheeto.Img = picEnemyCheeto.BackgroundImage;
+            game.player.Position = CreatePosition(picPlayer);
+            game.player.Collider = CreateCollider(picPlayer, PADDING);
 
-            bossKoolaid.Color = Color.Red;
-            enemyPoisonPacket.Color = Color.Green;
-            enemyCheeto.Color = Color.FromArgb(255, 245, 161);
+            game.bossKoolaid.Position = CreatePosition(picBossKoolAid);
+            game.bossKoolaid.Collider = CreateCollider(picBossKoolAid, PADDING);
+
+            game.enemyPoisonPacket.Position = CreatePosition(picEnemyPoisonPacket);
+            game.enemyPoisonPacket.Collider = CreateCollider(picEnemyPoisonPacket, PADDING);
+
+            game.enemyCheeto.Position = CreatePosition(picEnemyCheeto);
+            game.enemyCheeto.Collider = CreateCollider(picEnemyCheeto, PADDING);
+
+            game.bossKoolaid.Img = picBossKoolAid.BackgroundImage;
+            game.enemyPoisonPacket.Img = picEnemyPoisonPacket.BackgroundImage;
+            game.enemyCheeto.Img = picEnemyCheeto.BackgroundImage;
+
+            game.bossKoolaid.Color = Color.Red;
+            game.enemyPoisonPacket.Color = Color.Green;
+            game.enemyCheeto.Color = Color.FromArgb(255, 245, 161);
 
             walls = new Character[NUM_WALLS];
             for (int w = 0; w < NUM_WALLS; w++)
@@ -57,12 +76,10 @@ namespace Fall2020_CSC403_Project
                 PictureBox pic = Controls.Find("picWall" + w.ToString(), true)[0] as PictureBox;
                 walls[w] = new Character(CreatePosition(pic), CreateCollider(pic, PADDING));
             }
-
-            Game.player = player;
             timeBegin = DateTime.Now;
         }
 
-        private Vector2 CreatePosition(PictureBox pic)
+        private static Vector2 CreatePosition(PictureBox pic)
         {
             return new Vector2(pic.Location.X, pic.Location.Y);
         }
@@ -71,11 +88,6 @@ namespace Fall2020_CSC403_Project
         {
             Rectangle rect = new Rectangle(pic.Location, new Size(pic.Size.Width - padding, pic.Size.Height - padding));
             return new Collider(rect);
-        }
-
-        private void FrmLevel_KeyUp(object sender, KeyEventArgs e)
-        {
-            player.ResetMoveSpeed();
         }
 
         private void tmrUpdateInGameTime_Tick(object sender, EventArgs e)
@@ -87,31 +99,53 @@ namespace Fall2020_CSC403_Project
 
         private void tmrPlayerMove_Tick(object sender, EventArgs e)
         {
+            Game game = Game.Instance;
             // move player
-            player.Move();
+            game.player.Move();
 
             // check collision with walls
-            if (HitAWall(player))
+            if (HitAWall(game.player))
             {
-                player.MoveBack();
+                game.player.MoveBack();
             }
 
             // check collision with enemies
-            if (HitAChar(player, enemyPoisonPacket))
+            if (HitAChar(game.player, game.enemyPoisonPacket))
             {
-                Fight(enemyPoisonPacket);
+                if (game.player.Health > 0)
+                {
+                    Fight(game.enemyPoisonPacket);
+                }
+                else
+                {
+                    game.player.MoveBack();
+                }
             }
-            else if (HitAChar(player, enemyCheeto))
+            else if (HitAChar(game.player, game.enemyCheeto))
             {
-                Fight(enemyCheeto);
+                if(game.player.Health > 0)
+                {
+                    Fight(game.enemyCheeto);
+                }
+                else
+                {
+                    game.player.MoveBack();
+                }
             }
-            if (HitAChar(player, bossKoolaid))
+            if (HitAChar(game.player, game.bossKoolaid))
             {
-                Fight(bossKoolaid);
+                if (game.player.Health > 0)
+                {
+                    Fight(game.bossKoolaid);
+                }
+                else
+                {
+                    game.player.MoveBack();
+                }
             }
 
             // update player's picture box
-            picPlayer.Location = new Point((int)player.Position.x, (int)player.Position.y);
+            picPlayer.Location = new Point((int)game.player.Position.x, (int)game.player.Position.y);
         }
 
         private bool HitAWall(Character c)
@@ -135,44 +169,140 @@ namespace Fall2020_CSC403_Project
 
         private void Fight(Enemy enemy)
         {
-            player.ResetMoveSpeed();
+            Game game = Game.Instance;
+            Player player = game.player;
             player.MoveBack();
-            frmBattle = FrmBattle.GetInstance(enemy, _openAIApi);
-            frmBattle.Show();
-
-            if (enemy == bossKoolaid)
+            try
             {
-                frmBattle.SetupForBossBattle();
+                frmBattle = FrmBattle.GetInstance(enemy, _openAIApi);
+                if (!(frmBattle == null))
+                {
+                    if (enemy == game.bossKoolaid)
+                    {
+                        frmBattle.SetupForBossBattle();
+                    }
+                    frmBattle.StartPosition = FormStartPosition.Manual;
+                    frmBattle.Left = this.Left + (this.Width - frmBattle.Width) / 2;
+                    frmBattle.Top = this.Top + (this.Height - frmBattle.Height) / 2;
+                    frmBattle.Show();
+                }
+                else{
+                }
+            }
+            catch
+            {
             }
         }
 
+        // detect input
         private void FrmLevel_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode)
+            Game.Instance.player.ResetMoveSpeed();
+            if (e.KeyCode == Keys.Up)
             {
-                case Keys.Left:
-                    player.GoLeft();
-                    break;
-
-                case Keys.Right:
-                    player.GoRight();
-                    break;
-
-                case Keys.Up:
-                    player.GoUp();
-                    break;
-
-                case Keys.Down:
-                    player.GoDown();
-                    break;
-
-                default:
-                    player.ResetMoveSpeed();
-                    break;
+                isUpPressed = true;
             }
+            else if (e.KeyCode == Keys.Down)
+            {
+                isDownPressed = true;
+            }
+            else if (e.KeyCode == Keys.Left)
+            {
+                isLeftPressed = true;
+            }
+            else if (e.KeyCode == Keys.Right)
+            {
+                isRightPressed = true;
+            }
+            else if (e.KeyCode == Keys.Escape)
+            {
+                Environment.Exit(0);
+            }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                QuickStartMenu quickStartMenu = new QuickStartMenu();
+                quickStartMenu.StartPosition = FormStartPosition.Manual;
+                quickStartMenu.Left = this.Left + (this.Width - quickStartMenu.Width) / 2;
+                quickStartMenu.Top = this.Top + (this.Height - quickStartMenu.Height) / 2;
+                quickStartMenu.Show();
+            }
+
+            HandleMovement(); // handle pressed input
         }
 
+        // detect release of input
+        private void FrmLevel_KeyUp(object sender, KeyEventArgs e)
+        {
+            Game.Instance.player.ResetMoveSpeed();
+            if (e.KeyCode == Keys.Up)
+            {
+                isUpPressed = false;
+            }
+            else if (e.KeyCode == Keys.Down)
+            {
+                isDownPressed = false;
+            }
+            else if (e.KeyCode == Keys.Left)
+            {
+                isLeftPressed = false;
+            }
+            else if (e.KeyCode == Keys.Right)
+            {
+                isRightPressed = false;
+            }
+
+            HandleMovement(); // handle released input
+        }
+
+        // handle directional movement
+        private void HandleMovement()
+        {
+            Game game = Game.Instance;
+            Player player = game.player;
+            Game.Instance.player.ResetMoveSpeed();
+            if (isUpPressed && isRightPressed)
+            {
+                game.player.GoUpRight();
+            }
+            else if (isUpPressed && isLeftPressed)
+            {
+                game.player.GoUpLeft();
+            }
+            else if (isDownPressed && isRightPressed)
+            {
+                game.player.GoDownRight();
+            }
+            else if (isDownPressed && isLeftPressed)
+            {
+                game.player.GoDownLeft();
+            }
+            else if (isUpPressed)
+            {
+                game.player.GoUp();
+            }
+            else if (isDownPressed)
+            {
+                game.player.GoDown();
+            }
+            else if (isLeftPressed)
+            {
+                game.player.GoLeft();
+            }
+            else if (isRightPressed)
+            {
+                game.player.GoRight();
+            }
+            else
+            {
+                game.player.ResetMoveSpeed();
+            }
+        }
         private void lblInGameTime_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void picBossKoolAid_Click(object sender, EventArgs e)
         {
 
         }
