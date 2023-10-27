@@ -1,6 +1,10 @@
 ﻿// imports
 using Fall2020_CSC403_Project.code;
+using Fall2020_CSC403_Project.OpenAIApi;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
+using Refit;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,6 +12,7 @@ using System.Net.Http;
 using System.Numerics;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
+using static Fall2020_CSC403_Project.OpenAIApi.ChatCompletionQuery;
 using Vector2 = Fall2020_CSC403_Project.code.Vector2;
 
 namespace Fall2020_CSC403_Project
@@ -52,33 +57,36 @@ namespace Fall2020_CSC403_Project
         {
             public class OpenAI : HTTPRequests
             {
-                private static readonly HttpClient httpClient = new HttpClient();
-
-                public async Task<string> MakeOpenAIApiRequest(string userMessage = "", string bossName = "", string bossPreviousResponse = "")
+                [Headers("Content-Type: application/json", "Authorization: Bearer ")]
+                public interface IOpenAIApi
                 {
-                    string url = "PUT THE URL HERE!!!!!";
+                    [Post("/v1/chat/completions")]
+                    Task<ChatCompletionResponse> GetChatCompletion(ChatCompletionQuery query);
+                }
 
-                    httpClient.DefaultRequestHeaders.Add("Authorization", "PUT THE KEY HERE!!!!");
-                    httpClient.DefaultRequestHeaders.Add("Content-Type", "application/json");
+                public async Task<string> MakeOpenAIApiRequest()
+                {
+                    return "";
+                }
 
-                    var requestBody = new
-                    {
-                        text = userMessage
-                    };
+                public async Task<ChatCompletionQuery> CreateChatCompletionQuery()
+                {
+                    var query = new ChatCompletionQuery();
+                    query.Messages = new List<ChatMessage>();
+                    query.Model = "gpt-3.5-turbo";
+                    return query;
+                }
 
-                    try
-                    {
-                        return "";
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error reading JSON file: " + ex.Message);
-                    }
-
-                    return null;
+                public enum RoleType
+                {
+                    System,
+                    User,
+                    Assistant,
+                    Function
                 }
             }
         }
+
 
         public class GameData : Controller
         {
@@ -166,8 +174,8 @@ namespace Fall2020_CSC403_Project
                             }
                         },
 
-                        enemy_koolaidData = new EnemyData 
-                        { 
+                        enemy_koolaidData = new EnemyData
+                        {
                             defeated = game.IsKoolAidDefeated,
                             MaxHealth = game.bossKoolaid.MaxHealth,
                             strength = game.bossKoolaid.strength,
@@ -175,16 +183,16 @@ namespace Fall2020_CSC403_Project
 
                         },
 
-                        enemy_poisonpacketData = new EnemyData 
-                        { 
+                        enemy_poisonpacketData = new EnemyData
+                        {
                             defeated = game.IsPoisonPacketDefeated,
                             MaxHealth = game.enemyPoisonPacket.MaxHealth,
                             strength = game.enemyPoisonPacket.strength,
                             Health = game.enemyPoisonPacket.Health,
                         },
 
-                        enemy_cheetosData = new EnemyData 
-                        { 
+                        enemy_cheetosData = new EnemyData
+                        {
                             defeated = game.IsCheetosDefeated,
                             MaxHealth = game.enemyCheeto.MaxHealth,
                             strength = game.enemyCheeto.strength,
@@ -217,7 +225,7 @@ namespace Fall2020_CSC403_Project
 
                 return null;
             }
-           
+
         }
     }
 }

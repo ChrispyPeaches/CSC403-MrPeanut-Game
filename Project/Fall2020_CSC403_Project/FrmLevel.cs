@@ -41,6 +41,11 @@ namespace Fall2020_CSC403_Project
 
             Game game = Game.Instance;
 
+            if (game == null)
+            {
+                System.Environment.Exit(0);
+            }
+
             game.player.Position = CreatePosition(picPlayer);
             game.player.Collider = CreateCollider(picPlayer, PADDING);
 

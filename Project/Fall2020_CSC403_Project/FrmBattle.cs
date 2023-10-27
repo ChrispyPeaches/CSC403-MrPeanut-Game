@@ -189,7 +189,6 @@ namespace Fall2020_CSC403_Project
 
         }
 
-        // may need parity here
         private void btnFlee_Click(object sender, EventArgs e)
         {
             SendKeys.SendWait("{ESC}");
