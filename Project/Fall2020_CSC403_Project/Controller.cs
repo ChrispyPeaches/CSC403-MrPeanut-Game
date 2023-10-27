@@ -7,6 +7,7 @@ using Newtonsoft.Json.Serialization;
 using Refit;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Net.Http;
 using System.Numerics;
@@ -38,6 +39,7 @@ namespace Fall2020_CSC403_Project
 
     public class EnemyData
     {
+        public string displayName { get; set; }
         public bool defeated { get; set; }
         public int MaxHealth { get; set; }
         public float strength { get; set; }
@@ -114,6 +116,7 @@ namespace Fall2020_CSC403_Project
                             },
                             enemy_koolaidData = new EnemyData
                             {
+                                displayName = "Kool Aid Man",
                                 defeated = false,
                                 MaxHealth = 150,
                                 strength = 15,
@@ -122,6 +125,7 @@ namespace Fall2020_CSC403_Project
 
                             enemy_poisonpacketData = new EnemyData
                             {
+                                displayName = "Poison Packet",
                                 defeated = false,
                                 MaxHealth = 75,
                                 strength = 10,
@@ -130,6 +134,7 @@ namespace Fall2020_CSC403_Project
 
                             enemy_cheetosData = new EnemyData
                             {
+                                displayName = "Violent Cheeto",
                                 defeated = false,
                                 MaxHealth = 50,
                                 strength = 8,
@@ -176,15 +181,16 @@ namespace Fall2020_CSC403_Project
 
                         enemy_koolaidData = new EnemyData
                         {
+                            displayName = game.bossKoolaid.displayName,
                             defeated = game.IsKoolAidDefeated,
                             MaxHealth = game.bossKoolaid.MaxHealth,
                             strength = game.bossKoolaid.strength,
                             Health = game.bossKoolaid.Health,
-
                         },
 
                         enemy_poisonpacketData = new EnemyData
                         {
+                            displayName = game.enemyPoisonPacket.displayName,
                             defeated = game.IsPoisonPacketDefeated,
                             MaxHealth = game.enemyPoisonPacket.MaxHealth,
                             strength = game.enemyPoisonPacket.strength,
@@ -193,6 +199,7 @@ namespace Fall2020_CSC403_Project
 
                         enemy_cheetosData = new EnemyData
                         {
+                            displayName = game.enemyCheeto.displayName,
                             defeated = game.IsCheetosDefeated,
                             MaxHealth = game.enemyCheeto.MaxHealth,
                             strength = game.enemyCheeto.strength,

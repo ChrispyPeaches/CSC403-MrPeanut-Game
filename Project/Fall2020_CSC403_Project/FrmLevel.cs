@@ -214,6 +214,14 @@ namespace Fall2020_CSC403_Project
             {
                 Environment.Exit(0);
             }
+            else if (e.KeyCode == Keys.Enter)
+            {
+                QuickStartMenu quickStartMenu = new QuickStartMenu();
+                quickStartMenu.StartPosition = FormStartPosition.Manual;
+                quickStartMenu.Left = this.Left + (this.Width - quickStartMenu.Width) / 2;
+                quickStartMenu.Top = this.Top + (this.Height - quickStartMenu.Height) / 2;
+                quickStartMenu.Show();
+            }
 
             HandleMovement(); // handle pressed input
         }
@@ -286,6 +294,11 @@ namespace Fall2020_CSC403_Project
             }
         }
         private void lblInGameTime_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void picBossKoolAid_Click(object sender, EventArgs e)
         {
 
         }

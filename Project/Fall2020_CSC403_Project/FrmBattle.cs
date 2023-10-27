@@ -52,7 +52,7 @@ namespace Fall2020_CSC403_Project
                 {
                     Role = ChatCompletionQuery.RoleType.System,
                     Content = $"We are in a battle to the death." +
-                                $"You are playing the role of {enemy.Name}. I am playing the role of {Game.Instance.player.Name}." +
+                                $"You are playing the role of {enemy.displayName}. I am playing the role of {Game.Instance.player.Name}." +
                                 $"We will each send one message at a time to create a dialogue. "
                 }
             };
@@ -261,7 +261,7 @@ namespace Fall2020_CSC403_Project
             });
 
             // Display enemy name and message content
-            chatHistory.Add($"\n{enemy.Name}:");
+            chatHistory.Add($"\n{enemy.displayName}:");
             chatHistory.Add(chats.Last().Content
                 .Substring(chats.Last().Content.IndexOf(':') + 1)
                 .TrimStart('\n'));

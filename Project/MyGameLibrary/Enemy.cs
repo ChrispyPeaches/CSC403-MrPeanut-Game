@@ -22,6 +22,7 @@ namespace Fall2020_CSC403_Project.code
         /// this is the name of the enemy
         /// </summary>
         public string Name { get; set; }
+        public string displayName { get; set; }
 
         /// <summary>
         /// 
@@ -33,7 +34,7 @@ namespace Fall2020_CSC403_Project.code
             int health = enemyData.Value<int>("Health");
             int maxHealth = enemyData.Value<int>("MaxHealth");
             float strength = enemyData.Value<float>("strength");
-
+            this.displayName = enemyData.Value<string>("displayName");
             this.ChangeHealthAndStrength(health, maxHealth, strength);
             this.Name = name;
         }
