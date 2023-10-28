@@ -191,9 +191,6 @@
             this.BackColor = System.Drawing.Color.Green;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(1346, 742);
-            this.Controls.Add(this.btnChat);
-            this.Controls.Add(this.textboxChatInput);
-            this.Controls.Add(this.textboxChatHistory);
             this.Controls.Add(this.picBossBattle);
             this.Controls.Add(this.btnFlee);
             this.Controls.Add(this.lblEnemyHealthFull);
@@ -203,12 +200,16 @@
             this.Controls.Add(this.btnAttack);
             this.Controls.Add(this.picEnemy);
             this.Controls.Add(this.picPlayer);
+            this.Controls.Add(this.textboxChatHistory);
+            this.Controls.Add(this.textboxChatInput);
+            this.Controls.Add(this.btnChat);
             this.DoubleBuffered = true;
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FrmBattle";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Fight!";
             this.Click += new System.EventHandler(this.btnChat_Click);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmBattle_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.picBossBattle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEnemy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPlayer)).EndInit();
