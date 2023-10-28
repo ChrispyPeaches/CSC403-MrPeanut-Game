@@ -80,6 +80,13 @@ namespace Fall2020_CSC403_Project
                 instance.enemyName = enemy.Name;
                 instance.Setup();
             }
+            if (instance.IsDisposed)
+            {
+                instance = new FrmBattle(openAIApi);
+                instance.enemy = enemy;
+                instance.enemyName = enemy.Name;
+                instance.Setup();
+            }
             return instance;
         }
 
