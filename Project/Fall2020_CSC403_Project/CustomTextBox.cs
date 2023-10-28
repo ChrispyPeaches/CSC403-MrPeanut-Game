@@ -25,6 +25,8 @@ namespace Fall2020_CSC403_Project
                  ControlStyles.UserPaint, true);
             BackColor = Color.Transparent;
         }
+
+        // Paints the inside of the textbox with the semiTransparentColor
         protected override void OnPaintBackground(PaintEventArgs e)
         {
             base.OnPaintBackground(e);

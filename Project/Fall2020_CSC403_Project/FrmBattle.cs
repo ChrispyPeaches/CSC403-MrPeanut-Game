@@ -80,6 +80,8 @@ namespace Fall2020_CSC403_Project
                 instance.enemyName = enemy.Name;
                 instance.Setup();
             }
+
+            // If battle form has been shut down improperly, we restart the instance
             if (instance.IsDisposed)
             {
                 instance = new FrmBattle(openAIApi);
