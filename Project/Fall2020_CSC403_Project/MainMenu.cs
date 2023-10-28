@@ -16,12 +16,19 @@ namespace Fall2020_CSC403_Project
 {
     public partial class MainMenu : Form
     {
+        private string SavesDirectoryPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "..", "..", "Saves");
+
         private IOpenAIApi openAiApi;
         public MainMenu(IOpenAIApi openAiApi)
         {
             InitializeComponent();
             btnNew.Location = new Point((this.ClientSize.Width - btnNew.Width) / 2, (this.ClientSize.Height - btnNew.Height) / 2 - 60);
             btnContinue.Location = new Point((this.ClientSize.Width - btnContinue.Width) / 2, (this.ClientSize.Height - btnContinue.Height) / 2);
+            if (!Directory.Exists(SavesDirectoryPath))
+            {
+                btnContinue.Enabled = false;
+                btnContinue.Visible = false;
+            }
             btnExit.Location = new Point((this.ClientSize.Width - btnExit.Width) / 2, (this.ClientSize.Height - btnExit.Height) / 2 + 60);
 
             this.openAiApi = openAiApi;
@@ -43,9 +50,7 @@ namespace Fall2020_CSC403_Project
 
         private void btnContinue_Click(object sender, EventArgs e)
         {
-            string savesDirectory = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "..", "..", "Saves");
-
-            if (Directory.Exists(savesDirectory))
+            if (Directory.Exists(SavesDirectoryPath))
             {
                 SavesSelect savesSelectForm = new SavesSelect(true);
                 savesSelectForm.StartPosition = FormStartPosition.Manual;

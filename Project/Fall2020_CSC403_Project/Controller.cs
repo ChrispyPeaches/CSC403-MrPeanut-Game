@@ -97,8 +97,13 @@ namespace Fall2020_CSC403_Project
                 try
                 {
                     string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                    string savesDirectory = Path.Combine(appDirectory, "..", "..", "Saves", pathToFile + ".json");
-                    if (!File.Exists(savesDirectory))
+                    string savesDirectoryPath = Path.Combine(appDirectory, "..", "..", "Saves");
+                    if (!Directory.Exists(savesDirectoryPath))
+                    {
+                        Directory.CreateDirectory(savesDirectoryPath);
+                    }
+                    string saveFilePath = Path.Combine(savesDirectoryPath, pathToFile + ".json");
+                    if (!File.Exists(saveFilePath))
                     {
                         SaveData defaultSave = new SaveData
                         {
@@ -143,7 +148,7 @@ namespace Fall2020_CSC403_Project
                         };
 
                         string jsonSaveData = JsonConvert.SerializeObject(defaultSave);
-                        File.WriteAllText(savesDirectory, jsonSaveData);
+                        File.WriteAllText(saveFilePath, jsonSaveData);
 
                     }
                     else
