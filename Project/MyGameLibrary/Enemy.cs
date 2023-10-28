@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using Newtonsoft.Json.Linq;
+using System.Drawing;
 
 namespace Fall2020_CSC403_Project.code
 {
@@ -18,13 +19,25 @@ namespace Fall2020_CSC403_Project.code
         public Color Color { get; set; }
 
         /// <summary>
+        /// this is the name of the enemy
+        /// </summary>
+        public string Name { get; set; }
+        public string displayName { get; set; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="initPos">this is the initial position of the enemy</param>
         /// <param name="collider">this is the collider for the enemy</param>
-        public Enemy(Vector2 initPos, Collider collider, string name) 
-            : base(initPos, collider, name)
+        public Enemy(string name, Vector2 initPos, Collider collider, JObject enemyData) : base(initPos, collider)
         {
+            int health = enemyData.Value<int>("Health");
+            int maxHealth = enemyData.Value<int>("MaxHealth");
+            float strength = enemyData.Value<float>("strength");
+            displayName = enemyData.Value<string>("displayName");
+
+            this.ChangeHealthAndStrength(health, maxHealth, strength);
+            Name = name;
         }
     }
 }
