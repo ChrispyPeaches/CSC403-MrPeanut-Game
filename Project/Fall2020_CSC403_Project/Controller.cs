@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Net.Http;
 using System.Numerics;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 using static Fall2020_CSC403_Project.OpenAIApi.ChatCompletionQuery;
@@ -74,7 +75,7 @@ namespace Fall2020_CSC403_Project
                         {
                             playerData = new PlayerData
                             {
-                                name = "Mr. Peanut",
+                                name = pathToFile,
                                 MaxHealth = 100,
                                 strength = 5,
                                 Health = 100,
@@ -129,6 +130,8 @@ namespace Fall2020_CSC403_Project
 
             public void UpdateData(string pathToFile = "Save Data Name Here")
             {
+                string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                string saveDirectory = Path.Combine(appDirectory, "..", "..", "Saves", pathToFile + ".json");
                 try
                 {
                     Game game = Game.Instance;
@@ -177,7 +180,7 @@ namespace Fall2020_CSC403_Project
                         }
                     };
                     string jsonSaveData = JsonConvert.SerializeObject(updatedSave);
-                    File.WriteAllText(pathToFile, jsonSaveData);
+                    File.WriteAllText(saveDirectory, jsonSaveData, Encoding.UTF8);
                 }
                 catch (Exception ex)
                 {
