@@ -39,7 +39,7 @@
             this.picPlayer = new System.Windows.Forms.PictureBox();
             this.tmrFinalBattle = new System.Windows.Forms.Timer(this.components);
             this.btnFlee = new System.Windows.Forms.Button();
-            this.textboxChatHistory = new System.Windows.Forms.RichTextBox();
+            this.textboxChatHistory = new CustomTextBox();
             this.textboxChatInput = new System.Windows.Forms.RichTextBox();
             this.btnChat = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picBossBattle)).BeginInit();
@@ -51,7 +51,7 @@
             // 
             this.btnAttack.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAttack.Location = new System.Drawing.Point(13, 622);
-            this.btnAttack.Margin = new System.Windows.Forms.Padding(4);
+            this.btnAttack.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnAttack.Name = "btnAttack";
             this.btnAttack.Size = new System.Drawing.Size(304, 105);
             this.btnAttack.TabIndex = 2;
@@ -74,7 +74,7 @@
             // 
             this.label1.BackColor = System.Drawing.Color.Black;
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label1.Location = new System.Drawing.Point(13, 8);
+            this.label1.Location = new System.Drawing.Point(13, 7);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(305, 28);
@@ -84,7 +84,7 @@
             // 
             this.label2.BackColor = System.Drawing.Color.Black;
             this.label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label2.Location = new System.Drawing.Point(1029, 8);
+            this.label2.Location = new System.Drawing.Point(1029, 7);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(305, 28);
@@ -95,7 +95,7 @@
             this.lblEnemyHealthFull.BackColor = System.Drawing.Color.Blue;
             this.lblEnemyHealthFull.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblEnemyHealthFull.ForeColor = System.Drawing.Color.White;
-            this.lblEnemyHealthFull.Location = new System.Drawing.Point(1030, 9);
+            this.lblEnemyHealthFull.Location = new System.Drawing.Point(1029, 9);
             this.lblEnemyHealthFull.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEnemyHealthFull.Name = "lblEnemyHealthFull";
             this.lblEnemyHealthFull.Size = new System.Drawing.Size(301, 25);
@@ -106,7 +106,7 @@
             this.picBossBattle.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.battle_screen;
             this.picBossBattle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.picBossBattle.Location = new System.Drawing.Point(1291, 693);
-            this.picBossBattle.Margin = new System.Windows.Forms.Padding(4);
+            this.picBossBattle.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.picBossBattle.Name = "picBossBattle";
             this.picBossBattle.Size = new System.Drawing.Size(40, 34);
             this.picBossBattle.TabIndex = 7;
@@ -115,27 +115,25 @@
             // 
             // picEnemy
             // 
-            this.picEnemy.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.picEnemy.BackColor = System.Drawing.Color.Transparent;
             this.picEnemy.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.enemy_koolaid;
             this.picEnemy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.picEnemy.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.picEnemy.Location = new System.Drawing.Point(1029, 56);
-            this.picEnemy.Margin = new System.Windows.Forms.Padding(4);
+            this.picEnemy.Location = new System.Drawing.Point(1029, 286);
+            this.picEnemy.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.picEnemy.Name = "picEnemy";
-            this.picEnemy.Size = new System.Drawing.Size(304, 328);
+            this.picEnemy.Size = new System.Drawing.Size(305, 329);
             this.picEnemy.TabIndex = 1;
             this.picEnemy.TabStop = false;
             // 
             // picPlayer
             // 
-            this.picPlayer.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.picPlayer.BackColor = System.Drawing.Color.Transparent;
             this.picPlayer.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.player;
             this.picPlayer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.picPlayer.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.picPlayer.Location = new System.Drawing.Point(13, 56);
-            this.picPlayer.Margin = new System.Windows.Forms.Padding(4);
+            this.picPlayer.Location = new System.Drawing.Point(11, 286);
+            this.picPlayer.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.picPlayer.Name = "picPlayer";
-            this.picPlayer.Size = new System.Drawing.Size(304, 328);
+            this.picPlayer.Size = new System.Drawing.Size(305, 329);
             this.picPlayer.TabIndex = 0;
             this.picPlayer.TabStop = false;
             // 
@@ -148,7 +146,7 @@
             // 
             this.btnFlee.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnFlee.Location = new System.Drawing.Point(1029, 622);
-            this.btnFlee.Margin = new System.Windows.Forms.Padding(4);
+            this.btnFlee.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnFlee.Name = "btnFlee";
             this.btnFlee.Size = new System.Drawing.Size(305, 105);
             this.btnFlee.TabIndex = 8;
@@ -159,24 +157,26 @@
             // textboxChatHistory
             // 
             this.textboxChatHistory.Location = new System.Drawing.Point(325, 6);
+            this.textboxChatHistory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textboxChatHistory.Name = "textboxChatHistory";
-            this.textboxChatHistory.Size = new System.Drawing.Size(697, 657);
+            this.textboxChatHistory.Size = new System.Drawing.Size(697, 658);
             this.textboxChatHistory.TabIndex = 9;
             this.textboxChatHistory.Text = "";
             // 
             // textboxChatInput
             // 
-            this.textboxChatInput.Location = new System.Drawing.Point(325, 669);
+            this.textboxChatInput.Location = new System.Drawing.Point(325, 670);
+            this.textboxChatInput.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textboxChatInput.Name = "textboxChatInput";
-            this.textboxChatInput.Size = new System.Drawing.Size(582, 58);
+            this.textboxChatInput.Size = new System.Drawing.Size(583, 58);
             this.textboxChatInput.TabIndex = 10;
             this.textboxChatInput.Text = "";
             // 
             // btnChat
             // 
             this.btnChat.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnChat.Location = new System.Drawing.Point(914, 669);
-            this.btnChat.Margin = new System.Windows.Forms.Padding(4);
+            this.btnChat.Location = new System.Drawing.Point(915, 670);
+            this.btnChat.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnChat.Name = "btnChat";
             this.btnChat.Size = new System.Drawing.Size(108, 58);
             this.btnChat.TabIndex = 11;
@@ -189,12 +189,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Green;
+            this.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.brick_battleground;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1346, 742);
+            this.ClientSize = new System.Drawing.Size(1347, 742);
+            this.ControlBox = false;
+            this.Controls.Add(this.picBossBattle);
             this.Controls.Add(this.btnChat);
             this.Controls.Add(this.textboxChatInput);
             this.Controls.Add(this.textboxChatHistory);
-            this.Controls.Add(this.picBossBattle);
             this.Controls.Add(this.btnFlee);
             this.Controls.Add(this.lblEnemyHealthFull);
             this.Controls.Add(this.label2);
@@ -203,12 +205,17 @@
             this.Controls.Add(this.btnAttack);
             this.Controls.Add(this.picEnemy);
             this.Controls.Add(this.picPlayer);
+            this.Controls.Add(this.textboxChatHistory);
+            this.Controls.Add(this.textboxChatInput);
+            this.Controls.Add(this.btnChat);
             this.DoubleBuffered = true;
-            this.Margin = new System.Windows.Forms.Padding(4);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FrmBattle";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Fight!";
             this.Click += new System.EventHandler(this.btnChat_Click);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmBattle_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.picBossBattle)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picEnemy)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picPlayer)).EndInit();
@@ -228,7 +235,7 @@
         private System.Windows.Forms.PictureBox picBossBattle;
         private System.Windows.Forms.Timer tmrFinalBattle;
         private System.Windows.Forms.Button btnFlee;
-        private System.Windows.Forms.RichTextBox textboxChatHistory;
+        private CustomTextBox textboxChatHistory;
         private System.Windows.Forms.RichTextBox textboxChatInput;
         private System.Windows.Forms.Button btnChat;
     }
