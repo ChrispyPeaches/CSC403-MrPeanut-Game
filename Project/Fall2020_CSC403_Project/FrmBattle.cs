@@ -14,22 +14,27 @@ namespace Fall2020_CSC403_Project
     public partial class FrmBattle : Form
     {
         public static FrmBattle instance = null;
+        public static FrmBattle instanceForDeath { get; private set; }
         private Enemy enemy = null;
         private Player player = null;
         public string enemyName = "";
         private IOpenAIApi _openAIApi;
         private IList<ChatMessage> chats;
 
+        public static DeathScreen deathScreen = null;
+
         SoundPlayer bossMusic = new SoundPlayer(Resources.boss_music);
         SoundPlayer finalBattleClip = new SoundPlayer(Resources.final_battle);
         SoundPlayer overworldTheme = new SoundPlayer(Resources.overworld_theme);
         SoundPlayer battleMusic = new SoundPlayer(Resources.battle_music);
+        SoundPlayer gameOverTheme = new SoundPlayer(Resources.game_over_theme);
 
         private FrmBattle(IOpenAIApi openAIApi)
         {
             InitializeComponent();
             KeyPreview = true;
             _openAIApi = openAIApi;
+            instanceForDeath = this;
         }
 
         public void Setup()
@@ -182,7 +187,12 @@ namespace Fall2020_CSC403_Project
             }
             else
             {
-                SendKeys.SendWait("{ESC}");
+                FrmLevel frmLevel = FrmLevel.instanceForDeath;
+                frmLevel.Opacity = .01;
+                this.Opacity = 0;
+                gameOverTheme.Play();
+                deathScreen = new DeathScreen();
+                deathScreen.ShowDialog();
             }
         }
 

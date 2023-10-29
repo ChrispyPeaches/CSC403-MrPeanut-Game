@@ -15,16 +15,18 @@ namespace Fall2020_CSC403_Project
     {
         private Character[] walls;
 
-    private Coin coin1;
-    private Coin coin2;
-    private Coin coin3;
-    private Coin coin4;
-    private Coin coin5;
+        private Coin coin1;
+        private Coin coin2;
+        private Coin coin3;
+        private Coin coin4;
+        private Coin coin5;
 
-    private int coinCounter;
+        private int coinCounter;
 
-    private DateTime timeBegin;
-    private FrmBattle frmBattle;
+        private DateTime timeBegin;
+        private FrmBattle frmBattle;
+
+        public static FrmLevel instanceForDeath { get; private set; }
 
         public IOpenAIApi _openAIApi;
 
@@ -37,6 +39,7 @@ namespace Fall2020_CSC403_Project
         {
             InitializeComponent();
             _openAIApi = openAIApi;
+            instanceForDeath = this;
         }
 
         public void ResetMovementBooleans()
