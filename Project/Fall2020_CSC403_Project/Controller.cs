@@ -55,41 +55,6 @@ namespace Fall2020_CSC403_Project
 
     public partial class Controller
     {
-        public class HTTPRequests : Controller
-        {
-            public class OpenAI : HTTPRequests
-            {
-                [Headers("Content-Type: application/json", "Authorization: Bearer ")]
-                public interface IOpenAIApi
-                {
-                    [Post("/v1/chat/completions")]
-                    Task<ChatCompletionResponse> GetChatCompletion(ChatCompletionQuery query);
-                }
-
-                public async Task<string> MakeOpenAIApiRequest()
-                {
-                    return "";
-                }
-
-                public async Task<ChatCompletionQuery> CreateChatCompletionQuery()
-                {
-                    var query = new ChatCompletionQuery();
-                    query.Messages = new List<ChatMessage>();
-                    query.Model = "gpt-3.5-turbo";
-                    return query;
-                }
-
-                public enum RoleType
-                {
-                    System,
-                    User,
-                    Assistant,
-                    Function
-                }
-            }
-        }
-
-
         public class GameData : Controller
         {
             public void SaveData(string pathToFile = "Save Data Name Here")
@@ -109,7 +74,7 @@ namespace Fall2020_CSC403_Project
                         {
                             playerData = new PlayerData
                             {
-                                name = pathToFile,
+                                name = "Mr. Peanut",
                                 MaxHealth = 100,
                                 strength = 5,
                                 Health = 100,
@@ -130,7 +95,7 @@ namespace Fall2020_CSC403_Project
 
                             enemy_poisonpacketData = new EnemyData
                             {
-                                displayName = "Poison Packet",
+                                displayName = "Kool Aid Poison Packet",
                                 defeated = false,
                                 MaxHealth = 75,
                                 strength = 10,
