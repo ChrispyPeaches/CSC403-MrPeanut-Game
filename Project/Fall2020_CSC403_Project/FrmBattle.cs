@@ -18,7 +18,7 @@ namespace Fall2020_CSC403_Project
         private Player player = null;
         public string enemyName = "";
         private IOpenAIApi _openAIApi;
-        private IList<ChatCompletionQuery.ChatMessage> chats;
+        private IList<ChatMessage> chats;
 
         private FrmBattle(IOpenAIApi openAIApi)
         {
@@ -46,11 +46,11 @@ namespace Fall2020_CSC403_Project
             UpdateHealthBars();
 
             // Setup OpenAI
-            chats = new List<ChatCompletionQuery.ChatMessage>()
+            chats = new List<ChatMessage>()
             {
-                new ChatCompletionQuery.ChatMessage()
+                new ChatMessage()
                 {
-                    Role = ChatCompletionQuery.RoleType.System,
+                    Role = RoleType.System,
                     Content = $"We are in a battle to the death." +
                                 $"You are playing the role of {enemy.displayName}. I am playing the role of {Game.Instance.player.Name}." +
                                 $"We will each send one message at a time to create a dialogue. "
@@ -246,9 +246,9 @@ namespace Fall2020_CSC403_Project
                 (combinedString, currentString) =>
                     combinedString = $"{combinedString}\n{currentString}");
 
-            chats.Add(new ChatCompletionQuery.ChatMessage()
+            chats.Add(new ChatMessage()
             {
-                Role = ChatCompletionQuery.RoleType.User,
+                Role = RoleType.User,
                 Content = message
             });
 
@@ -259,9 +259,9 @@ namespace Fall2020_CSC403_Project
             });
 
             // Display enemy's response in chat history
-            chats.Add(new ChatCompletionQuery.ChatMessage()
+            chats.Add(new ChatMessage()
             {
-                Role = ChatCompletionQuery.RoleType.Assistant,
+                Role = RoleType.Assistant,
                 Content = response.Choices.First().Message.Content
             });
 
