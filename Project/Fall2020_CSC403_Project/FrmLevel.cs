@@ -58,7 +58,7 @@ namespace Fall2020_CSC403_Project
             game.enemyCheeto.Position = CreatePosition(picEnemyCheeto);
             game.enemyCheeto.Collider = CreateCollider(picEnemyCheeto, PADDING);
 
-            game.bossKoolaid.Img = picBossKoolAid.BackgroundImage;
+            game.bossKoolaid.Img = picBossKoolAid.Image;
             game.enemyPoisonPacket.Img = picEnemyPoisonPacket.BackgroundImage;
             game.enemyCheeto.Img = picEnemyCheeto.BackgroundImage;
 

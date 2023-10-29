@@ -13,7 +13,7 @@ namespace Fall2020_CSC403_Project.OpenAIApi
         public class Choice
         {
             [JsonProperty("message")]
-            public ChatCompletionQuery.ChatMessage Message { get; set; }
+            public ChatMessage Message { get; set; }
         }
     }
 }
