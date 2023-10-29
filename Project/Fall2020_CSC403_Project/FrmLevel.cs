@@ -163,35 +163,35 @@ namespace Fall2020_CSC403_Project
                 }
             }
 
-            if (HitACoin(player, coin1))
+            if (HitACoin(game.player, coin1))
             {
                 picCoin1.BackgroundImage = Resources.transparent;
                 coin1.Collider = null;
                 coinCounter++;
                 lblCoins.Text = "Coins: " + coinCounter.ToString();
             }
-            if (HitACoin(player, coin2))
+            if (HitACoin(game.player, coin2))
             {
                 picCoin2.BackgroundImage = Resources.transparent;
                 coin2.Collider = null;
                 coinCounter++;
                 lblCoins.Text = "Coins: " + coinCounter.ToString();
             }
-            if (HitACoin(player, coin3))
+            if (HitACoin(game.player, coin3))
             {
                 picCoin3.BackgroundImage = Resources.transparent;
                 coin3.Collider = null;
                 coinCounter++;
                 lblCoins.Text = "Coins: " + coinCounter.ToString();
             }
-            if (HitACoin(player, coin4))
+            if (HitACoin(game.player, coin4))
             {
                 picCoin4.BackgroundImage = Resources.transparent;
                 coin4.Collider = null;
                 coinCounter++;
                 lblCoins.Text = "Coins: " + coinCounter.ToString();
             }
-            if (HitACoin(player, coin5))
+            if (HitACoin(game.player, coin5))
             {
                 picCoin5.BackgroundImage = Resources.transparent;
                 coin5.Collider = null;
