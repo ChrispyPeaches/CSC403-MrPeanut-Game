@@ -20,6 +20,11 @@ namespace Fall2020_CSC403_Project
         private IOpenAIApi _openAIApi;
         private IList<ChatMessage> chats;
 
+        SoundPlayer bossMusic = new SoundPlayer(Resources.boss_music);
+        SoundPlayer finalBattleClip = new SoundPlayer(Resources.final_battle);
+        SoundPlayer overworldTheme = new SoundPlayer(Resources.overworld_theme);
+        SoundPlayer battleMusic = new SoundPlayer(Resources.battle_music);
+
         private FrmBattle(IOpenAIApi openAIApi)
         {
             InitializeComponent();
@@ -31,6 +36,9 @@ namespace Fall2020_CSC403_Project
         {
             Game game = Game.Instance;
             Player player = game.player;
+
+            // play battle music
+            battleMusic.PlayLooping();
 
             // update for this enemy
             picEnemy.BackgroundImage = enemy.Img;
@@ -63,10 +71,7 @@ namespace Fall2020_CSC403_Project
             picBossBattle.Location = Point.Empty;
             picBossBattle.Size = ClientSize;
             picBossBattle.Visible = true;
-
-            SoundPlayer simpleSound = new SoundPlayer(Resources.final_battle);
-            simpleSound.Play();
-
+            finalBattleClip.Play();
             tmrFinalBattle.Enabled = true;
         }
 
@@ -197,6 +202,7 @@ namespace Fall2020_CSC403_Project
         {
             picBossBattle.Visible = false;
             tmrFinalBattle.Enabled = false;
+            bossMusic.PlayLooping();
         }
 
         private void btnFlee_Click(object sender, EventArgs e)
@@ -223,6 +229,7 @@ namespace Fall2020_CSC403_Project
                 await Task.Delay(50);
                 player.ResetMoveSpeed();
                 // battle instance
+                overworldTheme.PlayLooping();
                 instance = null;
                 Close();
             }

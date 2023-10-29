@@ -2,10 +2,12 @@
 using Fall2020_CSC403_Project.OpenAIApi;
 using Fall2020_CSC403_Project.Properties;
 using System;
+using System.Media;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using static Fall2020_CSC403_Project.OpenAIApi.ChatCompletionQuery;
+using Fall2020_CSC403_Project.Properties;
 
 namespace Fall2020_CSC403_Project
 {
@@ -51,6 +53,8 @@ namespace Fall2020_CSC403_Project
             const int NUM_WALLS = 13;
 
             Game game = Game.Instance;
+            SoundPlayer overworldTheme = new SoundPlayer(Resources.overworld_theme);
+            overworldTheme.PlayLooping();
 
             coin1 = new Coin(CreatePosition(picCoin1), CreateCollider(picCoin1, PADDING));
             coin2 = new Coin(CreatePosition(picCoin2), CreateCollider(picCoin2, PADDING));

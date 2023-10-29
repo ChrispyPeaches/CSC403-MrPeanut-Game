@@ -180,6 +180,15 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="data\overworld_theme.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\boss_music.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\battle_music.wav" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="data\brick_main_background.jpg" />
   </ItemGroup>
   <ItemGroup>
