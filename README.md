@@ -5,24 +5,12 @@
 
 # CSC 403 002 - Fall 2023 (Software Design And Engineering)
 
-## Navigation
-
-<details open="open">
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#links">Links</a>
-    </li>
-    <li>
-      <a href="#contributors">Contributors</a>
-    </li>
-  </ol>
-</details>
-
 ## Links
 
 [Sprint Planning Spreadsheet Link](
 https://docs.google.com/spreadsheets/d/1GzQstlgXm6m5HMJf4LhcsFIQ4RywcgLOGv2dTBg9hO0/edit?usp=sharing)
+
+[Wiki Documentation](https://github.com/ChrispyPeaches/Fall2020_CSC403_Project/wiki)
 
 ## Contributors
 <a href="https://github.com/wesleypayton">
