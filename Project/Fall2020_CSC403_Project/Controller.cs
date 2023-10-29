@@ -36,6 +36,7 @@ namespace Fall2020_CSC403_Project
         public float strength { get; set; }
         public int Health { get; set; }
         public PositionData Position { get; set; }
+        public int coinCounter { get; set; }
     }
 
     public class EnemyData
@@ -83,7 +84,8 @@ namespace Fall2020_CSC403_Project
                                 {
                                     x = 300,
                                     y = 600
-                                }
+                                },
+                                coinCounter = 0,
                             },
                             enemy_koolaidData = new EnemyData
                             {
@@ -149,7 +151,8 @@ namespace Fall2020_CSC403_Project
                             {
                                 x = player.Position.x,
                                 y = player.Position.y
-                            }
+                            },
+                            coinCounter = player.coinCounter,
                         },
 
                         enemy_koolaidData = new EnemyData

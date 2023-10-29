@@ -8,6 +8,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using static Fall2020_CSC403_Project.OpenAIApi.ChatCompletionQuery;
 using Fall2020_CSC403_Project.Properties;
+using System.Numerics;
+using Vector2 = Fall2020_CSC403_Project.code.Vector2;
 
 namespace Fall2020_CSC403_Project
 {
@@ -20,8 +22,6 @@ namespace Fall2020_CSC403_Project
         private Coin coin3;
         private Coin coin4;
         private Coin coin5;
-
-        private int coinCounter;
 
         private DateTime timeBegin;
         private FrmBattle frmBattle;
@@ -75,6 +75,8 @@ namespace Fall2020_CSC403_Project
             {
                 System.Environment.Exit(0);
             }
+
+            lblCoins.Text = "Coins: " + Game.Instance.player.coinCounter.ToString();
 
             game.player.Position = CreatePosition(picPlayer);
             game.player.Collider = CreateCollider(picPlayer, PADDING);
@@ -174,36 +176,36 @@ namespace Fall2020_CSC403_Project
             {
                 picCoin1.BackgroundImage = Resources.transparent;
                 coin1.Collider = null;
-                coinCounter++;
-                lblCoins.Text = "Coins: " + coinCounter.ToString();
+                Game.Instance.player.coinCounter++;
+                lblCoins.Text = "Coins: " + Game.Instance.player.coinCounter.ToString();
             }
             if (HitACoin(game.player, coin2))
             {
                 picCoin2.BackgroundImage = Resources.transparent;
                 coin2.Collider = null;
-                coinCounter++;
-                lblCoins.Text = "Coins: " + coinCounter.ToString();
+                Game.Instance.player.coinCounter++;
+                lblCoins.Text = "Coins: " + Game.Instance.player.coinCounter.ToString();
             }
             if (HitACoin(game.player, coin3))
             {
                 picCoin3.BackgroundImage = Resources.transparent;
                 coin3.Collider = null;
-                coinCounter++;
-                lblCoins.Text = "Coins: " + coinCounter.ToString();
+                Game.Instance.player.coinCounter++;
+                lblCoins.Text = "Coins: " + Game.Instance.player.coinCounter.ToString();
             }
             if (HitACoin(game.player, coin4))
             {
                 picCoin4.BackgroundImage = Resources.transparent;
                 coin4.Collider = null;
-                coinCounter++;
-                lblCoins.Text = "Coins: " + coinCounter.ToString();
+                Game.Instance.player.coinCounter++;
+                lblCoins.Text = "Coins: " + Game.Instance.player.coinCounter.ToString();
             }
             if (HitACoin(game.player, coin5))
             {
                 picCoin5.BackgroundImage = Resources.transparent;
                 coin5.Collider = null;
-                coinCounter++;
-                lblCoins.Text = "Coins: " + coinCounter.ToString();
+                Game.Instance.player.coinCounter++;
+                lblCoins.Text = "Coins: " + Game.Instance.player.coinCounter.ToString();
             }
 
             // update player's picture box
