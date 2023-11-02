@@ -109,7 +109,7 @@ namespace Fall2020_CSC403_Project
 
         private static Vector2 CreatePosition(PictureBox pic)
         {
-            return new Vector2(pic.Location.X, pic.Location.Y);
+            return new Vector2(Game.instance.player.Position.x, Game.instance.player.Position.y);
         }
 
         private Collider CreateCollider(PictureBox pic, int padding)
