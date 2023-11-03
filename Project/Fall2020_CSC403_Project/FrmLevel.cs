@@ -58,6 +58,8 @@ namespace Fall2020_CSC403_Project
             Game game = Game.Instance;
             SoundPlayer overworldTheme = new SoundPlayer(Resources.overworld_theme);
             overworldTheme.PlayLooping();
+            // DungeonRoom currentRoom = GetCurrentRoom();
+            // LoadRoom(currentRoom);
 
             coin1 = new Coin(CreatePosition(picCoin1), CreateCollider(picCoin1, PADDING));
             coin2 = new Coin(CreatePosition(picCoin2), CreateCollider(picCoin2, PADDING));

@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dungeon.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="DeathScreen.cs">
       <SubType>Form</SubType>
