@@ -82,8 +82,8 @@ namespace Fall2020_CSC403_Project
                                 Health = 100,
                                 Position = new PositionData
                                 {
-                                    x = 300,
-                                    y = 600
+                                    x = 200,
+                                    y = 525
                                 },
                                 coinCounter = 0,
                             },
