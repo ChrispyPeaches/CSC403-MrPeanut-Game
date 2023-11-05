@@ -217,6 +217,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\brick_main_background.jpg" />
+    <None Include="data\raw images\exit_sign.png" />
     <None Include="data\raw images\skyrim_helmet.png" />
     <None Include="data\raw images\hat_foam.png" />
     <None Include="data\raw images\down_arrow.png" />

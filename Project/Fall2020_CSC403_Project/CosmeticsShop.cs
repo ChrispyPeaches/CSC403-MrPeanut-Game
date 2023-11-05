@@ -52,6 +52,14 @@ namespace Fall2020_CSC403_Project
         }
 
         /// <summary>
+        /// Display the player image with the new cosmetics
+        /// </summary>
+        private void RedrawPlayer()
+        {
+
+        }
+
+        /// <summary>
         /// When the up arrow is clicked, show the last hat in the list with wraparound indexing
         /// </summary>
         private void btnUpArrow_Click(object sender, EventArgs e)
@@ -63,6 +71,7 @@ namespace Fall2020_CSC403_Project
             }
             currentHatsIndex = currentHatsIndex % hats.Count;
             DisplayCurrentHat();
+            RedrawPlayer();
         }
 
         /// <summary>
@@ -73,6 +82,15 @@ namespace Fall2020_CSC403_Project
             currentHatsIndex++;
             currentHatsIndex = currentHatsIndex % hats.Count;
             DisplayCurrentHat();
+            RedrawPlayer();
+        }
+
+        /// <summary>
+        /// Close the form
+        /// </summary>
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
