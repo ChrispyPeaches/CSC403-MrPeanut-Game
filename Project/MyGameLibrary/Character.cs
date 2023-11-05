@@ -15,7 +15,7 @@ namespace Fall2020_CSC403_Project.code
         public Collider Collider { get; set; }
         public Character(Vector2 initPos, Collider collider)
         {
-            this.Position = initPos;
+            this.Position = this.Position;
             this.Collider = collider;
             this.MoveSpeed = new Vector2(0, 0);
         }

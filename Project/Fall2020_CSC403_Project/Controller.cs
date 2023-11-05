@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Net.Http;
 using System.Numerics;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 using static Fall2020_CSC403_Project.OpenAIApi.ChatCompletionQuery;
@@ -35,6 +36,7 @@ namespace Fall2020_CSC403_Project
         public float strength { get; set; }
         public int Health { get; set; }
         public PositionData Position { get; set; }
+        public int coinCounter { get; set; }
     }
 
     public class EnemyData
@@ -74,15 +76,16 @@ namespace Fall2020_CSC403_Project
                         {
                             playerData = new PlayerData
                             {
-                                name = "Mr. Peanut",
+                                name = pathToFile,
                                 MaxHealth = 100,
                                 strength = 5,
                                 Health = 100,
                                 Position = new PositionData
                                 {
-                                    x = 300,
-                                    y = 600
-                                }
+                                    x = 200,
+                                    y = 525
+                                },
+                                coinCounter = 0,
                             },
                             enemy_koolaidData = new EnemyData
                             {
@@ -129,6 +132,8 @@ namespace Fall2020_CSC403_Project
 
             public void UpdateData(string pathToFile = "Save Data Name Here")
             {
+                string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+                string saveDirectory = Path.Combine(appDirectory, "..", "..", "Saves", pathToFile + ".json");
                 try
                 {
                     Game game = Game.Instance;
@@ -146,7 +151,8 @@ namespace Fall2020_CSC403_Project
                             {
                                 x = player.Position.x,
                                 y = player.Position.y
-                            }
+                            },
+                            coinCounter = player.coinCounter,
                         },
 
                         enemy_koolaidData = new EnemyData
@@ -177,7 +183,7 @@ namespace Fall2020_CSC403_Project
                         }
                     };
                     string jsonSaveData = JsonConvert.SerializeObject(updatedSave);
-                    File.WriteAllText(pathToFile, jsonSaveData);
+                    File.WriteAllText(saveDirectory, jsonSaveData, Encoding.UTF8);
                 }
                 catch (Exception ex)
                 {

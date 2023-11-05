@@ -47,7 +47,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dungeon.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="DeathScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DeathScreen.Designer.cs">
+      <DependentUpon>DeathScreen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CosmeticsShop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CosmeticsShop.Designer.cs">
+      <DependentUpon>CosmeticsShop.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\CosmeticsResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CosmeticsResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="QuickStartMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,6 +108,12 @@
     <Compile Include="SavesSelect.Designer.cs">
       <DependentUpon>SavesSelect.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="DeathScreen.resx">
+      <DependentUpon>DeathScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CosmeticsShop.resx">
+      <DependentUpon>CosmeticsShop.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FrmBattle.resx">
       <DependentUpon>FrmBattle.cs</DependentUpon>
     </EmbeddedResource>
@@ -99,6 +123,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\CosmeticsResources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CosmeticsResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -153,7 +181,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="code\" />
-    <Folder Include="Resources\" />
     <Folder Include="Saves\" />
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +188,15 @@
       <Project>{F1E60F80-1868-4FE5-991B-FDDCFAF9B16B}</Project>
       <Name>MyGameLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\coin.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\coin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\transparent.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Refit">
@@ -171,7 +207,25 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="data\overworld_theme.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\boss_music.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\battle_music.wav" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="data\brick_main_background.jpg" />
+    <None Include="data\raw images\exit_sign.png" />
+    <None Include="data\raw images\skyrim_helmet.png" />
+    <None Include="data\raw images\hat_foam.png" />
+    <None Include="data\raw images\down_arrow.png" />
+    <None Include="data\raw images\up_arrow.png" />
+    <None Include="data\raw images\foam_hat.png" />
+    <None Include="data\shopkeeper_background.png" />
+    <None Include="data\game_over_theme.wav" />
+    <None Include="data\game_over.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\brick_battleground.png" />

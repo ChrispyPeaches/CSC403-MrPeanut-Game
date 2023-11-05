@@ -27,8 +27,7 @@ namespace Fall2020_CSC403_Project
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string savesDirectory = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "..", "..", "Saves");
-            string fileName = Game.Instance.player.Name + ".json";
+            string fileName = Game.Instance.player.Name;
             gameData.UpdateData(fileName);
             this.Close();
         }

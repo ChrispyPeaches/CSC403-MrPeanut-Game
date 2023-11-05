@@ -54,12 +54,8 @@ namespace Fall2020_CSC403_Project.code
             this.IsKoolAidDefeated = (bool)koolAidData["defeated"];
             this.IsPoisonPacketDefeated = (bool)poisonPacketData["defeated"];
             this.IsCheetosDefeated = (bool)cheetosData["defeated"];
-
-            float playerPosX = playerData["Position"].Value<float>("x");
-            float playerPosY = playerData["Position"].Value<float>("y");
-            Vector2 playerPosition = new Vector2(playerPosX, playerPosY);
-
-            player = new Player(playerPosition, null, playerData);
+            
+            player = new Player(new Vector2(0, 0), null, playerData);
             bossKoolaid = new Enemy("enemy_koolaid", new Vector2(0, 0), null, koolAidData);
             enemyPoisonPacket = new Enemy("enemy_poisonpacket", new Vector2(0, 0), null, poisonPacketData);
             enemyCheeto = new Enemy("enemy_cheetos", new Vector2(0, 0), null, cheetosData);

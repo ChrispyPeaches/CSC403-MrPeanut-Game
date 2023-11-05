@@ -67,12 +67,12 @@ namespace Fall2020_CSC403_Project
         private void InitializeForNewSave()
         {
             Label lblNewFileName = new Label();
-            lblNewFileName.Text = "Enter a new file name:";
+            lblNewFileName.Text = "Hero Name:";
             lblNewFileName.Location = new Point(10, 10);
             txtNewFileName = new TextBox();  
             txtNewFileName.Location = new Point(10, 40);
             Button btnCreateNewSave = new Button();
-            btnCreateNewSave.Text = "Create New Save";
+            btnCreateNewSave.Text = "Create Save";
             btnCreateNewSave.Location = new Point(10, 70);
             btnCreateNewSave.Click += BtnCreateNewSave_Click;
             Controls.Add(lblNewFileName);

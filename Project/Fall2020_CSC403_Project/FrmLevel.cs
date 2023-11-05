@@ -1,18 +1,33 @@
 ﻿using Fall2020_CSC403_Project.code;
 using Fall2020_CSC403_Project.OpenAIApi;
+using Fall2020_CSC403_Project.Properties;
 using System;
+using System.Media;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using static Fall2020_CSC403_Project.OpenAIApi.ChatCompletionQuery;
+using Fall2020_CSC403_Project.Properties;
+using System.Numerics;
+using Vector2 = Fall2020_CSC403_Project.code.Vector2;
 
 namespace Fall2020_CSC403_Project
 {
     public partial class FrmLevel : Form
     {
         private Character[] walls;
+
+        private Coin coin1;
+        private Coin coin2;
+        private Coin coin3;
+        private Coin coin4;
+        private Coin coin5;
+
         private DateTime timeBegin;
         private FrmBattle frmBattle;
+
+        public static FrmLevel instanceForDeath { get; private set; }
+
         public IOpenAIApi _openAIApi;
 
         private bool isUpPressed = false;
@@ -24,6 +39,7 @@ namespace Fall2020_CSC403_Project
         {
             InitializeComponent();
             _openAIApi = openAIApi;
+            instanceForDeath = this;
         }
 
         public void ResetMovementBooleans()
@@ -40,11 +56,29 @@ namespace Fall2020_CSC403_Project
             const int NUM_WALLS = 13;
 
             Game game = Game.Instance;
+            SoundPlayer overworldTheme = new SoundPlayer(Resources.overworld_theme);
+            overworldTheme.PlayLooping();
+            // DungeonRoom currentRoom = GetCurrentRoom();
+            // LoadRoom(currentRoom);
+
+            coin1 = new Coin(CreatePosition(picCoin1), CreateCollider(picCoin1, PADDING));
+            coin2 = new Coin(CreatePosition(picCoin2), CreateCollider(picCoin2, PADDING));
+            coin3 = new Coin(CreatePosition(picCoin3), CreateCollider(picCoin3, PADDING));
+            coin4 = new Coin(CreatePosition(picCoin4), CreateCollider(picCoin4, PADDING));
+            coin5 = new Coin(CreatePosition(picCoin5), CreateCollider(picCoin5, PADDING));
+
+            coin1.Img = picCoin1.BackgroundImage;
+            coin2.Img = picCoin2.BackgroundImage;
+            coin3.Img = picCoin3.BackgroundImage;
+            coin4.Img = picCoin4.BackgroundImage;
+            coin5.Img = picCoin5.BackgroundImage;
 
             if (game == null)
             {
                 System.Environment.Exit(0);
             }
+
+            lblCoins.Text = "Coins: " + Game.Instance.player.coinCounter.ToString();
 
             game.player.Position = CreatePosition(picPlayer);
             game.player.Collider = CreateCollider(picPlayer, PADDING);
@@ -77,7 +111,7 @@ namespace Fall2020_CSC403_Project
 
         private static Vector2 CreatePosition(PictureBox pic)
         {
-            return new Vector2(pic.Location.X, pic.Location.Y);
+            return new Vector2(Game.instance.player.Position.x, Game.instance.player.Position.y);
         }
 
         private Collider CreateCollider(PictureBox pic, int padding)
@@ -140,6 +174,42 @@ namespace Fall2020_CSC403_Project
                 }
             }
 
+            if (HitACoin(game.player, coin1))
+            {
+                picCoin1.BackgroundImage = Resources.transparent;
+                coin1.Collider = null;
+                Game.Instance.player.coinCounter++;
+                lblCoins.Text = "Coins: " + Game.Instance.player.coinCounter.ToString();
+            }
+            if (HitACoin(game.player, coin2))
+            {
+                picCoin2.BackgroundImage = Resources.transparent;
+                coin2.Collider = null;
+                Game.Instance.player.coinCounter++;
+                lblCoins.Text = "Coins: " + Game.Instance.player.coinCounter.ToString();
+            }
+            if (HitACoin(game.player, coin3))
+            {
+                picCoin3.BackgroundImage = Resources.transparent;
+                coin3.Collider = null;
+                Game.Instance.player.coinCounter++;
+                lblCoins.Text = "Coins: " + Game.Instance.player.coinCounter.ToString();
+            }
+            if (HitACoin(game.player, coin4))
+            {
+                picCoin4.BackgroundImage = Resources.transparent;
+                coin4.Collider = null;
+                Game.Instance.player.coinCounter++;
+                lblCoins.Text = "Coins: " + Game.Instance.player.coinCounter.ToString();
+            }
+            if (HitACoin(game.player, coin5))
+            {
+                picCoin5.BackgroundImage = Resources.transparent;
+                coin5.Collider = null;
+                Game.Instance.player.coinCounter++;
+                lblCoins.Text = "Coins: " + Game.Instance.player.coinCounter.ToString();
+            }
+
             // update player's picture box
             picPlayer.Location = new Point((int)game.player.Position.x, (int)game.player.Position.y);
         }
@@ -161,6 +231,11 @@ namespace Fall2020_CSC403_Project
         private bool HitAChar(Character you, Character other)
         {
             return you.Collider.Intersects(other.Collider);
+        }
+
+        private bool HitACoin(Character character, Coin coin)
+        {
+            return character.Collider.Intersects(coin.Collider);
         }
 
         private void Fight(Enemy enemy)

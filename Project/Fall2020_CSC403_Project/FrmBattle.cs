@@ -14,23 +14,36 @@ namespace Fall2020_CSC403_Project
     public partial class FrmBattle : Form
     {
         public static FrmBattle instance = null;
+        public static FrmBattle instanceForDeath { get; private set; }
         private Enemy enemy = null;
         private Player player = null;
         public string enemyName = "";
         private IOpenAIApi _openAIApi;
         private IList<ChatMessage> chats;
 
+        public static DeathScreen deathScreen = null;
+
+        SoundPlayer bossMusic = new SoundPlayer(Resources.boss_music);
+        SoundPlayer finalBattleClip = new SoundPlayer(Resources.final_battle);
+        SoundPlayer overworldTheme = new SoundPlayer(Resources.overworld_theme);
+        SoundPlayer battleMusic = new SoundPlayer(Resources.battle_music);
+        SoundPlayer gameOverTheme = new SoundPlayer(Resources.game_over_theme);
+
         private FrmBattle(IOpenAIApi openAIApi)
         {
             InitializeComponent();
             KeyPreview = true;
             _openAIApi = openAIApi;
+            instanceForDeath = this;
         }
 
         public void Setup()
         {
             Game game = Game.Instance;
             Player player = game.player;
+
+            // play battle music
+            battleMusic.PlayLooping();
 
             // update for this enemy
             picEnemy.BackgroundImage = enemy.Img;
@@ -63,10 +76,7 @@ namespace Fall2020_CSC403_Project
             picBossBattle.Location = Point.Empty;
             picBossBattle.Size = ClientSize;
             picBossBattle.Visible = true;
-
-            SoundPlayer simpleSound = new SoundPlayer(Resources.final_battle);
-            simpleSound.Play();
-
+            finalBattleClip.Play();
             tmrFinalBattle.Enabled = true;
         }
 
@@ -80,13 +90,7 @@ namespace Fall2020_CSC403_Project
                 instance.enemyName = enemy.Name;
                 instance.Setup();
             }
-            if (instance.IsDisposed)
-            {
-                instance = new FrmBattle(openAIApi);
-                instance.enemy = enemy;
-                instance.enemyName = enemy.Name;
-                instance.Setup();
-            }
+
             return instance;
         }
 
@@ -175,7 +179,12 @@ namespace Fall2020_CSC403_Project
             }
             else
             {
-                SendKeys.SendWait("{ESC}");
+                FrmLevel frmLevel = FrmLevel.instanceForDeath;
+                frmLevel.Opacity = .01;
+                this.Opacity = 0;
+                gameOverTheme.Play();
+                deathScreen = new DeathScreen();
+                deathScreen.ShowDialog();
             }
         }
 
@@ -195,6 +204,7 @@ namespace Fall2020_CSC403_Project
         {
             picBossBattle.Visible = false;
             tmrFinalBattle.Enabled = false;
+            bossMusic.PlayLooping();
         }
 
         private void btnFlee_Click(object sender, EventArgs e)
@@ -221,6 +231,7 @@ namespace Fall2020_CSC403_Project
                 await Task.Delay(50);
                 player.ResetMoveSpeed();
                 // battle instance
+                overworldTheme.PlayLooping();
                 instance = null;
                 Close();
             }

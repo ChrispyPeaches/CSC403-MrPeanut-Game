@@ -12,25 +12,23 @@ namespace Fall2020_CSC403_Project
 {
     public partial class CustomTextBox : RichTextBox
     {
-        // Adjust the alpha value (0-255) for the desired opacity
-        private Color semiTransparentColor = Color.FromArgb(128, Color.Transparent);
+        private const int WS_EX_TRANSPARENT = 0x20;
 
         public CustomTextBox()
         {
-            InitializeComponent();
-            SetStyle(ControlStyles.SupportsTransparentBackColor |
-                 ControlStyles.OptimizedDoubleBuffer |
-                 ControlStyles.AllPaintingInWmPaint |
-                 ControlStyles.ResizeRedraw |
-                 ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
             BackColor = Color.Transparent;
+            ForeColor = Color.White;
         }
-        protected override void OnPaintBackground(PaintEventArgs e)
+
+        // Set background as transparent
+        protected override CreateParams CreateParams
         {
-            base.OnPaintBackground(e);
-            using (SolidBrush semiTransparentBrush = new SolidBrush(semiTransparentColor))
+            get
             {
-                e.Graphics.FillRectangle(semiTransparentBrush, this.ClientRectangle);
+                CreateParams cp = base.CreateParams;
+                cp.ExStyle |= WS_EX_TRANSPARENT;
+                return cp;
             }
         }
     }
