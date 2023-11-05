@@ -55,6 +55,12 @@
     <Compile Include="DeathScreen.Designer.cs">
       <DependentUpon>DeathScreen.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
     <Compile Include="QuickStartMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,6 +105,9 @@
     </Compile>
     <EmbeddedResource Include="DeathScreen.resx">
       <DependentUpon>DeathScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmBattle.resx">
       <DependentUpon>FrmBattle.cs</DependentUpon>
@@ -199,6 +208,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\brick_main_background.jpg" />
+    <None Include="data\raw images\down_arrow.png" />
+    <None Include="data\raw images\up_arrow.png" />
+    <None Include="data\raw images\foam_hat.png" />
+    <None Include="data\shopkeeper_background.png" />
     <None Include="data\game_over_theme.wav" />
     <None Include="data\game_over.png" />
   </ItemGroup>
