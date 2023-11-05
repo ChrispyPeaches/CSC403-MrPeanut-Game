@@ -160,16 +160,6 @@ namespace Fall2020_CSC403_Project.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap foam_hat {
-            get {
-                object obj = ResourceManager.GetObject("foam_hat", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap game_over {
             get {
                 object obj = ResourceManager.GetObject("game_over", resourceCulture);
