@@ -23,10 +23,10 @@ namespace Fall2020_CSC403_Project
     // models to format any jsons from requests, etc
     public class SaveData
     {
+        public Dungeon dungeon { get; set; }
+        public int width { get; set; }
+        public int height { get; set; }
         public PlayerData playerData { get; set; }
-        public EnemyData enemy_koolaidData { get; set; }
-        public EnemyData enemy_poisonpacketData { get; set; }
-        public EnemyData enemy_cheetosData { get; set; }
     }
 
     public class PlayerData
@@ -72,8 +72,15 @@ namespace Fall2020_CSC403_Project
                     string saveFilePath = Path.Combine(savesDirectoryPath, pathToFile + ".json");
                     if (!File.Exists(saveFilePath))
                     {
+                        // dungeon size
+                        Random random = new Random();
+                        int dungeonSize = random.Next(5, 10);
+
                         SaveData defaultSave = new SaveData
                         {
+                            dungeon = new Dungeon(dungeonSize),
+                            width = dungeonSize,
+                            height = dungeonSize,
                             playerData = new PlayerData
                             {
                                 name = pathToFile,
@@ -86,32 +93,6 @@ namespace Fall2020_CSC403_Project
                                     y = 525
                                 },
                                 coinCounter = 0,
-                            },
-                            enemy_koolaidData = new EnemyData
-                            {
-                                displayName = "Kool Aid Man",
-                                defeated = false,
-                                MaxHealth = 150,
-                                strength = 15,
-                                Health = 150,
-                            },
-
-                            enemy_poisonpacketData = new EnemyData
-                            {
-                                displayName = "Kool Aid Poison Packet",
-                                defeated = false,
-                                MaxHealth = 75,
-                                strength = 10,
-                                Health = 75,
-                            },
-
-                            enemy_cheetosData = new EnemyData
-                            {
-                                displayName = "Violent Cheeto",
-                                defeated = false,
-                                MaxHealth = 50,
-                                strength = 8,
-                                Health = 50,
                             }
                         };
 
@@ -134,6 +115,7 @@ namespace Fall2020_CSC403_Project
             {
                 string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
                 string saveDirectory = Path.Combine(appDirectory, "..", "..", "Saves", pathToFile + ".json");
+
                 try
                 {
                     Game game = Game.Instance;
@@ -154,33 +136,6 @@ namespace Fall2020_CSC403_Project
                             },
                             coinCounter = player.coinCounter,
                         },
-
-                        enemy_koolaidData = new EnemyData
-                        {
-                            displayName = game.bossKoolaid.displayName,
-                            defeated = game.IsKoolAidDefeated,
-                            MaxHealth = game.bossKoolaid.MaxHealth,
-                            strength = game.bossKoolaid.strength,
-                            Health = game.bossKoolaid.Health,
-                        },
-
-                        enemy_poisonpacketData = new EnemyData
-                        {
-                            displayName = game.enemyPoisonPacket.displayName,
-                            defeated = game.IsPoisonPacketDefeated,
-                            MaxHealth = game.enemyPoisonPacket.MaxHealth,
-                            strength = game.enemyPoisonPacket.strength,
-                            Health = game.enemyPoisonPacket.Health,
-                        },
-
-                        enemy_cheetosData = new EnemyData
-                        {
-                            displayName = game.enemyCheeto.displayName,
-                            defeated = game.IsCheetosDefeated,
-                            MaxHealth = game.enemyCheeto.MaxHealth,
-                            strength = game.enemyCheeto.strength,
-                            Health = game.enemyCheeto.Health,
-                        }
                     };
                     string jsonSaveData = JsonConvert.SerializeObject(updatedSave);
                     File.WriteAllText(saveDirectory, jsonSaveData, Encoding.UTF8);

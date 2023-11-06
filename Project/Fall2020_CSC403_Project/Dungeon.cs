@@ -1,35 +1,36 @@
-﻿using System;
+﻿using Fall2020_CSC403_Project.code;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using static Fall2020_CSC403_Project.code.Game;
 
 namespace Fall2020_CSC403_Project
 {
-    public class DungeonRoom
+    public class DungeonRoom: code.DungeonRoom
     {
         public bool northDoor { get; set; }
         public bool eastDoor { get; set; }
         public bool southDoor { get; set; }
         public bool westDoor { get; set; }
-        public List<DungeonEnemyData> Enemies { get; set; }
-        public List<DungeonCoin> Coins { get; set; }
+        public List<IDungeonEnemyData> Enemies { get; set; }
+        public List<IDungeonCoin> Coins { get; set; }
         public bool visited { get; set; }
-        public DungeonPositionData TopLeft { get; set; }
-        public DungeonPositionData TopRight { get; set; }
-        public DungeonPositionData BottomLeft { get; set; }
-        public DungeonPositionData BottomRight { get; set; }
+        public IDungeonPositionData TopLeft { get; set; }
+        public IDungeonPositionData TopRight { get; set; }
+        public IDungeonPositionData BottomLeft { get; set; }
+        public IDungeonPositionData BottomRight { get; set; }
     }
 
-    public class DungeonCoin
+    public class DungeonCoin: IDungeonCoin
     {
         public float Amount { get; set; }
         public string Image { get; set; }
-        public DungeonPositionData Position { get; set; }
+        public IDungeonPositionData Position { get; set; }
     }
 
-    public class DungeonEnemyData
+    public class DungeonEnemyData: IDungeonEnemyData
     {
         public string displayName { get; set; }
         public bool defeated { get; set; }
@@ -37,10 +38,10 @@ namespace Fall2020_CSC403_Project
         public float strength { get; set; }
         public int Health { get; set; }
         public string image { get; set; }
-        public DungeonPositionData Position { get; set; }
+        public IDungeonPositionData Position { get; set; }
     }
 
-    public class DungeonPositionData
+    public class DungeonPositionData : IDungeonPositionData
     {
         public float x { get; set; }
         public float y { get; set; }
@@ -76,8 +77,8 @@ namespace Fall2020_CSC403_Project
                         eastDoor = false,
                         southDoor = false,
                         westDoor = false,
-                        Enemies = new List<DungeonEnemyData>(),
-                        Coins = new List<DungeonCoin>(),
+                        Enemies = new List<IDungeonEnemyData>(),
+                        Coins = new List<IDungeonCoin>(),
                         visited = false,
                     };
                     float roomLeft = i * (roomWidth + padding);
@@ -195,11 +196,11 @@ namespace Fall2020_CSC403_Project
             {
                 // for random health
                 int randomHealth = new Random().Next(3, 21);
-                int roundedHealth = (int)(Math.Floor(randomHealth / 10.0) * 10);
+                int roundedHealth = (int)(Math.Floor(randomHealth / 1.0) * 10);
 
                 // for random strength
                 int randomStrength = new Random().Next(3, 8);
-                int roundedStrength = (int)(Math.Floor(randomStrength / 10.0) * 10);
+                int roundedStrength = (int)(Math.Floor(randomStrength / 1.0) * 10);
 
                 // for random indexing
                 int randomIndex = new Random().Next(enemyImages.Count);
