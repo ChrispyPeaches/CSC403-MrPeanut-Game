@@ -51,8 +51,8 @@ namespace Fall2020_CSC403_Project
     {
         public DungeonRoom[,] DungeonRooms { get; set; }
         private int N;
-        private int roomWidth = 600;
-        private int roomHeight = 800;
+        private int roomWidth = 800;
+        private int roomHeight = 1000;
         private int padding = 7;
         List<string> enemyImages = new List<string>
         {
@@ -83,13 +83,11 @@ namespace Fall2020_CSC403_Project
                     };
                     float roomLeft = i * (roomWidth + padding);
                     float roomTop = j * (roomHeight + padding);
-                    float roomRight = roomLeft + roomWidth;
-                    float roomBottom = roomTop + roomHeight;
 
                     room.TopLeft = new DungeonPositionData { x = roomLeft, y = roomTop };
-                    room.TopRight = new DungeonPositionData { x = roomRight, y = roomTop };
-                    room.BottomLeft = new DungeonPositionData { x = roomLeft, y = roomBottom };
-                    room.BottomRight = new DungeonPositionData { x = roomRight, y = roomBottom };
+                    room.TopRight = new DungeonPositionData { x = roomLeft + roomWidth, y = roomTop };
+                    room.BottomLeft = new DungeonPositionData { x = roomLeft, y = roomTop + roomHeight };
+                    room.BottomRight = new DungeonPositionData { x = roomLeft + roomWidth, y = roomTop + roomHeight };
 
                     GenerateRandomEnemies(room);
                     GenerateRandomCoins(room);
@@ -191,7 +189,7 @@ namespace Fall2020_CSC403_Project
 
         private void GenerateRandomEnemies(DungeonRoom room)
         {
-            int numEnemies = new Random().Next(0, 3);
+            int numEnemies = new Random().Next(1, 3);
             for (int i = 0; i < numEnemies; i++)
             {
                 // for random health
@@ -223,7 +221,7 @@ namespace Fall2020_CSC403_Project
 
         private void GenerateRandomCoins(DungeonRoom room)
         {
-            int numCoins = new Random().Next(3, 8);
+            int numCoins = new Random().Next(2, 5);
             for (int i = 0; i < numCoins; i++)
             {
                 DungeonCoin coin = new DungeonCoin
@@ -240,10 +238,10 @@ namespace Fall2020_CSC403_Project
 
         private DungeonPositionData CalculateRandomPositionInRoom(DungeonRoom room)
         {
-            float minX = room.TopLeft.x;
-            float maxX = room.TopRight.x;
-            float minY = room.TopLeft.y;
-            float maxY = room.BottomLeft.y;
+            float minX = room.TopLeft.x + 50;
+            float maxX = room.TopRight.x - 50;
+            float minY = room.TopLeft.y + 50;
+            float maxY = room.BottomLeft.y - 50;
 
             // generate random position in room
             float randomX = (float)(minX + (maxX - minX) * new Random().NextDouble());

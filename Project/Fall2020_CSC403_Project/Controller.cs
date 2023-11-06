@@ -72,13 +72,31 @@ namespace Fall2020_CSC403_Project
                     string saveFilePath = Path.Combine(savesDirectoryPath, pathToFile + ".json");
                     if (!File.Exists(saveFilePath))
                     {
-                        // dungeon size
+                        // get dungeon size
                         Random random = new Random();
-                        int dungeonSize = random.Next(5, 10);
+                        int dungeonSize = random.Next(3, 5);
+
+                        Dungeon dungeon = new Dungeon(dungeonSize);
+
+                        /*int selectedRow = random.Next(0, dungeonSize);
+                        int selectedCol = random.Next(0, dungeonSize);
+
+
+                        DungeonRoom selectedRoom = dungeon.DungeonRooms[selectedRow, selectedCol];
+                        float roomWidth = selectedRoom.TopRight.x - selectedRoom.TopLeft.x;
+                        float roomHeight = selectedRoom.BottomLeft.y - selectedRoom.TopLeft.y;
+                        float randomX = (float)random.NextDouble() * roomWidth;
+                        float randomY = (float)random.NextDouble() * roomHeight;
+
+                        PositionData playerPosition = new PositionData
+                        {
+                            x = selectedRoom.TopLeft.x + randomX,
+                            y = selectedRoom.TopLeft.y + randomY
+                        };*/
 
                         SaveData defaultSave = new SaveData
                         {
-                            dungeon = new Dungeon(dungeonSize),
+                            dungeon = dungeon,
                             width = dungeonSize,
                             height = dungeonSize,
                             playerData = new PlayerData
