@@ -1,4 +1,6 @@
-﻿using Fall2020_CSC403_Project.Properties;
+﻿using Fall2020_CSC403_Project.Cosmetics;
+using Fall2020_CSC403_Project.Properties;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,7 +16,7 @@ namespace Fall2020_CSC403_Project
 {
     public partial class CosmeticsShop : Form
     {
-        IList<Bitmap> hats;
+        IList<Hat> hats;
         int currentHatsIndex;
 
         public CosmeticsShop()
@@ -30,15 +32,27 @@ namespace Fall2020_CSC403_Project
         /// </summary>
         private void GetAvailableHats()
         {
-            var a = typeof(CosmeticsResources).GetProperties();
-
-            IList<PropertyInfo> hatProps = a
+            IList<PropertyInfo> hatProperties = typeof(Cosmetics.CosmeticsResources)
+                .GetProperties()
                 .Where(prop => prop.Name.Contains("hat"))
                 .ToList();
 
-            hats = hatProps
-                .Select(prop => prop.GetValue(null) as Bitmap)
+            hats = hatProperties
+                .Where(prop => prop.PropertyType.Equals(typeof(string)))
+                .Select(prop => JsonConvert.DeserializeObject<Hat>((string)prop.GetValue(null)))
                 .ToList();
+
+            // Gather the matching images for each hat
+            IList<PropertyInfo> hatImages = hatProperties
+                .Where(prop => prop.PropertyType.Equals(typeof(Bitmap)))
+                .ToList();
+
+            foreach (Hat hat in hats)
+            {
+                hat.Image = (Bitmap)hatImages
+                                .First(hatImage => hatImage.Name == hat.FileName)
+                                .GetValue(null);
+            }
 
             currentHatsIndex = 0;
         }
@@ -48,7 +62,7 @@ namespace Fall2020_CSC403_Project
         /// </summary>
         private void DisplayCurrentHat()
         {
-            btnSelectedHat.BackgroundImage = hats.ElementAt(currentHatsIndex);
+            btnSelectedHat.BackgroundImage = hats.ElementAt(currentHatsIndex).Image;
         }
 
         /// <summary>
@@ -56,7 +70,7 @@ namespace Fall2020_CSC403_Project
         /// </summary>
         private void RedrawPlayer()
         {
-
+            
         }
 
         /// <summary>
