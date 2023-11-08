@@ -70,7 +70,24 @@ namespace Fall2020_CSC403_Project
         /// </summary>
         private void RedrawPlayer()
         {
-            
+            Hat currentHat = hats.ElementAt(currentHatsIndex);
+
+            Bitmap hatImage = (Bitmap)btnSelectedHat.BackgroundImage;
+            Bitmap playerImage = new Bitmap(Resources.player);
+
+            using (var graphics = Graphics.FromImage(playerImage))
+            {
+                graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
+
+                var hatStartingPoint = new Point(
+                    (playerImage.Width - hatImage.Width) / 2,
+                    currentHat.YCoordinate
+                    );
+
+                graphics.DrawImage(hatImage, hatStartingPoint.X, hatStartingPoint.Y);
+
+                pictureBox_player.BackgroundImage = playerImage;
+            }
         }
 
         /// <summary>
