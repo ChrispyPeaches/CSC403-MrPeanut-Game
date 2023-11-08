@@ -38,6 +38,7 @@ namespace Fall2020_CSC403_Project
         public float strength { get; set; }
         public int Health { get; set; }
         public string image { get; set; }
+        public Guid ID { get; set; }
         public IDungeonPositionData Position { get; set; }
     }
 
@@ -51,8 +52,8 @@ namespace Fall2020_CSC403_Project
     {
         public DungeonRoom[,] DungeonRooms { get; set; }
         private int N;
-        private int roomWidth = 800;
-        private int roomHeight = 1000;
+        private int roomWidth = 1400;
+        private int roomHeight = 550;
         private int padding = 7;
         List<string> enemyImages = new List<string>
         {
@@ -81,8 +82,9 @@ namespace Fall2020_CSC403_Project
                         Coins = new List<IDungeonCoin>(),
                         visited = false,
                     };
-                    float roomLeft = i * (roomWidth + padding);
-                    float roomTop = j * (roomHeight + padding);
+
+                    float roomLeft = i * (roomWidth + padding) % roomWidth;
+                    float roomTop = j * (roomHeight + padding) % roomHeight;
 
                     room.TopLeft = new DungeonPositionData { x = roomLeft, y = roomTop };
                     room.TopRight = new DungeonPositionData { x = roomLeft + roomWidth, y = roomTop };
@@ -189,7 +191,7 @@ namespace Fall2020_CSC403_Project
 
         private void GenerateRandomEnemies(DungeonRoom room)
         {
-            int numEnemies = new Random().Next(1, 3);
+            int numEnemies = new Random().Next(1, 5);
             for (int i = 0; i < numEnemies; i++)
             {
                 // for random health
@@ -200,8 +202,21 @@ namespace Fall2020_CSC403_Project
                 int randomStrength = new Random().Next(3, 8);
                 int roundedStrength = (int)(Math.Floor(randomStrength / 1.0) * 10);
 
-                // for random indexing
-                int randomIndex = new Random().Next(enemyImages.Count);
+                string enemyImage;
+
+                if (roundedHealth >= 30 && roundedHealth <= 80)
+                {
+                    enemyImage = enemyImages[0];
+                }
+                else if (roundedHealth > 80 && roundedHealth <= 160)
+                {
+                    enemyImage = enemyImages[2];
+                }
+                else
+                {
+                    enemyImage = enemyImages[1];
+                }
+
 
                 DungeonEnemyData enemy = new DungeonEnemyData
                 {
@@ -210,8 +225,9 @@ namespace Fall2020_CSC403_Project
                     MaxHealth = roundedHealth,
                     strength = roundedStrength,
                     Health = roundedHealth,
-                    image = enemyImages[randomIndex],
-            };
+                    ID =  Guid.NewGuid(),
+                    image = enemyImage,
+                };
 
                 enemy.Position = CalculateRandomPositionInRoom(room);
 
@@ -221,7 +237,7 @@ namespace Fall2020_CSC403_Project
 
         private void GenerateRandomCoins(DungeonRoom room)
         {
-            int numCoins = new Random().Next(2, 5);
+            int numCoins = new Random().Next(1, 8);
             for (int i = 0; i < numCoins; i++)
             {
                 DungeonCoin coin = new DungeonCoin

@@ -36,6 +36,7 @@ namespace Fall2020_CSC403_Project.code
         float strength { get; set; }
         int Health { get; set; }
         string image { get; set; }
+        Guid ID { get; set; }
         IDungeonPositionData Position { get; set; }
     }
 

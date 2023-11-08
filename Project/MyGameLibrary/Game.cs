@@ -48,6 +48,7 @@ namespace Fall2020_CSC403_Project.code
             public float strength { get; set; }
             public int Health { get; set; }
             public string image { get; set; }
+            public Guid ID { get; set; }
             public IDungeonPositionData Position { get; set; }
         }
 
@@ -66,6 +67,8 @@ namespace Fall2020_CSC403_Project.code
         public bool IsPoisonPacketDefeated { get; set; }
         public bool IsCheetosDefeated { get; set; }
         public DungeonRoom[,] Dungeon { get; set; }
+        public int row { get; set; } = 0;
+        public int column { get; set; } = 0;
         public Game(Dictionary<string, object> save)
         {
             if (instance == null)
@@ -85,14 +88,14 @@ namespace Fall2020_CSC403_Project.code
 
         public void InitializeGameEntities(Dictionary<string, object> save)
         {
-            // Convert save dictionary into a JObject
             JObject playerData = (JObject)save["playerData"];
             player = new Player(new Vector2(0, 0), null, playerData);
 
-            // Create dungeon object with data from the save file using a JObject
             JObject dungeonData = (JObject)save["dungeon"];
             int dungeonWidth = Convert.ToInt32(save["width"]);
             int dungeonHeight = Convert.ToInt32(save["height"]);
+            this.row = Convert.ToInt32(save["row"]);
+            this.column = Convert.ToInt32(save["column"]);
 
             Dungeon = new DungeonRoom[dungeonWidth, dungeonHeight];
 
@@ -102,7 +105,6 @@ namespace Fall2020_CSC403_Project.code
                 {
                     JObject roomData = (JObject)dungeonData["DungeonRooms"][j][i];
 
-                    // Parse enemy data for the room
                     List<IDungeonEnemyData> enemies = new List<IDungeonEnemyData>();
                     JArray enemiesArray = (JArray)roomData["Enemies"];
                     foreach (JObject enemyData in enemiesArray)
@@ -120,7 +122,6 @@ namespace Fall2020_CSC403_Project.code
                         enemies.Add(enemy);
                     }
 
-                    // Parse coin data for the room
                     List<IDungeonCoin> coins = new List<IDungeonCoin>();
                     JArray coinsArray = (JArray)roomData["Coins"];
                     foreach (JObject coinData in coinsArray)
@@ -134,7 +135,6 @@ namespace Fall2020_CSC403_Project.code
                         coins.Add(coin);
                     }
 
-                    // Create a dictionary to store room information
                     Dictionary<string, object> roomInfo = new Dictionary<string, object>
                     {
                         { "Room at", $"({i}, {j})" },

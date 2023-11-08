@@ -96,23 +96,7 @@ namespace Fall2020_CSC403_Project
 
         public static Boolean CheckFlag(Enemy enemy)
         {
-            string enemyName = enemy.Name;
-            if (enemyName.Contains("enemy_cheetos"))
-            {
-                return Game.Instance.IsCheetosDefeated;
-            }
-            else if (enemyName.Contains("enemy_koolaid"))
-            {
-                return Game.Instance.IsKoolAidDefeated;
-            }
-            else if (enemyName.Contains("enemy_poisonpacket"))
-            {
-                return Game.Instance.IsPoisonPacketDefeated;
-            }
-            else
-            {
-                return true;
-            }
+            return enemy.Defeated;
         }
 
         public void SetPlayerHealth(int health)
@@ -156,24 +140,10 @@ namespace Fall2020_CSC403_Project
 
                 if (enemy.Health <= 0)
                 {
-                    if (this.enemyName.Contains("enemy_cheetos"))
-                    {
-                        Game.Instance.player.MaxHealth += 20;
-                        Game.Instance.player.Health = Game.Instance.player.MaxHealth;
-                        Game.Instance.player.strength += 2;
-                        game.IsCheetosDefeated = true;
-                    }
-                    else if (this.enemyName.Contains("enemy_koolaid"))
-                    {
-                        game.IsKoolAidDefeated = true;
-                    }
-                    else if (this.enemyName.Contains("enemy_poisonpacket"))
-                    {
-                        Game.Instance.player.MaxHealth += 20;
-                        Game.Instance.player.Health = Game.Instance.player.MaxHealth;
-                        Game.Instance.player.strength += 2;
-                        game.IsPoisonPacketDefeated = true;
-                    }
+                    Game.Instance.player.MaxHealth += 20;
+                    Game.Instance.player.Health = Game.Instance.player.MaxHealth;
+                    Game.Instance.player.strength += 2;
+                    enemy.Defeated = true;
                     SendKeys.SendWait("{ESC}");
                 }
             }

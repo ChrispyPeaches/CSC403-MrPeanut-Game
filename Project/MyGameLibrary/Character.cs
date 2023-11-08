@@ -13,6 +13,7 @@ namespace Fall2020_CSC403_Project.code
         public Vector2 LastPosition { get; set; }
         public Vector2 Position { get; set; }
         public Collider Collider { get; set; }
+        public string Tag { get; set; }
         public Character(Vector2 initPos, Collider collider)
         {
             this.Position = this.Position;

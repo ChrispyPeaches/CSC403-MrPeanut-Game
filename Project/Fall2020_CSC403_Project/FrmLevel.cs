@@ -18,10 +18,14 @@ namespace Fall2020_CSC403_Project
 {
     public partial class FrmLevel : Form
     {
-        private Character[] walls;
+        private List<Character> walls;
+        private List<Character> doors;
 
         private DateTime timeBegin;
         private FrmBattle frmBattle;
+
+        private Enemy currentEnemy = null;
+        private Coin currentCoin = null;
 
         public static FrmLevel instanceForDeath { get; private set; }
 
@@ -37,12 +41,12 @@ namespace Fall2020_CSC403_Project
         private List<List<List<Enemy>>> characterList;
         private List<List<List<Coin>>> coinList;
         private List<List<List<Character>>> dungeonWalls;
-        System.Windows.Forms.Panel mainPanel;
-
+        private List<Enemy> currentRoomEnemies;
+        private List<Coin> currentRoomCoins;
+        private List<Control> roomControls = new List<Control>();
 
         private int currentRow;
         private int currentCol;
-
 
         public FrmLevel(IOpenAIApi openAIApi)
         {
@@ -64,6 +68,8 @@ namespace Fall2020_CSC403_Project
             const int PADDING = 7;
 
             Game game = Game.Instance;
+            this.currentRow = game.row;
+            this.currentCol = game.column;
             SoundPlayer overworldTheme = new SoundPlayer(Resources.overworld_theme);
             overworldTheme.PlayLooping();
 
@@ -71,12 +77,6 @@ namespace Fall2020_CSC403_Project
             {
                 System.Environment.Exit(0);
             }
-
-            this.mainPanel = new System.Windows.Forms.Panel
-            {
-                AutoScroll = true,
-                Dock = DockStyle.Fill,
-            };
 
             int dungeonWidth = Game.Instance.Dungeon.GetLength(0);
             int dungeonHeight = Game.Instance.Dungeon.GetLength(1);
@@ -99,12 +99,8 @@ namespace Fall2020_CSC403_Project
                 }
             }
 
-            MakeRoomPanels();
-            //this.Controls.Add(mainPanel);
-            this.currentRoom = this.GetCurrentRoom();
-            roomPanels[currentRow][currentCol].Visible = true;
-            roomPanels[currentRow][currentCol].Anchor = AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom | AnchorStyles.Left;
-            this.Controls.Add(roomPanels[currentRow][currentCol]);
+            this.currentRoom = Game.Instance.Dungeon[currentRow, currentCol];
+            LoadRoomElements(currentRoom);
 
             lblCoins.Text = "Coins: " + Game.Instance.player.coinCounter.ToString();
 
@@ -151,42 +147,34 @@ namespace Fall2020_CSC403_Project
             game.player.Move();
 
             // check collision with walls
-            if (HitAWall(game.player, dungeonWalls[currentRow][currentCol]))
+            if (HitAWall(game.player, this.walls))
             {
                 game.player.MoveBack();
             }
 
-            // check collision with enemies
-            foreach (Enemy enemy in characterList[currentRow][currentCol])
+            if (HitAChar(game.player, this.currentRoomEnemies))
             {
-                if (HitAChar(game.player, enemy))
+                if (game.player.Health > 0)
                 {
-                    if (game.player.Health > 0)
-                    {
-                        Fight(enemy);
-                    }
-                    else
-                    {
-                        game.player.MoveBack();
-                    }
+                    Fight(currentEnemy);
+                }
+                else
+                {
+                    game.player.MoveBack();
                 }
             }
 
-            // check collision with coins
-            foreach (var coin in coinList[currentRow][currentCol])
+            if (HitACoin(game.player, currentRoomCoins))
             {
-                if (HitACoin(game.player, coin))
-                {
-                    game.player.coinCounter += coin.Amount;
-                    //this.Controls.Remove(coin);
-                }
+                game.player.coinCounter += currentCoin.Amount;
+            }
+
+            if (HitADoor(game.player, doors))
+            {
             }
 
             // update player's picture box
             picPlayer.Location = new Point((int)game.player.Position.x, (int)game.player.Position.y);
-
-            // TESTING
-            mainPanel.AutoScrollPosition = picPlayer.Location;
         }
 
         private bool HitAWall(Character c, List<Character> wallList)
@@ -203,23 +191,120 @@ namespace Fall2020_CSC403_Project
             return hitAWall;
         }
 
-        private bool HitAChar(Character you, Character other)
+        private bool HitAChar(Character you, List<Enemy> enemyList)
         {
-            if (you != null && other != null && you.Collider != null && other.Collider != null)
+            bool hitAChar = false;
+            foreach (Enemy enemy in enemyList)
             {
-                return you.Collider.Intersects(other.Collider);
+                if (you.Collider.Intersects(enemy.Collider))
+                {
+                    currentEnemy = enemy;
+                    hitAChar = true;
+                    break;
+                }
+            }
+            return hitAChar;
+        }
+
+        private bool HitACoin(Character character, List<Coin> coinsList)
+        {
+            foreach (Coin coin in coinsList)
+            {
+                if (coin != null && character != null && character.Collider != null && coin.Collider != null)
+                {
+                        currentCoin = coin;
+                        return character.Collider.Intersects(coin.Collider);
+                }
             }
             return false;
         }
 
-        private bool HitACoin(Character character, Coin coin)
+        private bool HitADoor(Character character, List<Character> doors)
         {
-            if (coin != null && character != null && character.Collider != null && coin.Collider != null)
+            foreach (Character door in doors)
             {
-                return character.Collider.Intersects(coin.Collider);
+                if (door != null && character != null && character.Collider != null && door.Collider != null)
+                {
+                    bool collisionMade = character.Collider.Intersects(door.Collider);
+
+                    if (collisionMade)
+                    {
+                        string doorDirection = door.Tag as string;
+
+                        foreach (Control control in roomControls)
+                        {
+                            if (this.Controls.Contains(control))
+                            {
+                                this.Controls.Remove(control);
+                            }
+
+                        }
+
+                        switch (doorDirection)
+                        {
+                            case "North":
+                                currentRow -= 1;
+                                character.Position = new Vector2((int)character.Position.x, 700);
+                                try
+                                {
+                                    currentRoom = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[currentRow, currentCol];
+                                }
+                                catch
+                                {
+                                    currentRow += 1;
+                                }
+                                LoadRoomElements(currentRoom);
+                                break;
+
+                            case "East":
+                                currentCol += 1;
+                                character.Position = new Vector2(100, (int)character.Position.y);
+                                try
+                                {
+                                    currentRoom = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[currentRow, currentCol];
+                                }
+                                catch
+                                {
+                                    currentCol -= 1;
+                                }
+                                LoadRoomElements(currentRoom);
+                                break;
+
+                            case "South":
+                                currentRow += 1;
+                                character.Position = new Vector2((int)character.Position.x, 100);
+                                try
+                                {
+                                    currentRoom = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[currentRow, currentCol];
+                                }
+                                catch
+                                {
+                                    currentRow -= 1;
+                                }
+                                LoadRoomElements(currentRoom);
+                                break;
+
+                            case "West":
+                                currentCol -= 1;
+                                character.Position = new Vector2(700, (int)character.Position.y);
+                                try
+                                {
+                                    currentRoom = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[currentRow, currentCol];
+                                }
+                                catch
+                                {
+                                    currentCol += 1;
+                                }
+                                LoadRoomElements(currentRoom);
+                                break;
+                        }
+                    }
+                    return collisionMade;
+                }
             }
             return false;
         }
+
 
         private void Fight(Enemy enemy)
         {
@@ -229,7 +314,8 @@ namespace Fall2020_CSC403_Project
             try
             {
                 frmBattle = FrmBattle.GetInstance(enemy, _openAIApi);
-                if (!(frmBattle == null))
+
+                if (!(frmBattle == null) && enemy.Defeated != true)
                 {
                     if (enemy == game.bossKoolaid)
                     {
@@ -319,7 +405,6 @@ namespace Fall2020_CSC403_Project
             Game game = Game.Instance;
             Player player = game.player;
             Game.Instance.player.ResetMoveSpeed();
-            RenderDungeon();
             if (isUpPressed && isRightPressed)
             {
                 game.player.GoUpRight();
@@ -403,31 +488,24 @@ namespace Fall2020_CSC403_Project
                    Game.Instance.player.Position.y <= room.BottomRight.y;
         }
 
-        private void LoadRoomElements(Fall2020_CSC403_Project.code.Game.DungeonRoom currentRoom, System.Windows.Forms.Panel roomPanel)
+        private void LoadRoomElements(Fall2020_CSC403_Project.code.Game.DungeonRoom currentRoom)
         {
             const int PADDING = 7;
-            int panelWidth = roomPanel.Width;
-            int panelHeight = roomPanel.Height;
 
-            List<Enemy> currentRoomEnemies = characterList[currentRow][currentCol];
-            List<Coin> currentRoomCoins = coinList[currentRow][currentCol];
+            this.currentRoomEnemies = new List<Enemy>();
+            this.currentRoomCoins = new List<Coin>();
+            this.roomControls = new List<Control>();
 
             foreach (IDungeonEnemyData enemyData in currentRoom.Enemies)
             {
-                // Adjust enemy coordinates to fit within the panel's dimensions
-                int enemyX = (int)enemyData.Position.x;
-                int enemyY = (int)enemyData.Position.y;
-                
-                while (enemyX >= panelWidth) enemyX -= panelWidth;
-                while (enemyY >= panelHeight) enemyY -= panelHeight;
+                int enemyX = (int)enemyData.Position.x % (this.Width -50);
+                int enemyY = (int)enemyData.Position.y % (this.Height -50);
 
-                // Create the enemy, load image, and set position as before
-                Enemy enemy = new Enemy(null, new Vector2(40, 40), null, null);
+                Enemy enemy = new Enemy(null, new Vector2(50, 50), null, enemyData.defeated, enemyData.ID);
                 enemy.Img = LoadImage(enemyData.image);
-                currentRoomEnemies.Add(enemy);
 
                 PictureBox enemyPictureBox = new PictureBox();
-                enemyPictureBox.Size = new Size(40, 40);
+                enemyPictureBox.Size = new Size(70, 70);
                 enemyPictureBox.Location = new Point(enemyX, enemyY);
                 enemyPictureBox.BackgroundImage = enemy.Img;
                 enemyPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
@@ -439,33 +517,27 @@ namespace Fall2020_CSC403_Project
 
                 System.Windows.Forms.Label enemyLabel = new System.Windows.Forms.Label();
                 enemyLabel.Text = enemyData.displayName;
-                enemyLabel.Location = new Point(enemyX, enemyY - 20);
+                enemyLabel.Location = new Point(enemyX, enemyY);
                 enemyLabel.BackColor = Color.Transparent;
 
-                roomPanel.Controls.Add(enemyPictureBox);
-                roomPanel.Controls.Add(enemyLabel);
-
-                enemyPictureBox.BringToFront();
-                enemyLabel.BringToFront();
+                this.Controls.Add(enemyPictureBox);
+                this.Controls.Add(enemyLabel);
+                this.roomControls.Add(enemyPictureBox);
+                this.roomControls.Add(enemyLabel);
+                currentRoomEnemies.Add(enemy);
             }
 
             foreach (IDungeonCoin coinData in currentRoom.Coins)
             {
-                // Adjust coin coordinates to fit within the panel's dimensions
-                int coinX = (int)coinData.Position.x;
-                int coinY = (int)coinData.Position.y;
+                int coinX = (int)coinData.Position.x % (this.Width - 50);
+                int coinY = (int)coinData.Position.y % (this.Height - 50);
 
-                while (coinX >= panelWidth) coinX -= panelWidth;
-                while (coinY >= panelHeight) coinY -= panelHeight;
-
-                // Create the coin, load image, and set position as before
                 int coinValue = (int)Math.Round(coinData.Amount);
                 Coin coin = new Coin(new Vector2(20, 20), null, coinValue);
                 coin.Img = LoadImage(coinData.Image);
-                currentRoomCoins.Add(coin);
 
                 PictureBox coinPictureBox = new PictureBox();
-                coinPictureBox.Size = new Size(40, 40);
+                coinPictureBox.Size = new Size(30, 30);
                 coinPictureBox.Location = new Point(coinX, coinY);
                 coinPictureBox.BackgroundImage = coin.Img;
                 coinPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
@@ -477,17 +549,17 @@ namespace Fall2020_CSC403_Project
 
                 System.Windows.Forms.Label coinLabel = new System.Windows.Forms.Label();
                 coinLabel.Text = coinData.Amount.ToString();
-                coinLabel.Location = new Point(coinX, coinY - 20);
+                coinLabel.Location = new Point(coinX, coinY);
                 coinLabel.BackColor = Color.Transparent;
 
-                roomPanel.Controls.Add(coinPictureBox);
-                roomPanel.Controls.Add(coinLabel);
-
-                coinPictureBox.BringToFront();
-                coinLabel.BringToFront();
+                this.Controls.Add(coinPictureBox);
+                this.Controls.Add(coinLabel);
+                this.roomControls.Add(coinPictureBox);
+                this.roomControls.Add(coinLabel);
+                currentRoomCoins.Add(coin);
             }
 
-            GenerateWalls(currentRoom, roomPanel);
+            GenerateWalls(currentRoom);
         }
 
 
@@ -513,233 +585,237 @@ namespace Fall2020_CSC403_Project
             }
         }
 
-        private void GenerateWalls(Fall2020_CSC403_Project.code.Game.DungeonRoom currentRoom, System.Windows.Forms.Panel roomPanel)
+        private void GenerateWalls(Fall2020_CSC403_Project.code.Game.DungeonRoom currentRoom)
         {
             const int PADDING = 4;
             int wallWidth = 25;
-            List<Character> currentRoomWalls = dungeonWalls[currentRow][currentCol];
+            this.walls = new List<Character>();
+            this.doors = new List<Character>();
 
-            // Generate the north wall
             if (!currentRoom.northDoor)
             {
-                // Create a full-width top wall
                 PictureBox topWall = new PictureBox();
-                topWall.Size = new Size(roomPanel.Width, wallWidth);
+                topWall.Size = new Size(this.Width, wallWidth);
                 topWall.Location = new Point(0, 0);
                 topWall.BackgroundImage = LoadImage("wall.jpg");
                 topWall.BackgroundImageLayout = ImageLayout.Stretch;
                 topWall.Visible = true;
-                roomPanel.Controls.Add(topWall);
+                this.Controls.Add(topWall);
+                this.roomControls.Add(topWall);
 
                 Character topWallCharacter = new Character(CreatePosition(topWall, false), CreateCollider(topWall, PADDING));
-                currentRoomWalls.Add(topWallCharacter);
+                this.walls.Add(topWallCharacter);
             }
             else
             {
-                // Create a 1/3 width top wall
                 PictureBox topWall = new PictureBox();
-                topWall.Size = new Size(roomPanel.Width / 3, wallWidth);
-                topWall.Location = new Point(0, 0);
+                topWall.Size = new Size(this.Width / 3, wallWidth);
+                topWall.Location = new Point(this.Width / 3, 0);
                 topWall.BackgroundImage = LoadImage("wall.jpg");
                 topWall.BackgroundImageLayout = ImageLayout.Stretch;
                 topWall.Visible = true;
-                roomPanel.Controls.Add(topWall);
+                this.Controls.Add(topWall);
+                this.roomControls.Add(topWall);
 
                 Character topWallCharacter = new Character(CreatePosition(topWall, false), CreateCollider(topWall, PADDING));
-                currentRoomWalls.Add(topWallCharacter);
+                this.walls.Add(topWallCharacter);
 
-                // Start from 2/3 down the wall for the other end of the wall.
+                PictureBox door = new PictureBox();
+                door.Size =new Size(this.Width / 3, wallWidth);
+                door.Location = new Point(this.Width - wallWidth, this.Height / 3);
+                door.BackColor = Color.Brown;
+                door.BackgroundImageLayout = ImageLayout.Stretch;
+                door.Visible = true;
+                this.Controls.Add(door);
+                this.roomControls.Add(door);
+
+                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING));
+                doorCharacter.Tag = "North";
+                this.doors.Add(doorCharacter);
+
                 PictureBox topWall2 = new PictureBox();
-                topWall2.Size = new Size(roomPanel.Width / 3, wallWidth);
-                topWall2.Location = new Point(roomPanel.Width / 3 * 2, 0);
+                topWall2.Size = new Size(this.Width / 3, wallWidth);
+                topWall2.Location = new Point(this.Width / 3 * 2, 0);
                 topWall2.BackgroundImage = LoadImage("wall.jpg");
                 topWall2.BackgroundImageLayout = ImageLayout.Stretch;
                 topWall2.Visible = true;
-                roomPanel.Controls.Add(topWall2);
+                this.Controls.Add(topWall2);
+                this.roomControls.Add(topWall2);
 
                 Character topWallCharacter2 = new Character(CreatePosition(topWall2, false), CreateCollider(topWall2, PADDING));
-                currentRoomWalls.Add(topWallCharacter2);
+                this.walls.Add(topWallCharacter2);
             }
 
-            // Generate the east wall
             if (!currentRoom.eastDoor)
             {
-                // Create a full-height right wall
                 PictureBox rightWall = new PictureBox();
-                rightWall.Size = new Size(wallWidth, roomPanel.Height);
-                rightWall.Location = new Point(roomPanel.Width - wallWidth, 0);
+                rightWall.Size = new Size(wallWidth, this.Height);
+                rightWall.Location = new Point(this.Width - wallWidth, 0);
                 rightWall.BackgroundImage = LoadImage("wall.jpg");
                 rightWall.BackgroundImageLayout = ImageLayout.Stretch;
                 rightWall.Visible = true;
-                roomPanel.Controls.Add(rightWall);
+                this.Controls.Add(rightWall);
+                this.roomControls.Add(rightWall);
 
                 Character rightWallCharacter = new Character(CreatePosition(rightWall, false), CreateCollider(rightWall, PADDING));
-                currentRoomWalls.Add(rightWallCharacter);
+                this.walls.Add(rightWallCharacter);
             }
             else
             {
-                // Create a 1/3 height right wall
                 PictureBox rightWall = new PictureBox();
-                rightWall.Size = new Size(wallWidth, roomPanel.Height / 3);
-                rightWall.Location = new Point(roomPanel.Width - wallWidth, 0);
+                rightWall.Size = new Size(wallWidth, this.Height / 3);
+                rightWall.Location = new Point(this.Width - wallWidth, 0);
                 rightWall.BackgroundImage = LoadImage("wall.jpg");
                 rightWall.BackgroundImageLayout = ImageLayout.Stretch;
                 rightWall.Visible = true;
-                roomPanel.Controls.Add(rightWall);
+                this.Controls.Add(rightWall);
+                this.roomControls.Add(rightWall);
 
                 Character rightWallCharacter = new Character(CreatePosition(rightWall, false), CreateCollider(rightWall, PADDING));
-                currentRoomWalls.Add(rightWallCharacter);
+                this.walls.Add(rightWallCharacter);
 
-                // Start from 2/3 across the wall for the other end of the wall.
+                PictureBox door = new PictureBox();
+                door.Size = new Size(wallWidth, this.Height / 3);
+                door.Location = new Point(this.Width - wallWidth, this.Height / 3);
+                door.BackColor = Color.Brown;
+                door.BackgroundImageLayout = ImageLayout.Stretch;
+                door.Visible = true;
+                this.Controls.Add(door);
+                this.roomControls.Add(door);
+
+                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING));
+                doorCharacter.Tag = "East";
+                this.doors.Add(doorCharacter);
+
                 PictureBox rightWall2 = new PictureBox();
-                rightWall2.Size = new Size(wallWidth, roomPanel.Height / 3);
-                rightWall2.Location = new Point(roomPanel.Width - wallWidth, roomPanel.Height / 3 * 2);
+                rightWall2.Size = new Size(wallWidth, this.Height / 3);
+                rightWall2.Location = new Point(this.Width - wallWidth, this.Height / 3 * 2);
                 rightWall2.BackgroundImage = LoadImage("wall.jpg");
                 rightWall2.BackgroundImageLayout = ImageLayout.Stretch;
                 rightWall2.Visible = true;
-                roomPanel.Controls.Add(rightWall2);
+                this.Controls.Add(rightWall2);
+                this.roomControls.Add(rightWall2);
 
                 Character rightWallCharacter2 = new Character(CreatePosition(rightWall2, false), CreateCollider(rightWall2, PADDING));
-                currentRoomWalls.Add(rightWallCharacter2);
+                this.walls.Add(rightWallCharacter2);
             }
-
-            // Generate the south wall
             if (!currentRoom.southDoor)
             {
-                // Create a full-width bottom wall
                 PictureBox bottomWall = new PictureBox();
-                bottomWall.Size = new Size(roomPanel.Width, wallWidth);
-                bottomWall.Location = new Point(0, roomPanel.Height - wallWidth);
+                bottomWall.Size = new Size(this.Width, wallWidth);
+                bottomWall.Location = new Point(0, this.Height - wallWidth);
                 bottomWall.BackgroundImage = LoadImage("wall.jpg");
                 bottomWall.BackgroundImageLayout = ImageLayout.Stretch;
                 bottomWall.Visible = true;
-                roomPanel.Controls.Add(bottomWall);
+                this.Controls.Add(bottomWall);
+                this.roomControls.Add(bottomWall);
 
                 Character bottomWallCharacter = new Character(CreatePosition(bottomWall, false), CreateCollider(bottomWall, PADDING));
-                currentRoomWalls.Add(bottomWallCharacter);
+                this.walls.Add(bottomWallCharacter);
             }
             else
             {
-                // Create a 1/3 width bottom wall
                 PictureBox bottomWall = new PictureBox();
-                bottomWall.Size = new Size(roomPanel.Width / 3, wallWidth);
-                bottomWall.Location = new Point(0, roomPanel.Height - wallWidth);
+                bottomWall.Size = new Size(this.Width / 3, wallWidth);
+                bottomWall.Location = new Point(0, this.Height - wallWidth);
                 bottomWall.BackgroundImage = LoadImage("wall.jpg");
                 bottomWall.BackgroundImageLayout = ImageLayout.Stretch;
                 bottomWall.Visible = true;
-                roomPanel.Controls.Add(bottomWall);
+                this.Controls.Add(bottomWall);
+                this.roomControls.Add(bottomWall);
 
                 Character bottomWallCharacter = new Character(CreatePosition(bottomWall, false), CreateCollider(bottomWall, PADDING));
-                currentRoomWalls.Add(bottomWallCharacter);
+                this.walls.Add(bottomWallCharacter);
 
-                // Start from 2/3 down the wall for the other end of the wall.
+                PictureBox door = new PictureBox();
+                door.Size = new Size(this.Width / 3, wallWidth);
+                door.Location = new Point(this.Width / 3, this.Height - wallWidth);
+                door.BackColor = Color.Brown;
+                door.BackgroundImageLayout = ImageLayout.Stretch;
+                door.Visible = true;
+                this.Controls.Add(door);
+                this.roomControls.Add(door);
+
+                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING));
+                doorCharacter.Tag = "South";
+                this.doors.Add(doorCharacter);
+
                 PictureBox bottomWall2 = new PictureBox();
-                bottomWall2.Size = new Size(roomPanel.Width / 3, wallWidth);
-                bottomWall2.Location = new Point(roomPanel.Width / 3 * 2, roomPanel.Height - wallWidth);
+                bottomWall2.Size = new Size(this.Width / 3, wallWidth);
+                bottomWall2.Location = new Point(this.Width / 3 * 2, this.Height - wallWidth);
                 bottomWall2.BackgroundImage = LoadImage("wall.jpg");
                 bottomWall2.BackgroundImageLayout = ImageLayout.Stretch;
                 bottomWall2.Visible = true;
-                roomPanel.Controls.Add(bottomWall2);
+                this.Controls.Add(bottomWall2);
+                this.roomControls.Add(bottomWall2);
 
                 Character bottomWallCharacter2 = new Character(CreatePosition(bottomWall2, false), CreateCollider(bottomWall2, PADDING));
-                currentRoomWalls.Add(bottomWallCharacter2);
+                this.walls.Add(bottomWallCharacter2);
             }
 
-            // Generate the west wall
             if (!currentRoom.westDoor)
-            {
-                // Create a full-height left wall
-                PictureBox leftWall = new PictureBox();
-                leftWall.Size = new Size(wallWidth, roomPanel.Height);
+            {                PictureBox leftWall = new PictureBox();
+                leftWall.Size = new Size(wallWidth, this.Height);
                 leftWall.Location = new Point(0, 0);
                 leftWall.BackgroundImage = LoadImage("wall.jpg");
                 leftWall.BackgroundImageLayout = ImageLayout.Stretch;
                 leftWall.Visible = true;
-                roomPanel.Controls.Add(leftWall);
+                this.Controls.Add(leftWall);
+                this.roomControls.Add(leftWall);
 
                 Character leftWallCharacter = new Character(CreatePosition(leftWall, false), CreateCollider(leftWall, PADDING));
-                currentRoomWalls.Add(leftWallCharacter);
+                this.walls.Add(leftWallCharacter);
             }
             else
             {
-                // Create a 1/3 height left wall
                 PictureBox leftWall = new PictureBox();
-                leftWall.Size = new Size(wallWidth, roomPanel.Height / 3);
+                leftWall.Size = new Size(wallWidth, this.Height / 3);
                 leftWall.Location = new Point(0, 0);
                 leftWall.BackgroundImage = LoadImage("wall.jpg");
                 leftWall.BackgroundImageLayout = ImageLayout.Stretch;
                 leftWall.Visible = true;
-                roomPanel.Controls.Add(leftWall);
+                this.Controls.Add(leftWall);
+                this.roomControls.Add(leftWall);
 
                 Character leftWallCharacter = new Character(CreatePosition(leftWall, false), CreateCollider(leftWall, PADDING));
-                currentRoomWalls.Add(leftWallCharacter);
+                this.walls.Add(leftWallCharacter);
 
-                // Start from 2/3 across the wall for the other end of the wall.
+                PictureBox door = new PictureBox();
+                door.Size = new Size(wallWidth, this.Height / 3);
+                door.Location = new Point(0, this.Height / 3);
+                door.BackColor = Color.Brown;
+                door.BackgroundImageLayout = ImageLayout.Stretch;
+                door.Visible = true;
+                this.Controls.Add(door);
+                this.roomControls.Add(door);
+
+                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING));
+                doorCharacter.Tag = "West";
+                this.doors.Add(doorCharacter);
+
                 PictureBox leftWall2 = new PictureBox();
-                leftWall2.Size = new Size(wallWidth, roomPanel.Height / 3);
-                leftWall2.Location = new Point(0, roomPanel.Height / 3 * 2);
+                leftWall2.Size = new Size(wallWidth, this.Height / 3);
+                leftWall2.Location = new Point(0, this.Height / 3 * 2);
                 leftWall2.BackgroundImage = LoadImage("wall.jpg");
                 leftWall2.BackgroundImageLayout = ImageLayout.Stretch;
                 leftWall2.Visible = true;
-                roomPanel.Controls.Add(leftWall2);
+                this.Controls.Add(leftWall2);
+                this.roomControls.Add(leftWall2);
 
                 Character leftWallCharacter2 = new Character(CreatePosition(leftWall2, false), CreateCollider(leftWall2, PADDING));
-                currentRoomWalls.Add(leftWallCharacter2);
-            }
-            dungeonWalls[currentRow][currentCol] = currentRoomWalls;
-        }
-
-        public void MakeRoomPanels()
-        {
-            for (int row = 0; row < Game.Instance.Dungeon.GetLength(0); row++)
-            {
-                List<System.Windows.Forms.Panel> rowPanelsList = new List<System.Windows.Forms.Panel>();
-                for (int col = 0; col < Game.Instance.Dungeon.GetLength(1); col++)
-                {
-                    Fall2020_CSC403_Project.code.Game.DungeonRoom room = Game.Instance.Dungeon[row, col];
-                    int roomPanelX = (int)(room.TopLeft.x);
-                    int roomPanelY = (int)(room.TopLeft.y);
-                    int roomPanelWidth = 800;
-                    int roomPanelHeight = 1000;
-
-                    System.Windows.Forms.Panel roomPanel = new System.Windows.Forms.Panel();
-                    roomPanel.Size = new Size(roomPanelWidth, roomPanelHeight);
-                    roomPanel.Location = new Point(roomPanelX, roomPanelY);
-                    roomPanel.BackColor = Color.Gray;
-                    roomPanel.Visible = true;
-                    rowPanelsList.Add(roomPanel);
-                    LoadRoomElements(room, roomPanel);
-                    mainPanel.Controls.Add(roomPanel);
-                }
-                roomPanels.Add(rowPanelsList);
+                this.walls.Add(leftWallCharacter2);
             }
         }
 
-        private void RenderDungeon()
+        public void UpdateEnemyData(List<Enemy> enemyList)
         {
-            int playerX = currentCol;
-            int playerY = currentRow;
-            int visibilityRadius = 2;
-
-            for (int i = 0; i < Game.Instance.Dungeon.GetLength(0); i++)
-            {
-                for (int j = 0; j < Game.Instance.Dungeon.GetLength(1); j++)
+            foreach (Enemy enemy in enemyList)
+            { 
+                if (enemy.ID == currentEnemy.ID)
                 {
-                    int distance = Math.Abs(i - playerY) + Math.Abs(j - playerX);
-
-
-                    if (distance <= visibilityRadius)
-                    {
-                        roomPanels[i][j].Visible = true;
-                    }
-                    else
-                    {
-                        roomPanels[i][j].Visible = false;
-                    }
+                    enemy.Defeated = true;
                 }
             }
         }
-
-
     }
 }

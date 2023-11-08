@@ -43,6 +43,14 @@ namespace Fall2020_CSC403_Project
             savesSelectForm.ShowDialog();
 
             FrmLevel frmLevel = new FrmLevel(openAiApi);
+            Rectangle workingArea = Screen.GetWorkingArea(this);
+
+            // Calculate the desired form size based on the working area
+            int desiredWidth = workingArea.Width;
+            int desiredHeight = workingArea.Height - 100; // Subtract the height of the options control
+
+            // Set the form's size
+            frmLevel.Size = new Size(desiredWidth, desiredHeight);
             this.ShowInTaskbar = false;
             this.Opacity = 0;
             frmLevel.ShowDialog();

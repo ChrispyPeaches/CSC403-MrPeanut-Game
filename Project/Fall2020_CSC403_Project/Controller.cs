@@ -26,6 +26,8 @@ namespace Fall2020_CSC403_Project
         public Dungeon dungeon { get; set; }
         public int width { get; set; }
         public int height { get; set; }
+        public int row { get; set; }
+        public int column { get; set; }
         public PlayerData playerData { get; set; }
     }
 
@@ -78,27 +80,18 @@ namespace Fall2020_CSC403_Project
 
                         Dungeon dungeon = new Dungeon(dungeonSize);
 
-                        /*int selectedRow = random.Next(0, dungeonSize);
+                        int selectedRow = random.Next(0, dungeonSize);
                         int selectedCol = random.Next(0, dungeonSize);
-
-
-                        DungeonRoom selectedRoom = dungeon.DungeonRooms[selectedRow, selectedCol];
-                        float roomWidth = selectedRoom.TopRight.x - selectedRoom.TopLeft.x;
-                        float roomHeight = selectedRoom.BottomLeft.y - selectedRoom.TopLeft.y;
-                        float randomX = (float)random.NextDouble() * roomWidth;
-                        float randomY = (float)random.NextDouble() * roomHeight;
-
-                        PositionData playerPosition = new PositionData
-                        {
-                            x = selectedRoom.TopLeft.x + randomX,
-                            y = selectedRoom.TopLeft.y + randomY
-                        };*/
 
                         SaveData defaultSave = new SaveData
                         {
                             dungeon = dungeon,
                             width = dungeonSize,
                             height = dungeonSize,
+                            //row = selectedRow,
+                            //column = selectedCol,
+                            row = 0,
+                            column = 0,
                             playerData = new PlayerData
                             {
                                 name = pathToFile,
