@@ -13,6 +13,7 @@ using Vector2 = Fall2020_CSC403_Project.code.Vector2;
 using System.Web.UI.WebControls;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Fall2020_CSC403_Project
 {
@@ -25,7 +26,6 @@ namespace Fall2020_CSC403_Project
         private FrmBattle frmBattle;
 
         private Enemy currentEnemy = null;
-        private Coin currentCoin = null;
 
         public static FrmLevel instanceForDeath { get; private set; }
 
@@ -70,6 +70,7 @@ namespace Fall2020_CSC403_Project
             Game game = Game.Instance;
             this.currentRow = game.row;
             this.currentCol = game.column;
+            this.DoubleBuffered = true;
             SoundPlayer overworldTheme = new SoundPlayer(Resources.overworld_theme);
             overworldTheme.PlayLooping();
 
@@ -132,12 +133,6 @@ namespace Fall2020_CSC403_Project
             TimeSpan span = DateTime.Now - timeBegin;
             string time = span.ToString(@"hh\:mm\:ss");
             lblInGameTime.Text = "Time: " + time.ToString();
-            GetCurrentRoom();
-            Console.WriteLine(currentCol);
-            Console.WriteLine(currentRow);
-            Console.WriteLine(currentRoom);
-            Console.WriteLine(Game.Instance.player.Position.x);
-            Console.WriteLine(Game.Instance.player.Position.y);
         }
 
         private void tmrPlayerMove_Tick(object sender, EventArgs e)
@@ -166,7 +161,7 @@ namespace Fall2020_CSC403_Project
 
             if (HitACoin(game.player, currentRoomCoins))
             {
-                game.player.coinCounter += currentCoin.Amount;
+                lblCoins.Text = "Coins: " + Game.Instance.player.coinCounter.ToString();
             }
 
             if (HitADoor(game.player, doors))
@@ -175,49 +170,65 @@ namespace Fall2020_CSC403_Project
 
             // update player's picture box
             picPlayer.Location = new Point((int)game.player.Position.x, (int)game.player.Position.y);
-        }
 
+            foreach (Control control in this.Controls)
+            {
+                Console.WriteLine($"Control Name: {control.Name}, Type: {control.GetType().Name}");
+            }
+
+        }
         private bool HitAWall(Character c, List<Character> wallList)
         {
             bool hitAWall = false;
-            foreach (Character wall in wallList)
+
+            Parallel.ForEach(wallList, wall =>
             {
                 if (c.Collider.Intersects(wall.Collider))
                 {
                     hitAWall = true;
-                    break;
+                    Parallel.ForEach(wallList, (item, state) => state.Stop());
                 }
-            }
+            });
             return hitAWall;
         }
 
         private bool HitAChar(Character you, List<Enemy> enemyList)
         {
             bool hitAChar = false;
-            foreach (Enemy enemy in enemyList)
+
+            Parallel.ForEach(enemyList, enemy =>
             {
                 if (you.Collider.Intersects(enemy.Collider))
                 {
                     currentEnemy = enemy;
                     hitAChar = true;
-                    break;
+                    Parallel.ForEach(enemyList, (item, state) => state.Stop());
                 }
-            }
+            });
+
             return hitAChar;
         }
 
         private bool HitACoin(Character character, List<Coin> coinsList)
         {
-            foreach (Coin coin in coinsList)
+            bool hitACoin = false;
+
+            Parallel.ForEach(coinsList, coin =>
             {
                 if (coin != null && character != null && character.Collider != null && coin.Collider != null)
                 {
-                        currentCoin = coin;
-                        return character.Collider.Intersects(coin.Collider);
+                    if (character.Collider.Intersects(coin.Collider))
+                    {
+                        Game.Instance.player.coinCounter += coin.Amount;
+                        hitACoin = true;
+                        Parallel.ForEach(coinsList, (item, state) => state.Stop());
+                    }
                 }
-            }
-            return false;
+            });
+
+            return hitACoin;
         }
+
 
         private bool HitADoor(Character character, List<Character> doors)
         {
@@ -237,14 +248,22 @@ namespace Fall2020_CSC403_Project
                             {
                                 this.Controls.Remove(control);
                             }
-
                         }
+
+                        this.currentRoomCoins.Clear();
+                        this.currentRoomEnemies.Clear();
+                        this.doors.Clear();
+                        this.walls.Clear();
+                        this.roomControls.Clear();
+
+                        Game game = Game.Instance;
+                        Player player = game.player;
 
                         switch (doorDirection)
                         {
                             case "North":
                                 currentRow -= 1;
-                                character.Position = new Vector2((int)character.Position.x, 700);
+                                character.Position = new Vector2((int)character.Position.x, 100);
                                 try
                                 {
                                     currentRoom = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[currentRow, currentCol];
@@ -252,6 +271,7 @@ namespace Fall2020_CSC403_Project
                                 catch
                                 {
                                     currentRow += 1;
+                                    player.MoveBack();
                                 }
                                 LoadRoomElements(currentRoom);
                                 break;
@@ -266,13 +286,14 @@ namespace Fall2020_CSC403_Project
                                 catch
                                 {
                                     currentCol -= 1;
+                                    player.MoveBack();
                                 }
                                 LoadRoomElements(currentRoom);
                                 break;
 
                             case "South":
                                 currentRow += 1;
-                                character.Position = new Vector2((int)character.Position.x, 100);
+                                character.Position = new Vector2((int)character.Position.x, 700);
                                 try
                                 {
                                     currentRoom = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[currentRow, currentCol];
@@ -280,6 +301,7 @@ namespace Fall2020_CSC403_Project
                                 catch
                                 {
                                     currentRow -= 1;
+                                    player.MoveBack();
                                 }
                                 LoadRoomElements(currentRoom);
                                 break;
@@ -294,6 +316,7 @@ namespace Fall2020_CSC403_Project
                                 catch
                                 {
                                     currentCol += 1;
+                                    player.MoveBack();
                                 }
                                 LoadRoomElements(currentRoom);
                                 break;
@@ -317,7 +340,7 @@ namespace Fall2020_CSC403_Project
 
                 if (!(frmBattle == null) && enemy.Defeated != true)
                 {
-                    if (enemy == game.bossKoolaid)
+                    if (enemy.Name.Contains("koolaid")) 
                     {
                         frmBattle.SetupForBossBattle();
                     }
@@ -404,42 +427,42 @@ namespace Fall2020_CSC403_Project
         {
             Game game = Game.Instance;
             Player player = game.player;
-            Game.Instance.player.ResetMoveSpeed();
+            player.ResetMoveSpeed();
             if (isUpPressed && isRightPressed)
             {
-                game.player.GoUpRight();
+                player.GoUpRight();
             }
             else if (isUpPressed && isLeftPressed)
             {
-                game.player.GoUpLeft();
+                player.GoUpLeft();
             }
             else if (isDownPressed && isRightPressed)
             {
-                game.player.GoDownRight();
+                player.GoDownRight();
             }
             else if (isDownPressed && isLeftPressed)
             {
-                game.player.GoDownLeft();
+                player.GoDownLeft();
             }
             else if (isUpPressed)
             {
-                game.player.GoUp();
+                player.GoUp();
             }
             else if (isDownPressed)
             {
-                game.player.GoDown();
+                player.GoDown();
             }
             else if (isLeftPressed)
             {
-                game.player.GoLeft();
+                player.GoLeft();
             }
             else if (isRightPressed)
             {
-                game.player.GoRight();
+                player.GoRight();
             }
             else
             {
-                game.player.ResetMoveSpeed();
+                player.ResetMoveSpeed();
             }
         }
         private void lblInGameTime_Click(object sender, EventArgs e)
@@ -498,8 +521,8 @@ namespace Fall2020_CSC403_Project
 
             foreach (IDungeonEnemyData enemyData in currentRoom.Enemies)
             {
-                int enemyX = (int)enemyData.Position.x % (this.Width -50);
-                int enemyY = (int)enemyData.Position.y % (this.Height -50);
+                int enemyX = (int)enemyData.Position.x;
+                int enemyY = (int)enemyData.Position.y;
 
                 Enemy enemy = new Enemy(null, new Vector2(50, 50), null, enemyData.defeated, enemyData.ID);
                 enemy.Img = LoadImage(enemyData.image);
@@ -511,14 +534,19 @@ namespace Fall2020_CSC403_Project
                 enemyPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
                 enemyPictureBox.Tag = "Enemy";
                 enemyPictureBox.Visible = true;
+                enemyPictureBox.BringToFront();
 
                 enemy.Position = CreatePosition(enemyPictureBox, false);
                 enemy.Collider = CreateCollider(enemyPictureBox, PADDING);
+                enemy.Name = enemyData.image;
+                enemy.displayName = enemyData.displayName;
+                enemy.ChangeHealthAndStrength(enemyData.Health, enemyData.MaxHealth, enemyData.strength);
 
                 System.Windows.Forms.Label enemyLabel = new System.Windows.Forms.Label();
                 enemyLabel.Text = enemyData.displayName;
-                enemyLabel.Location = new Point(enemyX, enemyY);
+                enemyLabel.Location = new Point(enemyX - 20, enemyY - 20);
                 enemyLabel.BackColor = Color.Transparent;
+                enemyLabel.BringToFront();
 
                 this.Controls.Add(enemyPictureBox);
                 this.Controls.Add(enemyLabel);
@@ -529,8 +557,8 @@ namespace Fall2020_CSC403_Project
 
             foreach (IDungeonCoin coinData in currentRoom.Coins)
             {
-                int coinX = (int)coinData.Position.x % (this.Width - 50);
-                int coinY = (int)coinData.Position.y % (this.Height - 50);
+                int coinX = (int)coinData.Position.x;
+                int coinY = (int)coinData.Position.y;
 
                 int coinValue = (int)Math.Round(coinData.Amount);
                 Coin coin = new Coin(new Vector2(20, 20), null, coinValue);
@@ -543,6 +571,7 @@ namespace Fall2020_CSC403_Project
                 coinPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
                 coinPictureBox.Tag = "Coin";
                 coinPictureBox.Visible = true;
+                coinPictureBox.BringToFront();
 
                 coin.Position = CreatePosition(coinPictureBox, false);
                 coin.Collider = CreateCollider(coinPictureBox, PADDING);
@@ -551,6 +580,7 @@ namespace Fall2020_CSC403_Project
                 coinLabel.Text = coinData.Amount.ToString();
                 coinLabel.Location = new Point(coinX, coinY);
                 coinLabel.BackColor = Color.Transparent;
+                coinLabel.BringToFront();
 
                 this.Controls.Add(coinPictureBox);
                 this.Controls.Add(coinLabel);
@@ -588,7 +618,7 @@ namespace Fall2020_CSC403_Project
         private void GenerateWalls(Fall2020_CSC403_Project.code.Game.DungeonRoom currentRoom)
         {
             const int PADDING = 4;
-            int wallWidth = 25;
+            int wallWidth = 50;
             this.walls = new List<Character>();
             this.doors = new List<Character>();
 
@@ -610,7 +640,7 @@ namespace Fall2020_CSC403_Project
             {
                 PictureBox topWall = new PictureBox();
                 topWall.Size = new Size(this.Width / 3, wallWidth);
-                topWall.Location = new Point(this.Width / 3, 0);
+                topWall.Location = new Point(0, 0);
                 topWall.BackgroundImage = LoadImage("wall.jpg");
                 topWall.BackgroundImageLayout = ImageLayout.Stretch;
                 topWall.Visible = true;
@@ -622,15 +652,17 @@ namespace Fall2020_CSC403_Project
 
                 PictureBox door = new PictureBox();
                 door.Size =new Size(this.Width / 3, wallWidth);
-                door.Location = new Point(this.Width - wallWidth, this.Height / 3);
+                door.Location = new Point(this.Width /3, 0);
                 door.BackColor = Color.Brown;
                 door.BackgroundImageLayout = ImageLayout.Stretch;
                 door.Visible = true;
                 this.Controls.Add(door);
                 this.roomControls.Add(door);
 
-                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING));
-                doorCharacter.Tag = "North";
+                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING))
+                {
+                    Tag = "North"
+                };
                 this.doors.Add(doorCharacter);
 
                 PictureBox topWall2 = new PictureBox();
@@ -683,8 +715,10 @@ namespace Fall2020_CSC403_Project
                 this.Controls.Add(door);
                 this.roomControls.Add(door);
 
-                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING));
-                doorCharacter.Tag = "East";
+                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING))
+                {
+                    Tag = "East"
+                };
                 this.doors.Add(doorCharacter);
 
                 PictureBox rightWall2 = new PictureBox();
@@ -736,8 +770,10 @@ namespace Fall2020_CSC403_Project
                 this.Controls.Add(door);
                 this.roomControls.Add(door);
 
-                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING));
-                doorCharacter.Tag = "South";
+                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING))
+                {
+                    Tag = "South"
+                };
                 this.doors.Add(doorCharacter);
 
                 PictureBox bottomWall2 = new PictureBox();
@@ -789,8 +825,10 @@ namespace Fall2020_CSC403_Project
                 this.Controls.Add(door);
                 this.roomControls.Add(door);
 
-                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING));
-                doorCharacter.Tag = "West";
+                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING))
+                {
+                    Tag = "West"
+                };
                 this.doors.Add(doorCharacter);
 
                 PictureBox leftWall2 = new PictureBox();

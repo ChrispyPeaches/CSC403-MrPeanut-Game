@@ -62,6 +62,33 @@ namespace Fall2020_CSC403_Project
             "enemy_poisonpacket.fw.png"
         };
 
+        List<string> cheetosNames = new List<string>
+        {
+            "Flamin' Crunch Curl",
+            "Zesty Cheese Zing",
+            "Puffmaster Delight",
+            "Jalapeño Cheesepop",
+            "Nacho Bliss Nugget"
+        };
+
+        List<string> koolaidNames = new List<string>
+        {
+            "Berry Blast Beverage",
+            "Tropical Punch Delight",
+            "Citrus Chill Elixir",
+            "Cherry Splash Quencher",
+            "Grape Fizz Fusion"
+        };
+
+        List<string> poisonPacketNames = new List<string>
+        {
+            "Toxic Enigma",
+            "Venom Vial",
+            "Lethal Dose",
+            "Hazardous Pouch",
+            "Deadly Sachet"
+        };
+
         public Dungeon(int N)
         {
             this.N = N;
@@ -200,27 +227,30 @@ namespace Fall2020_CSC403_Project
 
                 // for random strength
                 int randomStrength = new Random().Next(3, 8);
-                int roundedStrength = (int)(Math.Floor(randomStrength / 1.0) * 10);
+                int roundedStrength = (int)(Math.Floor(randomStrength / 1.0));
 
                 string enemyImage;
+                string enemyName;
 
                 if (roundedHealth >= 30 && roundedHealth <= 80)
                 {
                     enemyImage = enemyImages[0];
+                    enemyName = cheetosNames[new Random().Next(0, 5)];
                 }
                 else if (roundedHealth > 80 && roundedHealth <= 160)
                 {
                     enemyImage = enemyImages[2];
+                    enemyName = poisonPacketNames[new Random().Next(0, 5)];
                 }
                 else
                 {
                     enemyImage = enemyImages[1];
+                    enemyName = koolaidNames[new Random().Next(0, 5)];
                 }
-
 
                 DungeonEnemyData enemy = new DungeonEnemyData
                 {
-                    displayName = "Enemy " + (i+1),
+                    displayName = enemyName,
                     defeated = false,
                     MaxHealth = roundedHealth,
                     strength = roundedStrength,

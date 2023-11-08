@@ -34,16 +34,7 @@ namespace Fall2020_CSC403_Project.code
         /// <param name="collider">this is the collider for the enemy</param>
         public Enemy(string name, Vector2 initPos, Collider collider, bool defeated = false, Guid id = new Guid()) : base(initPos, collider)
         {
-            /*int health = enemyData.Value<int>("Health");
-            int maxHealth = enemyData.Value<int>("MaxHealth");
-            float strength = enemyData.Value<float>("strength");
-            displayName = enemyData.Value<string>("displayName");*/
-            int health = 100;
-            int maxHealth = 100;
-            float strength = 1;
-            displayName = "test";
-            this.ChangeHealthAndStrength(health, maxHealth, strength);
-            Name = displayName;
+            displayName = displayName;
             Defeated = defeated;
             ID = id;
         }
