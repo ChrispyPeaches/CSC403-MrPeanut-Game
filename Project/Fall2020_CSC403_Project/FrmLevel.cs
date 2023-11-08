@@ -480,37 +480,6 @@ namespace Fall2020_CSC403_Project
             currentRoom = room;
         }
 
-        private Fall2020_CSC403_Project.code.Game.DungeonRoom GetCurrentRoom()
-        {
-            int dungeonWidth = Game.Instance.Dungeon.GetLength(0);
-            int dungeonHeight = Game.Instance.Dungeon.GetLength(1);
-
-            for (int j = 0; j < dungeonHeight; j++)
-            {
-                for (int i = 0; i < dungeonWidth; i++)
-                {
-                    Fall2020_CSC403_Project.code.Game.DungeonRoom room = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[i, j];
-                    if (playerIsInRoom(room))
-                    {
-                        currentRow = i;
-                        currentCol = j;
-                        SetCurrentRoom(room);
-                        return room;
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        private bool playerIsInRoom(Fall2020_CSC403_Project.code.Game.DungeonRoom room)
-        {
-            return Game.Instance.player.Position.x >= room.TopLeft.x &&
-                   Game.Instance.player.Position.x <= room.BottomRight.x &&
-                   Game.Instance.player.Position.y >= room.TopLeft.y &&
-                   Game.Instance.player.Position.y <= room.BottomRight.y;
-        }
-
         private void LoadRoomElements(Fall2020_CSC403_Project.code.Game.DungeonRoom currentRoom)
         {
             const int PADDING = 7;
