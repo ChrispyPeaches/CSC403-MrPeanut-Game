@@ -64,7 +64,7 @@ namespace Fall2020_CSC403_Project.Cosmetics {
         ///   Looks up a localized string similar to {
         ///    &quot;Name&quot;: &quot;Foam Cowboy Hat&quot;,
         ///    &quot;YCoordinate&quot;: 1,
-        ///    &quot;FileName&quot;: &quot;hat_foam_image&quot;
+        ///    &quot;ImageResourceName&quot;: &quot;hat_foam_image&quot;
         ///}.
         /// </summary>
         public static string hat_foam {
@@ -87,7 +87,7 @@ namespace Fall2020_CSC403_Project.Cosmetics {
         ///   Looks up a localized string similar to {
         ///    &quot;Name&quot;: &quot;Skyrim Helmet&quot;,
         ///    &quot;YCoordinate&quot;: 2,
-        ///    &quot;FileName&quot;: &quot;hat_skyrimhelmet_image&quot;
+        ///    &quot;ImageResourceName&quot;: &quot;hat_skyrimhelmet_image&quot;
         ///}.
         /// </summary>
         public static string hat_skyrimhelmet {

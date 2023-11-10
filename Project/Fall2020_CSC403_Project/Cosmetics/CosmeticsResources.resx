@@ -121,7 +121,7 @@
     <value>{
     "Name": "Foam Cowboy Hat",
     "YCoordinate": 1,
-    "FileName": "hat_foam_image"
+    "ImageResourceName": "hat_foam_image"
 }</value>
   </data>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
@@ -132,7 +132,7 @@
     <value>{
     "Name": "Skyrim Helmet",
     "YCoordinate": 2,
-    "FileName": "hat_skyrimhelmet_image"
+    "ImageResourceName": "hat_skyrimhelmet_image"
 }</value>
   </data>
   <data name="hat_skyrimhelmet_image" type="System.Resources.ResXFileRef, System.Windows.Forms">
