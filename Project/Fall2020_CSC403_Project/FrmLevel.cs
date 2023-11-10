@@ -11,6 +11,9 @@ using Fall2020_CSC403_Project.Properties;
 using System.Numerics;
 using Vector2 = Fall2020_CSC403_Project.code.Vector2;
 using System.Linq;
+using System.IO;
+using System.Reflection;
+using System.Threading.Tasks;
 
 namespace Fall2020_CSC403_Project
 {
@@ -40,6 +43,7 @@ namespace Fall2020_CSC403_Project
         public FrmLevel(IOpenAIApi openAIApi)
         {
             InitializeComponent();
+            SetPlayerImage();
             _openAIApi = openAIApi;
             instanceForDeath = this;
             if (instance == null)
@@ -418,6 +422,28 @@ namespace Fall2020_CSC403_Project
         {
             Controls.OfType<PictureBox>().FirstOrDefault(pb => pb.Name == name).BackgroundImage = Resources.transparent;
             Controls.OfType<PictureBox>().FirstOrDefault(pb => pb.Name == name).Hide();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        public void SetPlayerImage()
+        {
+            string appDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string playerImagePath = Path.Combine(appDirectory, "..", "..", "Saves", "playerImage.png");
+
+            if (File.Exists(playerImagePath))
+            {
+                picPlayer.BackgroundImage = Image.FromFile(playerImagePath);   
+            }
         }
     }
 }

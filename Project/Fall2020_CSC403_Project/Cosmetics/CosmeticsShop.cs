@@ -203,10 +203,10 @@ namespace Fall2020_CSC403_Project
             {
                 Directory.CreateDirectory(savesDirectoryPath);
             }
-            using (FileStream destinationStream = File.Create(Path.Combine(savesDirectoryPath, "playerImage.png")))
+            using (FileStream playerImageStream = File.Create(Path.Combine(savesDirectoryPath, "playerImage.png")))
             {
                 playerImage.Save(
-                    destinationStream,
+                    playerImageStream,
                     System.Drawing.Imaging.ImageFormat.Png);
             }
         }
