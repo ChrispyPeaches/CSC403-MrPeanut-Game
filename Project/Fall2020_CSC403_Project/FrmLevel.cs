@@ -10,11 +10,13 @@ using static Fall2020_CSC403_Project.OpenAIApi.ChatCompletionQuery;
 using Fall2020_CSC403_Project.Properties;
 using System.Numerics;
 using Vector2 = Fall2020_CSC403_Project.code.Vector2;
+using System.Linq;
 
 namespace Fall2020_CSC403_Project
 {
     public partial class FrmLevel : Form
     {
+        public static FrmLevel instance;
         private Character[] walls;
 
         private Coin coin1;
@@ -40,6 +42,17 @@ namespace Fall2020_CSC403_Project
             InitializeComponent();
             _openAIApi = openAIApi;
             instanceForDeath = this;
+            if (instance == null)
+            {
+                instance = this;
+            }
+        }
+        public static FrmLevel Instance
+        {
+            get
+            {
+                return instance;
+            }
         }
 
         public void ResetMovementBooleans()
@@ -95,6 +108,23 @@ namespace Fall2020_CSC403_Project
             game.bossKoolaid.Img = picBossKoolAid.Image;
             game.enemyPoisonPacket.Img = picEnemyPoisonPacket.BackgroundImage;
             game.enemyCheeto.Img = picEnemyCheeto.BackgroundImage;
+
+            // Upon game load, check if enemies are dead ; If so, hide enemies
+            if (game.IsKoolAidDefeated)
+            {
+                DefeatEnemy("picBossKoolAid");
+                game.bossKoolaid.Collider = null;
+            }
+            if (game.IsCheetosDefeated)
+            {
+                DefeatEnemy("picEnemyCheeto");
+                game.enemyCheeto.Collider = null;
+            }
+            if (game.IsPoisonPacketDefeated)
+            {
+                DefeatEnemy("picEnemyPoisonPacket");
+                game.enemyPoisonPacket.Collider = null;
+            }
 
             game.bossKoolaid.Color = Color.Red;
             game.enemyPoisonPacket.Color = Color.Green;
@@ -245,7 +275,7 @@ namespace Fall2020_CSC403_Project
             player.MoveBack();
             try
             {
-                frmBattle = FrmBattle.GetInstance(enemy, _openAIApi);
+                frmBattle = FrmBattle.GetInstance(enemy, _openAIApi, this);
                 if (!(frmBattle == null))
                 {
                     if (enemy == game.bossKoolaid)
@@ -381,6 +411,13 @@ namespace Fall2020_CSC403_Project
         private void picBossKoolAid_Click(object sender, EventArgs e)
         {
 
+        }
+
+        // Upon defeating an enemy, hide image
+        public void DefeatEnemy(string name)
+        {
+            Controls.OfType<PictureBox>().FirstOrDefault(pb => pb.Name == name).BackgroundImage = Resources.transparent;
+            Controls.OfType<PictureBox>().FirstOrDefault(pb => pb.Name == name).Hide();
         }
     }
 }

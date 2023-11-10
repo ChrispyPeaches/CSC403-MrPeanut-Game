@@ -20,6 +20,7 @@ namespace Fall2020_CSC403_Project
         public string enemyName = "";
         private IOpenAIApi _openAIApi;
         private IList<ChatMessage> chats;
+        private FrmLevel frmLevel;
 
         public static DeathScreen deathScreen = null;
 
@@ -29,12 +30,13 @@ namespace Fall2020_CSC403_Project
         SoundPlayer battleMusic = new SoundPlayer(Resources.battle_music);
         SoundPlayer gameOverTheme = new SoundPlayer(Resources.game_over_theme);
 
-        private FrmBattle(IOpenAIApi openAIApi)
+        private FrmBattle(IOpenAIApi openAIApi, FrmLevel frmLevel)
         {
             InitializeComponent();
             KeyPreview = true;
             _openAIApi = openAIApi;
             instanceForDeath = this;
+            this.frmLevel = frmLevel;
         }
 
         public void Setup()
@@ -80,12 +82,12 @@ namespace Fall2020_CSC403_Project
             tmrFinalBattle.Enabled = true;
         }
 
-        public static FrmBattle GetInstance(Enemy enemy, IOpenAIApi openAIApi)
+        public static FrmBattle GetInstance(Enemy enemy, IOpenAIApi openAIApi, FrmLevel frmLevel)
         {
             Boolean check = CheckFlag(enemy);
             if (instance == null && !check)
             {
-                instance = new FrmBattle(openAIApi);
+                instance = new FrmBattle(openAIApi, frmLevel);
                 instance.enemy = enemy;
                 instance.enemyName = enemy.Name;
                 instance.Setup();
@@ -143,7 +145,7 @@ namespace Fall2020_CSC403_Project
         private void btnAttack_Click(object sender, EventArgs e)
         {
             Game game = Game.Instance;
-            FrmBattle battleForm = GetInstance(enemy, this._openAIApi);
+            FrmBattle battleForm = GetInstance(enemy, this._openAIApi, frmLevel);
             if (game.player.Health > 0)
             {
                 // update hp
@@ -162,10 +164,14 @@ namespace Fall2020_CSC403_Project
                         Game.Instance.player.Health = Game.Instance.player.MaxHealth;
                         Game.Instance.player.strength += 2;
                         game.IsCheetosDefeated = true;
+                        frmLevel.DefeatEnemy("picEnemyCheeto");
+                        Game.Instance.enemyCheeto.Collider = null;
                     }
                     else if (this.enemyName.Contains("enemy_koolaid"))
                     {
                         game.IsKoolAidDefeated = true;
+                        frmLevel.DefeatEnemy("picBossKoolAid");
+                        Game.Instance.bossKoolaid.Collider = null;
                     }
                     else if (this.enemyName.Contains("enemy_poisonpacket"))
                     {
@@ -173,6 +179,8 @@ namespace Fall2020_CSC403_Project
                         Game.Instance.player.Health = Game.Instance.player.MaxHealth;
                         Game.Instance.player.strength += 2;
                         game.IsPoisonPacketDefeated = true;
+                        frmLevel.DefeatEnemy("picEnemyPoisonPacket");
+                        Game.Instance.enemyPoisonPacket.Collider = null;
                     }
                     SendKeys.SendWait("{ESC}");
                 }
