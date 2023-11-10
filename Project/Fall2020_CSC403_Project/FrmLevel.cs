@@ -14,6 +14,7 @@ using System.Web.UI.WebControls;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using static Fall2020_CSC403_Project.Controller;
 
 namespace Fall2020_CSC403_Project
 {
@@ -250,11 +251,7 @@ namespace Fall2020_CSC403_Project
                             }
                         }
 
-                        this.currentRoomCoins.Clear();
-                        this.currentRoomEnemies.Clear();
-                        this.doors.Clear();
-                        this.walls.Clear();
-                        this.roomControls.Clear();
+                        this.UpdateRoomData();
 
                         Game game = Game.Instance;
                         Player player = game.player;
@@ -263,7 +260,7 @@ namespace Fall2020_CSC403_Project
                         {
                             case "North":
                                 currentRow -= 1;
-                                character.Position = new Vector2((int)character.Position.x, 100);
+                                character.Position = new Vector2((int)character.Position.x, 800);
                                 try
                                 {
                                     currentRoom = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[currentRow, currentCol];
@@ -278,7 +275,7 @@ namespace Fall2020_CSC403_Project
 
                             case "East":
                                 currentCol += 1;
-                                character.Position = new Vector2(100, (int)character.Position.y);
+                                character.Position = new Vector2(200, (int)character.Position.y);
                                 try
                                 {
                                     currentRoom = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[currentRow, currentCol];
@@ -293,7 +290,7 @@ namespace Fall2020_CSC403_Project
 
                             case "South":
                                 currentRow += 1;
-                                character.Position = new Vector2((int)character.Position.x, 700);
+                                character.Position = new Vector2((int)character.Position.x, 200);
                                 try
                                 {
                                     currentRoom = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[currentRow, currentCol];
@@ -308,7 +305,7 @@ namespace Fall2020_CSC403_Project
 
                             case "West":
                                 currentCol -= 1;
-                                character.Position = new Vector2(700, (int)character.Position.y);
+                                character.Position = new Vector2(800, (int)character.Position.y);
                                 try
                                 {
                                     currentRoom = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[currentRow, currentCol];
@@ -475,11 +472,6 @@ namespace Fall2020_CSC403_Project
 
         }
 
-        private void SetCurrentRoom(Fall2020_CSC403_Project.code.Game.DungeonRoom room)
-        {
-            currentRoom = room;
-        }
-
         private void LoadRoomElements(Fall2020_CSC403_Project.code.Game.DungeonRoom currentRoom)
         {
             const int PADDING = 7;
@@ -509,6 +501,7 @@ namespace Fall2020_CSC403_Project
                 enemy.Collider = CreateCollider(enemyPictureBox, PADDING);
                 enemy.Name = enemyData.image;
                 enemy.displayName = enemyData.displayName;
+                enemy.chatHistory = enemyData.chatHistory;
                 enemy.ChangeHealthAndStrength(enemyData.Health, enemyData.MaxHealth, enemyData.strength);
 
                 System.Windows.Forms.Label enemyLabel = new System.Windows.Forms.Label();
@@ -530,7 +523,8 @@ namespace Fall2020_CSC403_Project
                 int coinY = (int)coinData.Position.y;
 
                 int coinValue = (int)Math.Round(coinData.Amount);
-                Coin coin = new Coin(new Vector2(20, 20), null, coinValue);
+                Guid coinID = coinData.ID;
+                Coin coin = new Coin(new Vector2(20, 20), null, coinValue, coinID);
                 coin.Img = LoadImage(coinData.Image);
 
                 PictureBox coinPictureBox = new PictureBox();
@@ -820,9 +814,45 @@ namespace Fall2020_CSC403_Project
             { 
                 if (enemy.ID == currentEnemy.ID)
                 {
+                    enemy.Health = enemy.Health;
                     enemy.Defeated = true;
                 }
             }
+        }
+
+        public void UpdateRoomData()
+        {
+            foreach (Fall2020_CSC403_Project.DungeonEnemyData currentEnemy in Game.Instance.Dungeon[currentRow, currentCol].Enemies)
+            {
+                foreach (Enemy enemy in currentRoomEnemies)
+                {
+                    if (enemy.ID == currentEnemy.ID)
+                    {
+                        currentEnemy.Health = enemy.Health;
+                        currentEnemy.defeated = enemy.Defeated;
+                        currentEnemy.chatHistory = enemy.chatHistory;
+                        break;
+                    }
+                }
+            }
+
+            foreach (Fall2020_CSC403_Project.DungeonCoin currentCoin in Game.Instance.Dungeon[currentRow, currentCol].Coins)
+            {
+                foreach (Coin coin in currentRoomCoins)
+                {
+                    if (coin.ID == currentCoin.ID)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            Game.Instance.Dungeon[currentRow, currentCol] = currentRoom;
+            this.currentRoomCoins.Clear();
+            this.currentRoomEnemies.Clear();
+            this.doors.Clear();
+            this.walls.Clear();
+            this.roomControls.Clear();
         }
     }
 }

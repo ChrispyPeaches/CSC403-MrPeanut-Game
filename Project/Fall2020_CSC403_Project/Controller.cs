@@ -88,10 +88,8 @@ namespace Fall2020_CSC403_Project
                             dungeon = dungeon,
                             width = dungeonSize,
                             height = dungeonSize,
-                            //row = selectedRow,
-                            //column = selectedCol,
-                            row = 0,
-                            column = 0,
+                            row = selectedRow,
+                            column = selectedCol,
                             playerData = new PlayerData
                             {
                                 name = pathToFile,

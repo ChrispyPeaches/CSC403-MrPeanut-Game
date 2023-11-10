@@ -21,12 +21,18 @@ namespace Fall2020_CSC403_Project
         public IDungeonPositionData TopRight { get; set; }
         public IDungeonPositionData BottomLeft { get; set; }
         public IDungeonPositionData BottomRight { get; set; }
+
+        public static implicit operator DungeonRoom(Game.DungeonRoom v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class DungeonCoin: IDungeonCoin
     {
         public float Amount { get; set; }
         public string Image { get; set; }
+        public Guid ID { get; set; }
         public IDungeonPositionData Position { get; set; }
     }
 
@@ -39,6 +45,7 @@ namespace Fall2020_CSC403_Project
         public int Health { get; set; }
         public string image { get; set; }
         public Guid ID { get; set; }
+        public List<IEnemyDialogue> chatHistory { get; set; }
         public IDungeonPositionData Position { get; set; }
     }
 
@@ -47,6 +54,13 @@ namespace Fall2020_CSC403_Project
         public float x { get; set; }
         public float y { get; set; }
     }
+
+    public class EnemyDialogue : IEnemyDialogue
+    {
+        public string UserName { get; set; }
+        public string Text { get; set; }
+    }
+
 
     public class Dungeon
     {
@@ -257,6 +271,7 @@ namespace Fall2020_CSC403_Project
                     Health = roundedHealth,
                     ID =  Guid.NewGuid(),
                     image = enemyImage,
+                    chatHistory = new List<IEnemyDialogue>(),
                 };
 
                 enemy.Position = CalculateRandomPositionInRoom(room);
@@ -267,13 +282,14 @@ namespace Fall2020_CSC403_Project
 
         private void GenerateRandomCoins(DungeonRoom room)
         {
-            int numCoins = new Random().Next(1, 8);
+            int numCoins = new Random().Next(1, 5);
             for (int i = 0; i < numCoins; i++)
             {
                 DungeonCoin coin = new DungeonCoin
                 {
                     Amount = new Random().Next(1, 5),
-                    Image = "coin.png"
+                    Image = "coin.png",
+                    ID = Guid.NewGuid(),
                 };
 
                 coin.Position = CalculateRandomPositionInRoom(room);

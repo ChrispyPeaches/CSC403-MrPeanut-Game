@@ -37,6 +37,7 @@ namespace Fall2020_CSC403_Project.code
         {
             public float Amount { get; set; }
             public string Image { get; set; }
+            public Guid ID { get; set; }
             public IDungeonPositionData Position { get; set; }
         }
 
@@ -49,6 +50,7 @@ namespace Fall2020_CSC403_Project.code
             public int Health { get; set; }
             public string image { get; set; }
             public Guid ID { get; set; }
+            public List<IEnemyDialogue> chatHistory { get; set; }
             public IDungeonPositionData Position { get; set; }
         }
 
@@ -94,6 +96,7 @@ namespace Fall2020_CSC403_Project.code
             JObject dungeonData = (JObject)save["dungeon"];
             int dungeonWidth = Convert.ToInt32(save["width"]);
             int dungeonHeight = Convert.ToInt32(save["height"]);
+
             this.row = Convert.ToInt32(save["row"]);
             this.column = Convert.ToInt32(save["column"]);
 
@@ -117,8 +120,14 @@ namespace Fall2020_CSC403_Project.code
                             strength = enemyData["strength"].Value<float>(),
                             Health = enemyData["Health"].Value<int>(),
                             image = enemyData["image"].Value<string>(),
-                            Position = enemyData["Position"].ToObject<DungeonPositionData>()
+                            ID = Guid.Parse(enemyData["ID"].Value<string>()),
+                            Position = enemyData["Position"].ToObject<DungeonPositionData>(),
                         };
+
+                        JArray chatHistoryArray = (JArray)enemyData["chatHistory"];
+                        List<IEnemyDialogue> chatHistoryList = chatHistoryArray.ToObject<List<IEnemyDialogue>>();
+                        enemy.chatHistory = chatHistoryList;
+
                         enemies.Add(enemy);
                     }
 
@@ -130,6 +139,7 @@ namespace Fall2020_CSC403_Project.code
                         {
                             Amount = coinData["Amount"].Value<float>(),
                             Image = coinData["Image"].Value<string>(),
+                            ID = Guid.Parse(coinData["ID"].Value<string>()),
                             Position = coinData["Position"].ToObject<DungeonPositionData>()
                         };
                         coins.Add(coin);

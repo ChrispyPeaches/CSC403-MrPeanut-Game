@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Fall2020_CSC403_Project.code
@@ -26,7 +27,7 @@ namespace Fall2020_CSC403_Project.code
         public string displayName { get; set; }
         public bool Defeated { get; set; }
         public Guid ID { get; set; }
-
+        public List<IEnemyDialogue> chatHistory { get; set; }
         /// <summary>
         /// 
         /// </summary>

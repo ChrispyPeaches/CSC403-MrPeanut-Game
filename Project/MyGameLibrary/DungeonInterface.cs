@@ -25,6 +25,7 @@ namespace Fall2020_CSC403_Project.code
     {
         float Amount { get; set; }
         string Image { get; set; }
+        Guid ID { get; set; }
         IDungeonPositionData Position { get; set; }
     }
 
@@ -37,6 +38,7 @@ namespace Fall2020_CSC403_Project.code
         int Health { get; set; }
         string image { get; set; }
         Guid ID { get; set; }
+        List<IEnemyDialogue> chatHistory { get; set; }
         IDungeonPositionData Position { get; set; }
     }
 
@@ -44,5 +46,11 @@ namespace Fall2020_CSC403_Project.code
     {
         float x { get; set; }
         float y { get; set; }
+    }
+
+    public interface IEnemyDialogue
+    {
+        string UserName { get; set; }
+        string Text { get; set; }
     }
 }
