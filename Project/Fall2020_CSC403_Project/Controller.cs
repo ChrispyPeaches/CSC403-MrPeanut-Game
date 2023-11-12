@@ -120,7 +120,7 @@ namespace Fall2020_CSC403_Project
                 }
             }
 
-            public void UpdateData(string pathToFile = "Save Data Name Here")
+            public void UpdateData(string pathToFile = "Save Data Name Here", int currentRow = 0, int currentCol= 0)
             {
                 string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
                 string saveDirectory = Path.Combine(appDirectory, "..", "..", "Saves", pathToFile + ".json");
@@ -130,22 +130,38 @@ namespace Fall2020_CSC403_Project
                     Game game = Game.Instance;
                     Player player = game.player;
                     CharacterState characterState = BattleCharacter.GetCharacterState(player);
+
+                    Dungeon dungeon = new Dungeon(Game.Instance.Dungeon.GetLength(0));
+                    for (int row = 0; row < Game.Instance.Dungeon.GetLength(0); row++)
+                    {
+                        for (int col = 0; col < Game.Instance.Dungeon.GetLength(1); col++)
+                        {
+                            DungeonRoom room = Game.Instance.Dungeon[row, col];
+                            dungeon.DungeonRooms[col, row] = room;
+                        }
+                    }
                     SaveData updatedSave = new SaveData
                     {
+                        dungeon = dungeon,
+                        width = Game.Instance.Dungeon.GetLength(0),
+                        height = Game.Instance.Dungeon.GetLength(0),
+                        row = currentRow,
+                        column = currentCol,
                         playerData = new PlayerData
                         {
-                            name = player.Name,
+                            name = pathToFile,
                             MaxHealth = player.MaxHealth,
                             strength = player.strength,
                             Health = player.Health,
                             Position = new PositionData
                             {
                                 x = player.Position.x,
-                                y = player.Position.y
+                                y = player.Position.y,
                             },
                             coinCounter = player.coinCounter,
-                        },
+                        }
                     };
+
                     string jsonSaveData = JsonConvert.SerializeObject(updatedSave);
                     File.WriteAllText(saveDirectory, jsonSaveData, Encoding.UTF8);
                 }

@@ -46,8 +46,8 @@ namespace Fall2020_CSC403_Project
         private List<Coin> currentRoomCoins;
         private List<Control> roomControls = new List<Control>();
 
-        private int currentRow;
-        private int currentCol;
+        public int currentRow;
+        public int currentCol;
 
         public FrmLevel(IOpenAIApi openAIApi)
         {
@@ -64,13 +64,23 @@ namespace Fall2020_CSC403_Project
             isLeftPressed = false;
         }
 
+        public int getRow()
+        {
+            return this.currentRow;
+        }
+
+        public int getColumn()
+        {
+            return this.currentCol;
+        }
+
         private void FrmLevel_Load(object sender, EventArgs e)
         {
             const int PADDING = 7;
 
             Game game = Game.Instance;
-            this.currentRow = game.row;
-            this.currentCol = game.column;
+            this.currentRow = game.getRowForLevel();
+            this.currentCol = game.getColForLevel();
             this.DoubleBuffered = true;
             SoundPlayer overworldTheme = new SoundPlayer(Resources.overworld_theme);
             overworldTheme.PlayLooping();
@@ -205,11 +215,8 @@ namespace Fall2020_CSC403_Project
                 {
                     Game.Instance.player.coinCounter += coin.Amount;
                     RemoveCoinControl(coin.ID);
-                    Coin foundCoin = coinsList.FirstOrDefault(c => c.ID == coin.ID);
-                    if (foundCoin != null)
-                    {
-                        foundCoin.Collider = null;
-                    }
+
+                    coinsList.RemoveAll(c => c.ID == coin.ID);
 
                     return true;
                 }
@@ -377,7 +384,7 @@ namespace Fall2020_CSC403_Project
             }
             else if (e.KeyCode == Keys.Enter)
             {
-                QuickStartMenu quickStartMenu = new QuickStartMenu();
+                QuickStartMenu quickStartMenu = new QuickStartMenu(this);
                 quickStartMenu.StartPosition = FormStartPosition.Manual;
                 quickStartMenu.Left = this.Left + (this.Width - quickStartMenu.Width) / 2;
                 quickStartMenu.Top = this.Top + (this.Height - quickStartMenu.Height) / 2;
@@ -833,12 +840,18 @@ namespace Fall2020_CSC403_Project
                 {
                     if (coin.ID == currentCoin.ID)
                     {
-                        break;
+                        if (coin.Collider == null)
+                        {
+                            Game.Instance.Dungeon[currentRow, currentCol].Coins.Remove(currentCoin);
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
                 }
             }
 
-            Game.Instance.Dungeon[currentRow, currentCol] = this.currentRoom;
             this.currentRoomCoins.Clear();
             this.currentRoomEnemies.Clear();
             this.doors.Clear();

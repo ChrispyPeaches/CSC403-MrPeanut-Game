@@ -71,6 +71,7 @@ namespace Fall2020_CSC403_Project.code
         public DungeonRoom[,] Dungeon { get; set; }
         public int row { get; set; } = 0;
         public int column { get; set; } = 0;
+
         public Game(Dictionary<string, object> save)
         {
             if (instance == null)
@@ -86,6 +87,16 @@ namespace Fall2020_CSC403_Project.code
             {
                 return instance;
             }
+        }
+
+        public int getRowForLevel()
+        {
+            return this.row;
+        }
+
+        public int getColForLevel()
+        {
+            return this.column;
         }
 
         public void InitializeGameEntities(Dictionary<string, object> save)
