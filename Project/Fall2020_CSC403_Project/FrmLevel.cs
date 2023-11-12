@@ -204,11 +204,36 @@ namespace Fall2020_CSC403_Project
                 if (character.Collider.Intersects(coin.Collider))
                 {
                     Game.Instance.player.coinCounter += coin.Amount;
+                    RemoveCoinControl(coin.ID);
+                    Coin foundCoin = coinsList.FirstOrDefault(c => c.ID == coin.ID);
+                    if (foundCoin != null)
+                    {
+                        foundCoin.Collider = null;
+                    }
+
                     return true;
                 }
             }
             return false;
         }
+
+        private void RemoveCoinControl(Guid coinId)
+        {
+            this.roomControls.RemoveAll(control =>
+            {
+                if (control is PictureBox pictureBox && pictureBox.Tag is string tag && tag.StartsWith("Coin") && Guid.TryParse(tag.Substring(4), out Guid guid))
+                {
+                    if (guid == coinId)
+                    {
+                        control.Parent.Controls.Remove(control);
+                        control.Dispose();
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+
 
         private bool HitADoor(Character character, List<Character> doors)
         {
@@ -452,7 +477,7 @@ namespace Fall2020_CSC403_Project
                 int enemyX = (int)enemyData.Position.x;
                 int enemyY = (int)enemyData.Position.y;
 
-                Enemy enemy = new Enemy(null, new Vector2(50, 50), null, enemyData.defeated, enemyData.ID);
+                Enemy enemy = new Enemy(null, new Vector2(enemyX, enemyY), null, enemyData.defeated, enemyData.ID);
                 enemy.Img = LoadImage(enemyData.image);
 
                 PictureBox enemyPictureBox = new PictureBox();
@@ -460,7 +485,7 @@ namespace Fall2020_CSC403_Project
                 enemyPictureBox.Location = new Point(enemyX, enemyY);
                 enemyPictureBox.BackgroundImage = enemy.Img;
                 enemyPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
-                enemyPictureBox.Tag = "Enemy";
+                enemyPictureBox.Tag = "Enemy" + enemy.ID;
                 enemyPictureBox.Visible = true;
 
                 enemy.Position = CreatePosition(enemyPictureBox, false);
@@ -480,6 +505,7 @@ namespace Fall2020_CSC403_Project
                 this.roomControls.Add(enemyPictureBox);
                 this.roomControls.Add(enemyLabel);
                 currentRoomEnemies.Add(enemy);
+                Point location = PointToScreen(enemyPictureBox.Location);
             }
 
             foreach (IDungeonCoin coinData in currentRoom.Coins)
@@ -489,7 +515,7 @@ namespace Fall2020_CSC403_Project
 
                 int coinValue = (int)Math.Round(coinData.Amount);
                 Guid coinID = coinData.ID;
-                Coin coin = new Coin(new Vector2(20, 20), null, coinValue, coinID);
+                Coin coin = new Coin(new Vector2(coinX, coinY), null, coinValue, coinID);
                 coin.Img = LoadImage(coinData.Image);
 
                 PictureBox coinPictureBox = new PictureBox();
@@ -497,7 +523,7 @@ namespace Fall2020_CSC403_Project
                 coinPictureBox.Location = new Point(coinX, coinY);
                 coinPictureBox.BackgroundImage = coin.Img;
                 coinPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
-                coinPictureBox.Tag = "Coin";
+                coinPictureBox.Tag = "Coin" + coinID;
                 coinPictureBox.Visible = true;
 
                 coin.Position = CreatePosition(coinPictureBox, false);
@@ -514,6 +540,7 @@ namespace Fall2020_CSC403_Project
                 this.roomControls.Add(coinPictureBox);
                 this.roomControls.Add(coinLabel);
                 currentRoomCoins.Add(coin);
+                Point location = PointToScreen(coinPictureBox.Location);
             }
 
             GenerateWalls(currentRoom);

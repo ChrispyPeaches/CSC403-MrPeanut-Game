@@ -69,6 +69,7 @@ namespace Fall2020_CSC403_Project
         private int roomWidth = 1400;
         private int roomHeight = 550;
         private int padding = 7;
+        private Random random = new Random();
         List<string> enemyImages = new List<string>
         {
             "enemy_cheetos.fw.png",
@@ -143,17 +144,17 @@ namespace Fall2020_CSC403_Project
             // generate a random starting room for the player;
             // this room should be on the outskirts of the maze itself
             int startX, startY;
-            if (new Random().NextDouble() < 0.5)
+            if (random.NextDouble() < 0.5)
             {
                 // get a random row on the top or bottom wall
-                startY = new Random().Next(0, 2) == 0 ? 0 : N - 1;
-                startX = new Random().Next(0, N);
+                startY = random.Next(0, 2) == 0 ? 0 : N - 1;
+                startX = random.Next(0, N);
             }
             else
             {
                 // get a random column on the left or right wall
-                startX = new Random().Next(0, 2) == 0 ? 0 : N - 1;
-                startY = new Random().Next(0, N);
+                startX = random.Next(0, 2) == 0 ? 0 : N - 1;
+                startY = random.Next(0, N);
             }
             
             // create the maze using DFS
@@ -218,7 +219,6 @@ namespace Fall2020_CSC403_Project
         private void Shuffle(List<int> list)
         {
             int n = list.Count;
-            Random random = new Random();
 
             for (int i = n - 1; i > 0; i--)
             {
@@ -231,15 +231,15 @@ namespace Fall2020_CSC403_Project
 
         private void GenerateRandomEnemies(DungeonRoom room)
         {
-            int numEnemies = new Random().Next(1, 5);
+            int numEnemies = random.Next(1, 5);
             for (int i = 0; i < numEnemies; i++)
             {
                 // for random health
-                int randomHealth = new Random().Next(3, 21);
+                int randomHealth = random.Next(3, 21);
                 int roundedHealth = (int)(Math.Floor(randomHealth / 1.0) * 10);
 
                 // for random strength
-                int randomStrength = new Random().Next(3, 8);
+                int randomStrength = random.Next(3, 8);
                 int roundedStrength = (int)(Math.Floor(randomStrength / 1.0));
 
                 string enemyImage;
@@ -248,17 +248,17 @@ namespace Fall2020_CSC403_Project
                 if (roundedHealth >= 30 && roundedHealth <= 80)
                 {
                     enemyImage = enemyImages[0];
-                    enemyName = cheetosNames[new Random().Next(0, 5)];
+                    enemyName = cheetosNames[random.Next(0, 5)];
                 }
                 else if (roundedHealth > 80 && roundedHealth <= 160)
                 {
                     enemyImage = enemyImages[2];
-                    enemyName = poisonPacketNames[new Random().Next(0, 5)];
+                    enemyName = poisonPacketNames[random.Next(0, 5)];
                 }
                 else
                 {
                     enemyImage = enemyImages[1];
-                    enemyName = koolaidNames[new Random().Next(0, 5)];
+                    enemyName = koolaidNames[random.Next(0, 5)];
                 }
 
                 DungeonEnemyData enemy = new DungeonEnemyData
@@ -268,12 +268,11 @@ namespace Fall2020_CSC403_Project
                     MaxHealth = roundedHealth,
                     strength = roundedStrength,
                     Health = roundedHealth,
-                    ID =  Guid.NewGuid(),
+                    ID = Guid.NewGuid(),
                     image = enemyImage,
                     chatHistory = new List<IEnemyDialogue>(),
+                    Position = CalculateRandomPositionInRoom(room),
                 };
-
-                enemy.Position = CalculateRandomPositionInRoom(room);
 
                 room.Enemies.Add(enemy);
             }
@@ -281,17 +280,16 @@ namespace Fall2020_CSC403_Project
 
         private void GenerateRandomCoins(DungeonRoom room)
         {
-            int numCoins = new Random().Next(1, 5);
+            int numCoins = random.Next(1, 5);
             for (int i = 0; i < numCoins; i++)
             {
                 DungeonCoin coin = new DungeonCoin
                 {
-                    Amount = new Random().Next(1, 5),
+                    Amount = random.Next(1, 5),
                     Image = "coin.png",
                     ID = Guid.NewGuid(),
-                };
-
-                coin.Position = CalculateRandomPositionInRoom(room);
+                    Position = CalculateRandomPositionInRoom(room),
+            };
 
                 room.Coins.Add(coin);
             }
@@ -305,8 +303,8 @@ namespace Fall2020_CSC403_Project
             float maxY = Math.Min(room.BottomLeft.y - 50, 800);
 
             // generate random position in room
-            float randomX = (float)(minX + (maxX - minX) * new Random().NextDouble());
-            float randomY = (float)(minY + (maxY - minY) * new Random().NextDouble());
+            float randomX = (float)(minX + (maxX - minX) * random.NextDouble());
+            float randomY = (float)(minY + (maxY - minY) * random.NextDouble());
 
             return new DungeonPositionData { x = randomX, y = randomY };
         }
