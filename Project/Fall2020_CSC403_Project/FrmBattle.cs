@@ -8,6 +8,7 @@ using System.Linq;
 using System.Media;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Fall2020_CSC403_Project
 {
@@ -20,6 +21,7 @@ namespace Fall2020_CSC403_Project
         public string enemyName = "";
         private IOpenAIApi _openAIApi;
         private IList<ChatMessage> chats;
+        private bool checkedMessages = false;
 
         public static DeathScreen deathScreen = null;
 
@@ -220,6 +222,16 @@ namespace Fall2020_CSC403_Project
         /// <param name="e"></param>
         private async void btnChat_Click(object sender, EventArgs e)
         {
+            if (!checkedMessages)
+            {
+                List<string> chatLines = enemy.chatHistory
+                    .Select(dialogue => $"{dialogue.UserName}: {dialogue.Text}")
+                    .ToList();
+
+                textboxChatHistory.Lines = chatLines.ToArray();
+                checkedMessages = true;
+            }
+
             if (string.IsNullOrEmpty(textboxChatInput.Text))
             {
                 return;
@@ -233,22 +245,21 @@ namespace Fall2020_CSC403_Project
             Player player = game.player;
 
             // Display user message in chat history
-            List<string> chatHistory = textboxChatHistory.Lines.ToList();
-            chatHistory.Add($"\n{player.Name}:");
-            chatHistory.AddRange(textboxChatInput.Lines);
-            textboxChatHistory.Lines = chatHistory.ToArray();
-            textboxChatInput.Text = String.Empty;
+            string userMessage = $"{player.Name}: {textboxChatInput.Text}";
+            textboxChatHistory.AppendText($"\n{userMessage}");
+            textboxChatInput.Text = string.Empty;
 
             // Format message for OpenAI
-            string message = "";
-            message = chatHistory.Aggregate(
-                (combinedString, currentString) =>
-                    combinedString = $"{combinedString}\n{currentString}");
-
             chats.Add(new ChatMessage()
             {
                 Role = RoleType.User,
-                Content = message
+                Content = userMessage
+            });
+
+            enemy.chatHistory.Add(new EnemyDialogue()
+            {
+                UserName = player.Name,
+                Text = userMessage,
             });
 
             // Send to OpenAI
@@ -259,18 +270,20 @@ namespace Fall2020_CSC403_Project
                 });
 
             // Display enemy's response in chat history
+            string enemyResponse = response.Choices.First().Message.Content;
+            textboxChatHistory.AppendText($"\n{enemy.displayName}: {enemyResponse}");
+
             chats.Add(new ChatMessage()
             {
                 Role = RoleType.Assistant,
-                Content = response.Choices.First().Message.Content
+                Content = enemyResponse
             });
 
-            // Display enemy message in chat history
-            chatHistory.Add($"\n{enemy.displayName}:");
-            chatHistory.Add(chats.Last().Content
-                .Substring(chats.Last().Content.IndexOf(':') + 1)
-                .TrimStart('\n'));
-            textboxChatHistory.Lines = chatHistory.ToArray();
+            enemy.chatHistory.Add(new EnemyDialogue()
+            {
+                UserName = enemy.displayName,
+                Text = enemyResponse,
+            });
 
             // Enable chat button
             btnChat.Enabled = true;
