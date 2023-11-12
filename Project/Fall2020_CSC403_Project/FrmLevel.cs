@@ -474,7 +474,6 @@ namespace Fall2020_CSC403_Project
                 enemyLabel.Text = enemyData.displayName;
                 enemyLabel.Location = new Point(enemyX - 20, enemyY - 20);
                 enemyLabel.BackColor = Color.Transparent;
-                enemy.Img = null;
 
                 this.Controls.Add(enemyPictureBox);
                 this.Controls.Add(enemyLabel);
@@ -500,7 +499,6 @@ namespace Fall2020_CSC403_Project
                 coinPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
                 coinPictureBox.Tag = "Coin";
                 coinPictureBox.Visible = true;
-                coin.Img = null;
 
                 coin.Position = CreatePosition(coinPictureBox, false);
                 coin.Collider = CreateCollider(coinPictureBox, PADDING);
