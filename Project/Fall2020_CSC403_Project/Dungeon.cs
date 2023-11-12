@@ -183,38 +183,37 @@ namespace Fall2020_CSC403_Project
                     newX--;
 
                 // check if the new position is even valid
-                if (newX >= 0 && newX < N && newY >= 0 && newY < N)
+                if (newX >= 0 && newX < N && newY >= 0 && newY < N && !DungeonRooms[newX, newY].visited)
                 {
                     DungeonRoom nextRoom = DungeonRooms[newX, newY];
 
-                    if (!nextRoom.visited)
+                    // set doors for the room
+                    if (direction == 0) // north
                     {
-                        // set doors for the room
-                        if (direction == 0) // north
-                        {
-                            room.northDoor = true;
-                            nextRoom.southDoor = true;
-                        }
-                        else if (direction == 1) // east
-                        {
-                            room.eastDoor = true;
-                            nextRoom.westDoor = true;
-                        }
-                        else if (direction == 2) // south
-                        {
-                            room.southDoor = true;
-                            nextRoom.northDoor = true;
-                        }
-                        else if (direction == 3) // west
-                        {
-                            room.westDoor = true;
-                            nextRoom.eastDoor = true;
-                        }
-                        DepthFirstSearch(newX, newY);
+                        room.northDoor = true;
+                        nextRoom.southDoor = true;
                     }
+                    else if (direction == 1) // east
+                    {
+                        room.eastDoor = true;
+                        nextRoom.westDoor = true;
+                    }
+                    else if (direction == 2) // south
+                    {
+                        room.southDoor = true;
+                        nextRoom.northDoor = true;
+                    }
+                    else if (direction == 3) // west
+                    {
+                        room.westDoor = true;
+                        nextRoom.eastDoor = true;
+                    }
+
+                    DepthFirstSearch(newX, newY);
                 }
             }
         }
+
 
         private void Shuffle(List<int> list)
         {
@@ -300,10 +299,10 @@ namespace Fall2020_CSC403_Project
 
         private DungeonPositionData CalculateRandomPositionInRoom(DungeonRoom room)
         {
-            float minX = room.TopLeft.x + 50;
-            float maxX = room.TopRight.x - 50;
-            float minY = room.TopLeft.y + 50;
-            float maxY = room.BottomLeft.y - 50;
+            float minX = Math.Max(room.TopLeft.x + 50, 0);
+            float maxX = Math.Min(room.TopRight.x - 50, 1400);
+            float minY = Math.Max(room.TopLeft.y + 50, 0);
+            float maxY = Math.Min(room.BottomLeft.y - 50, 800);
 
             // generate random position in room
             float randomX = (float)(minX + (maxX - minX) * new Random().NextDouble());
@@ -311,6 +310,7 @@ namespace Fall2020_CSC403_Project
 
             return new DungeonPositionData { x = randomX, y = randomY };
         }
+
 
         public DungeonRoom GetCurrentRoom(DungeonPositionData playerPosition)
         {

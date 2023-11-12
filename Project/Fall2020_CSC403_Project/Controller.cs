@@ -76,7 +76,7 @@ namespace Fall2020_CSC403_Project
                     {
                         // get dungeon size
                         Random random = new Random();
-                        int dungeonSize = random.Next(3, 5);
+                        int dungeonSize = random.Next(6, 10);
 
                         Dungeon dungeon = new Dungeon(dungeonSize);
 

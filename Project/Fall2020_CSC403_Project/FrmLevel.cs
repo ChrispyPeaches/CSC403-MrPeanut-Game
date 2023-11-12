@@ -135,7 +135,6 @@ namespace Fall2020_CSC403_Project
             string time = span.ToString(@"hh\:mm\:ss");
             lblInGameTime.Text = "Time: " + time.ToString();
         }
-
         private void tmrPlayerMove_Tick(object sender, EventArgs e)
         {
             Game game = Game.Instance;
@@ -169,67 +168,47 @@ namespace Fall2020_CSC403_Project
             {
             }
 
-            // update player's picture box
-            picPlayer.Location = new Point((int)game.player.Position.x, (int)game.player.Position.y);
-
-            foreach (Control control in this.Controls)
-            {
-                Console.WriteLine($"Control Name: {control.Name}, Type: {control.GetType().Name}");
-            }
+            this.UpdatePlayerPictureBox();
 
         }
+
         private bool HitAWall(Character c, List<Character> wallList)
         {
-            bool hitAWall = false;
-
-            Parallel.ForEach(wallList, wall =>
+            foreach (Character wall in wallList)
             {
                 if (c.Collider.Intersects(wall.Collider))
                 {
-                    hitAWall = true;
-                    Parallel.ForEach(wallList, (item, state) => state.Stop());
+                    return true;
                 }
-            });
-            return hitAWall;
+            }
+            return false;
         }
 
         private bool HitAChar(Character you, List<Enemy> enemyList)
         {
-            bool hitAChar = false;
-
-            Parallel.ForEach(enemyList, enemy =>
+            foreach (Enemy enemy in enemyList)
             {
                 if (you.Collider.Intersects(enemy.Collider))
                 {
                     currentEnemy = enemy;
-                    hitAChar = true;
-                    Parallel.ForEach(enemyList, (item, state) => state.Stop());
+                    return true;
                 }
-            });
-
-            return hitAChar;
+            }
+            return false;
         }
 
         private bool HitACoin(Character character, List<Coin> coinsList)
         {
-            bool hitACoin = false;
-
-            Parallel.ForEach(coinsList, coin =>
+            foreach (Coin coin in coinsList)
             {
-                if (coin != null && character != null && character.Collider != null && coin.Collider != null)
+                if (character.Collider.Intersects(coin.Collider))
                 {
-                    if (character.Collider.Intersects(coin.Collider))
-                    {
-                        Game.Instance.player.coinCounter += coin.Amount;
-                        hitACoin = true;
-                        Parallel.ForEach(coinsList, (item, state) => state.Stop());
-                    }
+                    Game.Instance.player.coinCounter += coin.Amount;
+                    return true;
                 }
-            });
-
-            return hitACoin;
+            }
+            return false;
         }
-
 
         private bool HitADoor(Character character, List<Character> doors)
         {
@@ -243,88 +222,76 @@ namespace Fall2020_CSC403_Project
                     {
                         string doorDirection = door.Tag as string;
 
-                        foreach (Control control in roomControls)
+                        for (int i = roomControls.Count - 1; i >= 0; i--)
                         {
-                            if (this.Controls.Contains(control))
+                            try
                             {
-                                this.Controls.Remove(control);
+                                this.Controls.Remove(roomControls[i]);
+                                roomControls[i].Dispose();
+                                roomControls.RemoveAt(i);
+                            }
+                            catch
+                            {
                             }
                         }
+
+                        roomControls.Clear();
 
                         this.UpdateRoomData();
 
                         Game game = Game.Instance;
                         Player player = game.player;
+                        int oldRow = currentRow;
+                        int oldCol = currentCol;
 
                         switch (doorDirection)
                         {
                             case "North":
                                 currentRow -= 1;
                                 character.Position = new Vector2((int)character.Position.x, 800);
-                                try
-                                {
-                                    currentRoom = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[currentRow, currentCol];
-                                }
-                                catch
-                                {
-                                    currentRow += 1;
-                                    player.MoveBack();
-                                }
-                                LoadRoomElements(currentRoom);
                                 break;
 
                             case "East":
                                 currentCol += 1;
-                                character.Position = new Vector2(200, (int)character.Position.y);
-                                try
-                                {
-                                    currentRoom = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[currentRow, currentCol];
-                                }
-                                catch
-                                {
-                                    currentCol -= 1;
-                                    player.MoveBack();
-                                }
-                                LoadRoomElements(currentRoom);
+                                character.Position = new Vector2(100, (int)character.Position.y);
                                 break;
 
                             case "South":
                                 currentRow += 1;
                                 character.Position = new Vector2((int)character.Position.x, 200);
-                                try
-                                {
-                                    currentRoom = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[currentRow, currentCol];
-                                }
-                                catch
-                                {
-                                    currentRow -= 1;
-                                    player.MoveBack();
-                                }
-                                LoadRoomElements(currentRoom);
                                 break;
 
                             case "West":
                                 currentCol -= 1;
-                                character.Position = new Vector2(800, (int)character.Position.y);
-                                try
-                                {
-                                    currentRoom = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[currentRow, currentCol];
-                                }
-                                catch
-                                {
-                                    currentCol += 1;
-                                    player.MoveBack();
-                                }
-                                LoadRoomElements(currentRoom);
+                                character.Position = new Vector2(1300, (int)character.Position.y);
                                 break;
                         }
+
+                        try
+                        {
+                            currentRoom = (Fall2020_CSC403_Project.code.Game.DungeonRoom)Game.Instance.Dungeon[currentRow, currentCol];
+                        }
+                        catch
+                        {
+                            currentRow = oldRow;
+                            currentCol = oldCol;
+                            player.MoveBack();
+                        }
+
+                        LoadRoomElements(currentRoom);
+
+                        return collisionMade;
                     }
-                    return collisionMade;
                 }
             }
             return false;
         }
 
+
+        private void UpdatePlayerPictureBox()
+        {
+            picPlayer.Location = new Point((int)Game.Instance.player.Position.x, (int)Game.Instance.player.Position.y);
+        }
 
         private void Fight(Enemy enemy)
         {
@@ -495,7 +462,6 @@ namespace Fall2020_CSC403_Project
                 enemyPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
                 enemyPictureBox.Tag = "Enemy";
                 enemyPictureBox.Visible = true;
-                enemyPictureBox.BringToFront();
 
                 enemy.Position = CreatePosition(enemyPictureBox, false);
                 enemy.Collider = CreateCollider(enemyPictureBox, PADDING);
@@ -508,7 +474,7 @@ namespace Fall2020_CSC403_Project
                 enemyLabel.Text = enemyData.displayName;
                 enemyLabel.Location = new Point(enemyX - 20, enemyY - 20);
                 enemyLabel.BackColor = Color.Transparent;
-                enemyLabel.BringToFront();
+                enemy.Img = null;
 
                 this.Controls.Add(enemyPictureBox);
                 this.Controls.Add(enemyLabel);
@@ -519,8 +485,8 @@ namespace Fall2020_CSC403_Project
 
             foreach (IDungeonCoin coinData in currentRoom.Coins)
             {
-                int coinX = (int)coinData.Position.x;
-                int coinY = (int)coinData.Position.y;
+                int coinX = (int)(currentRoom.BottomLeft.x + coinData.Position.x);
+                int coinY = (int)(currentRoom.TopRight.y + coinData.Position.y);
 
                 int coinValue = (int)Math.Round(coinData.Amount);
                 Guid coinID = coinData.ID;
@@ -534,7 +500,7 @@ namespace Fall2020_CSC403_Project
                 coinPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
                 coinPictureBox.Tag = "Coin";
                 coinPictureBox.Visible = true;
-                coinPictureBox.BringToFront();
+                coin.Img = null;
 
                 coin.Position = CreatePosition(coinPictureBox, false);
                 coin.Collider = CreateCollider(coinPictureBox, PADDING);
@@ -822,7 +788,7 @@ namespace Fall2020_CSC403_Project
 
         public void UpdateRoomData()
         {
-            foreach (Fall2020_CSC403_Project.DungeonEnemyData currentEnemy in Game.Instance.Dungeon[currentRow, currentCol].Enemies)
+            foreach (IDungeonEnemyData currentEnemy in Game.Instance.Dungeon[currentRow, currentCol].Enemies)
             {
                 foreach (Enemy enemy in currentRoomEnemies)
                 {
@@ -836,7 +802,7 @@ namespace Fall2020_CSC403_Project
                 }
             }
 
-            foreach (Fall2020_CSC403_Project.DungeonCoin currentCoin in Game.Instance.Dungeon[currentRow, currentCol].Coins)
+            foreach (IDungeonCoin currentCoin in Game.Instance.Dungeon[currentRow, currentCol].Coins)
             {
                 foreach (Coin coin in currentRoomCoins)
                 {
@@ -847,7 +813,7 @@ namespace Fall2020_CSC403_Project
                 }
             }
 
-            Game.Instance.Dungeon[currentRow, currentCol] = currentRoom;
+            Game.Instance.Dungeon[currentRow, currentCol] = this.currentRoom;
             this.currentRoomCoins.Clear();
             this.currentRoomEnemies.Clear();
             this.doors.Clear();
