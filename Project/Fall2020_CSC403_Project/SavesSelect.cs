@@ -66,19 +66,49 @@ namespace Fall2020_CSC403_Project
 
         private void InitializeForNewSave()
         {
-            Label lblNewFileName = new Label();
-            lblNewFileName.Text = "Hero Name:";
-            lblNewFileName.Location = new Point(10, 10);
-            txtNewFileName = new TextBox();  
-            txtNewFileName.Location = new Point(10, 40);
-            Button btnCreateNewSave = new Button();
-            btnCreateNewSave.Text = "Create Save";
-            btnCreateNewSave.Location = new Point(10, 70);
+
+            string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            string imageLocation = Path.GetFullPath(Path.Combine(appDirectory, "..", "..", "data", "player.png"));
+
+
+            Label lblNewFileName = new Label
+            {
+                Text = "Hero Name:",
+                Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0),
+                AutoSize = true
+            };
+
+            lblNewFileName.Location = new Point((ClientSize.Width - lblNewFileName.Width) / 2, 10);
+
+            txtNewFileName = new TextBox
+            {
+                Location = new Point((ClientSize.Width - 175) / 2, lblNewFileName.Bottom + 10),
+                Size = new Size(175, 30)
+            };
+
+            Button btnCreateNewSave = new Button
+            {
+                Text = "Create Save",
+                Location = new Point((ClientSize.Width - 175) / 2, txtNewFileName.Bottom + 10),
+                Size = new Size(175, 40)
+            };
+
+            PictureBox pictureBox = new PictureBox
+            {
+                Image = Image.FromFile(imageLocation),
+                Location = new Point((ClientSize.Width - 175) / 2, btnCreateNewSave.Bottom + 10),
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Size = new Size(200, 350)
+            };
+
             btnCreateNewSave.Click += BtnCreateNewSave_Click;
+
             Controls.Add(lblNewFileName);
             Controls.Add(txtNewFileName);
             Controls.Add(btnCreateNewSave);
+            Controls.Add(pictureBox);
         }
+
 
         private void FileButton_Click(object sender, EventArgs e)
         {
