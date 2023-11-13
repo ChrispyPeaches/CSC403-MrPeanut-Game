@@ -102,12 +102,7 @@ namespace Fall2020_CSC403_Project
                 {
                     graphics.CompositingMode = System.Drawing.Drawing2D.CompositingMode.SourceOver;
 
-                    var hatStartingPoint = new Point(
-                        (playerImage.Width - hatImage.Width) / 2,
-                        currentHat.YCoordinate
-                        );
-
-                    graphics.DrawImage(hatImage, hatStartingPoint.X, hatStartingPoint.Y);
+                    graphics.DrawImage(hatImage, currentHat.XCoordinate, currentHat.YCoordinate);
 
                     pictureBox_player.BackgroundImage = playerImage;
                 }
@@ -161,13 +156,27 @@ namespace Fall2020_CSC403_Project
             RedrawPlayer();
         }
 
+        private void btn_AdjustHatHeight_RightArrow_Click(object sender, EventArgs e)
+        {
+            hats.ElementAt(currentHatsIndex).XCoordinate += hatAdjustmentAmount;
+            RedrawPlayer();
+        }
+
+        private void btn_AdjustHatHeight_LeftArrow_Click(object sender, EventArgs e)
+        {
+            hats.ElementAt(currentHatsIndex).XCoordinate -= hatAdjustmentAmount;
+            RedrawPlayer();
+        }
+
         /// <summary>
         /// If the adjust hat height menu is hidden, display it, if it's displayed, hide it
         /// </summary>
-        public void ShouldDisplayAdjustHatHeightMenu(bool showMenu)
+            public void ShouldDisplayAdjustHatHeightMenu(bool showMenu)
         {
             btn_AdjustHatHeight_UpArrow.Visible = showMenu;
             btn_AdjustHatHeight_DownArrow.Visible = showMenu;
+            btn_AdjustHatHeight_LeftArrow.Visible = showMenu;
+            btn_AdjustHatHeight_RightArrow.Visible = showMenu;
             btn_AdjustHat_Title.Visible = showMenu;
         }
 

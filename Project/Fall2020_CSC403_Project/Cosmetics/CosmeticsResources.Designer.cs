@@ -63,6 +63,7 @@ namespace Fall2020_CSC403_Project.Cosmetics {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///    &quot;Name&quot;: &quot;Foam Cowboy Hat&quot;,
+        ///    &quot;XCoordinate&quot;: 1,
         ///    &quot;YCoordinate&quot;: 1,
         ///    &quot;ImageResourceName&quot;: &quot;hat_foam_image&quot;
         ///}.
@@ -86,6 +87,7 @@ namespace Fall2020_CSC403_Project.Cosmetics {
         /// <summary>
         ///   Looks up a localized string similar to {
         ///    &quot;Name&quot;: &quot;Skyrim Helmet&quot;,
+        ///    &quot;XCoordinate&quot;: 1,
         ///    &quot;YCoordinate&quot;: 2,
         ///    &quot;ImageResourceName&quot;: &quot;hat_skyrimhelmet_image&quot;
         ///}.

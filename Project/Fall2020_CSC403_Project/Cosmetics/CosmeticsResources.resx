@@ -120,6 +120,7 @@
   <data name="hat_foam" xml:space="preserve">
     <value>{
     "Name": "Foam Cowboy Hat",
+    "XCoordinate": 1,
     "YCoordinate": 1,
     "ImageResourceName": "hat_foam_image"
 }</value>
@@ -131,6 +132,7 @@
   <data name="hat_skyrimhelmet" xml:space="preserve">
     <value>{
     "Name": "Skyrim Helmet",
+    "XCoordinate": 1,
     "YCoordinate": 2,
     "ImageResourceName": "hat_skyrimhelmet_image"
 }</value>
