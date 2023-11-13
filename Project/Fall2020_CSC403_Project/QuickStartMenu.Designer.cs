@@ -8,7 +8,6 @@
         private System.ComponentModel.IContainer components = null;
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Button btnCosmetics;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -35,7 +34,6 @@
             // add buttons
             this.btnSave = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
-            this.btnCosmetics = new System.Windows.Forms.Button();
             // 
             // QuickStartMenu
             // 
@@ -67,18 +65,8 @@
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
 
-            // btnCosmetics
-            this.btnCosmetics.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCosmetics.Size = new System.Drawing.Size(200, 60);
-            this.btnCosmetics.Location = new System.Drawing.Point((this.ClientSize.Width - this.btnCosmetics.Width) / 2, (this.ClientSize.Height - this.btnCosmetics.Height) / 3 + 120);
-            this.btnCosmetics.TabIndex = 11;
-            this.btnCosmetics.Text = "Cosmetics";
-            this.btnCosmetics.UseVisualStyleBackColor = true;
-            this.btnCosmetics.Click += new System.EventHandler(this.btnCosmetics_Click);
-
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnExit);
-            this.Controls.Add(this.btnCosmetics);
 
         }
         #endregion
