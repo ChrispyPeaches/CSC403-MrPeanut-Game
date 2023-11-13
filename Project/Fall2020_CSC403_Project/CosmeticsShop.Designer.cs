@@ -39,7 +39,7 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.player;
+            this.pictureBox1.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.mrPeanut;
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox1.ErrorImage = null;
             this.pictureBox1.InitialImage = null;

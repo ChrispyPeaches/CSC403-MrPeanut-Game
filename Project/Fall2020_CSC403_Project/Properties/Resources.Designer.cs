@@ -131,6 +131,26 @@ namespace Fall2020_CSC403_Project.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap enemy_hamburglar {
+            get {
+                object obj = ResourceManager.GetObject("enemy_hamburglar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap enemy_hotsauce {
+            get {
+                object obj = ResourceManager.GetObject("enemy_hotsauce", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap enemy_koolaid {
             get {
                 object obj = ResourceManager.GetObject("enemy_koolaid", resourceCulture);
@@ -187,6 +207,36 @@ namespace Fall2020_CSC403_Project.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap grimace {
+            get {
+                object obj = ResourceManager.GetObject("grimace", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap missingTextures {
+            get {
+                object obj = ResourceManager.GetObject("missingTextures", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap mrPeanut {
+            get {
+                object obj = ResourceManager.GetObject("mrPeanut", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
         internal static System.IO.UnmanagedMemoryStream overworld_theme {
@@ -198,9 +248,19 @@ namespace Fall2020_CSC403_Project.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap player {
+        internal static System.Drawing.Bitmap pepsiMan {
             get {
-                object obj = ResourceManager.GetObject("player", resourceCulture);
+                object obj = ResourceManager.GetObject("pepsiMan", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap phil {
+            get {
+                object obj = ResourceManager.GetObject("phil", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

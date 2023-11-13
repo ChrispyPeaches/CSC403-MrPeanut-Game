@@ -152,12 +152,11 @@
             // picPlayer
             // 
             this.picPlayer.BackColor = System.Drawing.Color.Transparent;
-            this.picPlayer.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.player;
-            this.picPlayer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.picPlayer.Location = new System.Drawing.Point(119, 510);
+            this.picPlayer.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.missingTextures;
+            this.picPlayer.Location = new System.Drawing.Point(147, 530);
             this.picPlayer.Name = "picPlayer";
-            this.picPlayer.Size = new System.Drawing.Size(54, 106);
-            this.picPlayer.TabIndex = 0;
+            this.picPlayer.Size = new System.Drawing.Size(52, 74);
+            this.picPlayer.TabIndex = 24;
             this.picPlayer.TabStop = false;
             // 
             // picWall5

@@ -118,17 +118,6 @@
             this.picEnemy.TabIndex = 1;
             this.picEnemy.TabStop = false;
             // 
-            // picPlayer
-            // 
-            this.picPlayer.BackColor = System.Drawing.Color.Transparent;
-            this.picPlayer.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.player;
-            this.picPlayer.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.picPlayer.Location = new System.Drawing.Point(8, 232);
-            this.picPlayer.Name = "picPlayer";
-            this.picPlayer.Size = new System.Drawing.Size(229, 267);
-            this.picPlayer.TabIndex = 0;
-            this.picPlayer.TabStop = false;
-            // 
             // tmrFinalBattle
             // 
             this.tmrFinalBattle.Interval = 5600;

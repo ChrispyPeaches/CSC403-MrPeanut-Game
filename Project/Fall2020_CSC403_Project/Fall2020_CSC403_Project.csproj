@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharacterSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CharacterSelect.Designer.cs">
+      <DependentUpon>CharacterSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dungeon.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="DeathScreen.cs">
@@ -162,22 +168,10 @@
     <None Include="data\final_battle.wav" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\player.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="data\battle_screen.fw.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\wall.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="data\enemy_cheetos.fw.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="data\enemy_poisonpacket.fw.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="data\enemy_koolaid.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="code\" />
@@ -217,6 +211,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\brick_main_background.jpg" />
+    <None Include="data\missingTextures.jpg" />
     <None Include="data\raw images\exit_sign.png" />
     <None Include="data\raw images\skyrim_helmet.png" />
     <None Include="data\raw images\hat_foam.png" />
