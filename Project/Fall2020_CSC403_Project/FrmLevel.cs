@@ -52,6 +52,7 @@ namespace Fall2020_CSC403_Project
         public FrmLevel(IOpenAIApi openAIApi)
         {
             InitializeComponent();
+            SetPlayerImage();
             _openAIApi = openAIApi;
             instanceForDeath = this;
         }
@@ -857,6 +858,28 @@ namespace Fall2020_CSC403_Project
             this.doors.Clear();
             this.walls.Clear();
             this.roomControls.Clear();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        public void SetPlayerImage()
+        {
+            string appDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string playerImagePath = Path.Combine(appDirectory, "..", "..", "Saves", "playerImage.png");
+
+            if (File.Exists(playerImagePath))
+            {
+                picPlayer.BackgroundImage = Image.FromFile(playerImagePath);   
+            }
         }
     }
 }
