@@ -280,22 +280,22 @@ namespace Fall2020_CSC403_Project
                         {
                             case "North":
                                 currentRow -= 1;
-                                character.Position = new Vector2((int)character.Position.x, 800);
+                                character.Position = new Vector2((int)character.Position.x, 650);
                                 break;
 
                             case "East":
                                 currentCol += 1;
-                                character.Position = new Vector2(100, (int)character.Position.y);
+                                character.Position = new Vector2(150, (int)character.Position.y);
                                 break;
 
                             case "South":
                                 currentRow += 1;
-                                character.Position = new Vector2((int)character.Position.x, 200);
+                                character.Position = new Vector2((int)character.Position.x, 150);
                                 break;
 
                             case "West":
                                 currentCol -= 1;
-                                character.Position = new Vector2(1300, (int)character.Position.y);
+                                character.Position = new Vector2(1250, (int)character.Position.y);
                                 break;
                         }
 

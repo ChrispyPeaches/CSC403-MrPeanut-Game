@@ -297,10 +297,10 @@ namespace Fall2020_CSC403_Project
 
         private DungeonPositionData CalculateRandomPositionInRoom(DungeonRoom room)
         {
-            float minX = Math.Max(room.TopLeft.x + 50, 0);
-            float maxX = Math.Min(room.TopRight.x - 50, 1400);
-            float minY = Math.Max(room.TopLeft.y + 50, 0);
-            float maxY = Math.Min(room.BottomLeft.y - 50, 800);
+            float minX = Math.Max(room.TopLeft.x + 100, 0);
+            float maxX = Math.Min(room.TopRight.x - 100, 1200);
+            float minY = Math.Max(room.TopLeft.y + 100, 0);
+            float maxY = Math.Min(room.BottomLeft.y - 100, 600);
 
             // generate random position in room
             float randomX = (float)(minX + (maxX - minX) * random.NextDouble());
