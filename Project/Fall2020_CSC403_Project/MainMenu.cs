@@ -42,7 +42,11 @@ namespace Fall2020_CSC403_Project
             savesSelectForm.Top = this.Top + (this.Height - savesSelectForm.Height) / 2;
             savesSelectForm.ShowDialog();
 
-            FrmLevel frmLevel = new FrmLevel(openAiApi);
+            CharacterSelect characterSelect = new CharacterSelect();
+            characterSelect.ShowDialog();
+            string selectedImg = characterSelect.SelectedCharacterImg;
+
+            FrmLevel frmLevel = new FrmLevel(openAiApi, selectedImg);
             this.ShowInTaskbar = false;
             this.Opacity = 0;
             frmLevel.ShowDialog();
@@ -59,7 +63,7 @@ namespace Fall2020_CSC403_Project
                 savesSelectForm.ShowDialog();
             }
 
-            FrmLevel frmLevel = new FrmLevel(openAiApi);
+            FrmLevel frmLevel = new FrmLevel(openAiApi, "phil");
             this.ShowInTaskbar = false;
             this.Opacity = 0;
             frmLevel.ShowDialog();

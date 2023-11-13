@@ -114,6 +114,9 @@
     <Compile Include="SavesSelect.Designer.cs">
       <DependentUpon>SavesSelect.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CharacterSelect.resx">
+      <DependentUpon>CharacterSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DeathScreen.resx">
       <DependentUpon>DeathScreen.cs</DependentUpon>
     </EmbeddedResource>

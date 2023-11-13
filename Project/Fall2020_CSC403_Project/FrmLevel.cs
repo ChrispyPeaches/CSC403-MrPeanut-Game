@@ -11,6 +11,7 @@ using Fall2020_CSC403_Project.Properties;
 using System.Numerics;
 using Vector2 = Fall2020_CSC403_Project.code.Vector2;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Fall2020_CSC403_Project
 {
@@ -32,12 +33,14 @@ namespace Fall2020_CSC403_Project
 
         public IOpenAIApi _openAIApi;
 
+        public string _characterImg;
+
         private bool isUpPressed = false;
         private bool isDownPressed = false;
         private bool isLeftPressed = false;
         private bool isRightPressed = false;
 
-        public FrmLevel(IOpenAIApi openAIApi)
+        public FrmLevel(IOpenAIApi openAIApi, string characterImg)
         {
             InitializeComponent();
             _openAIApi = openAIApi;
@@ -46,6 +49,8 @@ namespace Fall2020_CSC403_Project
             {
                 instance = this;
             }
+
+            _characterImg = characterImg;
         }
         public static FrmLevel Instance
         {
@@ -96,6 +101,8 @@ namespace Fall2020_CSC403_Project
             game.player.Position = CreatePosition(picPlayer);
             game.player.Collider = CreateCollider(picPlayer, PADDING);
 
+            setPlayerImage(_characterImg);
+
             game.bossKoolaid.Position = CreatePosition(picBossKoolAid);
             game.bossKoolaid.Collider = CreateCollider(picBossKoolAid, PADDING);
 
@@ -137,6 +144,26 @@ namespace Fall2020_CSC403_Project
                 walls[w] = new Character(CreatePosition(pic), CreateCollider(pic, PADDING));
             }
             timeBegin = DateTime.Now;
+        }
+
+        public void setPlayerImage(string imgName)
+        {
+            if (imgName == "grimace")
+            {
+                picPlayer.BackgroundImage = Resources.grimace;
+            }
+            else if (imgName == "pepsiMan") 
+            {
+                picPlayer.BackgroundImage = Resources.pepsiMan;
+            }
+            else if (imgName == "phil")
+            {
+                picPlayer.BackgroundImage = Resources.phil;
+            }
+            else if (imgName == "mrPeanut")
+            {
+                picPlayer.BackgroundImage = Resources.mrPeanut;
+            }
         }
 
         private static Vector2 CreatePosition(PictureBox pic)
