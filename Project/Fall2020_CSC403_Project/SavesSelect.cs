@@ -52,7 +52,7 @@ namespace Fall2020_CSC403_Project
                 int column = i % columns;
 
                 Button fileButton = new Button();
-                fileButton.Text = Path.GetFileName(fileNames[i]);
+                fileButton.Text = Path.GetFileNameWithoutExtension(fileNames[i]);
                 fileButton.Tag = fileNames[i];
                 fileButton.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
                 fileButton.Size = new Size(buttonWidth, buttonHeight);
