@@ -483,38 +483,41 @@ namespace Fall2020_CSC403_Project
 
             foreach (IDungeonEnemyData enemyData in currentRoom.Enemies)
             {
-                int enemyX = (int)enemyData.Position.x;
-                int enemyY = (int)enemyData.Position.y;
+                if(enemyData.defeated != true)
+                {
+                    int enemyX = (int)enemyData.Position.x;
+                    int enemyY = (int)enemyData.Position.y;
 
-                Enemy enemy = new Enemy(null, new Vector2(enemyX, enemyY), null, enemyData.defeated, enemyData.ID);
-                enemy.Img = LoadImage(enemyData.image);
+                    Enemy enemy = new Enemy(null, new Vector2(enemyX, enemyY), null, enemyData.defeated, enemyData.ID);
+                    enemy.Img = LoadImage(enemyData.image);
 
-                PictureBox enemyPictureBox = new PictureBox();
-                enemyPictureBox.Size = new Size(70, 70);
-                enemyPictureBox.Location = new Point(enemyX, enemyY);
-                enemyPictureBox.BackgroundImage = enemy.Img;
-                enemyPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
-                enemyPictureBox.Tag = "Enemy" + enemy.ID;
-                enemyPictureBox.Visible = true;
+                    PictureBox enemyPictureBox = new PictureBox();
+                    enemyPictureBox.Size = new Size(70, 70);
+                    enemyPictureBox.Location = new Point(enemyX, enemyY);
+                    enemyPictureBox.BackgroundImage = enemy.Img;
+                    enemyPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
+                    enemyPictureBox.Tag = "Enemy" + enemy.ID;
+                    enemyPictureBox.Visible = true;
 
-                enemy.Position = CreatePosition(enemyPictureBox, false);
-                enemy.Collider = CreateCollider(enemyPictureBox, PADDING);
-                enemy.Name = enemyData.image;
-                enemy.displayName = enemyData.displayName;
-                enemy.chatHistory = enemyData.chatHistory;
-                enemy.ChangeHealthAndStrength(enemyData.Health, enemyData.MaxHealth, enemyData.strength);
+                    enemy.Position = CreatePosition(enemyPictureBox, false);
+                    enemy.Collider = CreateCollider(enemyPictureBox, PADDING);
+                    enemy.Name = enemyData.image;
+                    enemy.displayName = enemyData.displayName;
+                    enemy.chatHistory = enemyData.chatHistory;
+                    enemy.ChangeHealthAndStrength(enemyData.Health, enemyData.MaxHealth, enemyData.strength);
 
-                System.Windows.Forms.Label enemyLabel = new System.Windows.Forms.Label();
-                enemyLabel.Text = enemyData.displayName;
-                enemyLabel.Location = new Point(enemyX - 20, enemyY - 20);
-                enemyLabel.BackColor = Color.Transparent;
+                    System.Windows.Forms.Label enemyLabel = new System.Windows.Forms.Label();
+                    enemyLabel.Text = enemyData.displayName;
+                    enemyLabel.Location = new Point(enemyX - 20, enemyY - 20);
+                    enemyLabel.BackColor = Color.Transparent;
 
-                this.Controls.Add(enemyPictureBox);
-                this.Controls.Add(enemyLabel);
-                this.roomControls.Add(enemyPictureBox);
-                this.roomControls.Add(enemyLabel);
-                currentRoomEnemies.Add(enemy);
-                Point location = PointToScreen(enemyPictureBox.Location);
+                    this.Controls.Add(enemyPictureBox);
+                    this.Controls.Add(enemyLabel);
+                    this.roomControls.Add(enemyPictureBox);
+                    this.roomControls.Add(enemyLabel);
+                    currentRoomEnemies.Add(enemy);
+                    Point location = PointToScreen(enemyPictureBox.Location);
+                }
             }
 
             foreach (IDungeonCoin coinData in currentRoom.Coins)

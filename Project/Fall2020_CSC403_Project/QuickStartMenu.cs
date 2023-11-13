@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ToolTip;
 
 namespace Fall2020_CSC403_Project
 {
@@ -36,6 +37,17 @@ namespace Fall2020_CSC403_Project
 
         private void btnExit_Click(object sender, EventArgs e)
         {
+            this.Close();
+        }
+
+        private void btnCosmetics_Click(object sender, EventArgs e)
+        {
+            CosmeticsShop hatsShop = new CosmeticsShop();
+            hatsShop.FormBorderStyle = FormBorderStyle.None;
+            hatsShop.StartPosition = FormStartPosition.Manual;
+            hatsShop.Left = this.Left + (this.Width - hatsShop.Width) / 2;
+            hatsShop.Top = this.Top + (this.Height - hatsShop.Height) / 2;
+            hatsShop.Show();
             this.Close();
         }
     }

@@ -146,6 +146,7 @@ namespace Fall2020_CSC403_Project
                     Game.Instance.player.Health = Game.Instance.player.MaxHealth;
                     Game.Instance.player.strength += 2;
                     enemy.Defeated = true;
+                    enemy.Collider = null;
                     SendKeys.SendWait("{ESC}");
                 }
             }
