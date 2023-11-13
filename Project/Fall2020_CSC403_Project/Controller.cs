@@ -14,6 +14,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
+using static Fall2020_CSC403_Project.code.Game;
 using static Fall2020_CSC403_Project.OpenAIApi.ChatCompletionQuery;
 using Vector2 = Fall2020_CSC403_Project.code.Vector2;
 
@@ -23,10 +24,12 @@ namespace Fall2020_CSC403_Project
     // models to format any jsons from requests, etc
     public class SaveData
     {
+        public Dungeon dungeon { get; set; }
+        public int width { get; set; }
+        public int height { get; set; }
+        public int row { get; set; }
+        public int column { get; set; }
         public PlayerData playerData { get; set; }
-        public EnemyData enemy_koolaidData { get; set; }
-        public EnemyData enemy_poisonpacketData { get; set; }
-        public EnemyData enemy_cheetosData { get; set; }
     }
 
     public class PlayerData
@@ -72,8 +75,22 @@ namespace Fall2020_CSC403_Project
                     string saveFilePath = Path.Combine(savesDirectoryPath, pathToFile + ".json");
                     if (!File.Exists(saveFilePath))
                     {
+                        // get dungeon size
+                        Random random = new Random();
+                        int dungeonSize = random.Next(6, 10);
+
+                        Dungeon dungeon = new Dungeon(dungeonSize);
+
+                        int selectedRow = random.Next(0, dungeonSize);
+                        int selectedCol = random.Next(0, dungeonSize);
+
                         SaveData defaultSave = new SaveData
                         {
+                            dungeon = dungeon,
+                            width = dungeonSize,
+                            height = dungeonSize,
+                            row = selectedRow,
+                            column = selectedCol,
                             playerData = new PlayerData
                             {
                                 name = pathToFile,
@@ -86,32 +103,6 @@ namespace Fall2020_CSC403_Project
                                     y = 525
                                 },
                                 coinCounter = 0,
-                            },
-                            enemy_koolaidData = new EnemyData
-                            {
-                                displayName = "Kool Aid Man",
-                                defeated = false,
-                                MaxHealth = 150,
-                                strength = 15,
-                                Health = 150,
-                            },
-
-                            enemy_poisonpacketData = new EnemyData
-                            {
-                                displayName = "Kool Aid Poison Packet",
-                                defeated = false,
-                                MaxHealth = 75,
-                                strength = 10,
-                                Health = 75,
-                            },
-
-                            enemy_cheetosData = new EnemyData
-                            {
-                                displayName = "Violent Cheeto",
-                                defeated = false,
-                                MaxHealth = 50,
-                                strength = 8,
-                                Health = 50,
                             }
                         };
 
@@ -130,60 +121,64 @@ namespace Fall2020_CSC403_Project
                 }
             }
 
-            public void UpdateData(string pathToFile = "Save Data Name Here")
+            public void UpdateData(string pathToFile = "Save Data Name Here", int currentRow = 0, int currentCol= 0)
             {
                 string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                string saveDirectory = Path.Combine(appDirectory, "..", "..", "Saves", pathToFile + ".json");
+                string savesDirectoryPath = Path.Combine(appDirectory, "..", "..", "Saves");
+                string saveFilePath = Path.Combine(savesDirectoryPath, pathToFile + ".json");
+
                 try
                 {
                     Game game = Game.Instance;
                     Player player = game.player;
-                    CharacterState characterState = BattleCharacter.GetCharacterState(player);
+
+                    Dungeon dungeon = new Dungeon(Game.Instance.Dungeon.GetLength(0));
+
+                    for (int row = 0; row < Game.Instance.Dungeon.GetLength(0); row++)
+                    {
+                        for (int col = 0; col < Game.Instance.Dungeon.GetLength(1); col++)
+                        {
+                            code.DungeonRoom sourceRoom = Game.Instance.Dungeon[row, col];
+                            DungeonRoom destinationRoom = (DungeonRoom)dungeon.DungeonRooms[col, row];
+                            destinationRoom.northDoor = sourceRoom.northDoor;
+                            destinationRoom.eastDoor = sourceRoom.eastDoor;
+                            destinationRoom.southDoor = sourceRoom.southDoor;
+                            destinationRoom.westDoor = sourceRoom.westDoor;
+                            destinationRoom.Enemies = sourceRoom.Enemies;
+                            destinationRoom.Coins = sourceRoom.Coins;
+                            destinationRoom.visited = sourceRoom.visited;
+                            destinationRoom.TopLeft = sourceRoom.TopLeft;
+                            destinationRoom.TopRight = sourceRoom.TopRight;
+                            destinationRoom.BottomLeft = sourceRoom.BottomLeft;
+                            destinationRoom.BottomRight = sourceRoom.BottomRight;
+                        }
+                    }
+
                     SaveData updatedSave = new SaveData
                     {
+                        dungeon = dungeon,
+                        width = Game.Instance.Dungeon.GetLength(0),
+                        height = Game.Instance.Dungeon.GetLength(0),
+                        row = currentRow,
+                        column = currentCol,
                         playerData = new PlayerData
                         {
-                            name = player.Name,
+                            name = pathToFile,
                             MaxHealth = player.MaxHealth,
                             strength = player.strength,
                             Health = player.Health,
                             Position = new PositionData
                             {
                                 x = player.Position.x,
-                                y = player.Position.y
+                                y = player.Position.y,
                             },
                             coinCounter = player.coinCounter,
-                        },
-
-                        enemy_koolaidData = new EnemyData
-                        {
-                            displayName = game.bossKoolaid.displayName,
-                            defeated = game.IsKoolAidDefeated,
-                            MaxHealth = game.bossKoolaid.MaxHealth,
-                            strength = game.bossKoolaid.strength,
-                            Health = game.bossKoolaid.Health,
-                        },
-
-                        enemy_poisonpacketData = new EnemyData
-                        {
-                            displayName = game.enemyPoisonPacket.displayName,
-                            defeated = game.IsPoisonPacketDefeated,
-                            MaxHealth = game.enemyPoisonPacket.MaxHealth,
-                            strength = game.enemyPoisonPacket.strength,
-                            Health = game.enemyPoisonPacket.Health,
-                        },
-
-                        enemy_cheetosData = new EnemyData
-                        {
-                            displayName = game.enemyCheeto.displayName,
-                            defeated = game.IsCheetosDefeated,
-                            MaxHealth = game.enemyCheeto.MaxHealth,
-                            strength = game.enemyCheeto.strength,
-                            Health = game.enemyCheeto.Health,
                         }
                     };
+
                     string jsonSaveData = JsonConvert.SerializeObject(updatedSave);
-                    File.WriteAllText(saveDirectory, jsonSaveData, Encoding.UTF8);
+                    File.WriteAllText(saveFilePath, jsonSaveData, Encoding.UTF8);
+
                 }
                 catch (Exception ex)
                 {

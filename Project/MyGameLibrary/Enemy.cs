@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Fall2020_CSC403_Project.code
@@ -23,21 +25,19 @@ namespace Fall2020_CSC403_Project.code
         /// </summary>
         public string Name { get; set; }
         public string displayName { get; set; }
-
+        public bool Defeated { get; set; }
+        public Guid ID { get; set; }
+        public List<IEnemyDialogue> chatHistory { get; set; }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="initPos">this is the initial position of the enemy</param>
         /// <param name="collider">this is the collider for the enemy</param>
-        public Enemy(string name, Vector2 initPos, Collider collider, JObject enemyData) : base(initPos, collider)
+        public Enemy(string name, Vector2 initPos, Collider collider, bool defeated = false, Guid id = new Guid()) : base(initPos, collider)
         {
-            int health = enemyData.Value<int>("Health");
-            int maxHealth = enemyData.Value<int>("MaxHealth");
-            float strength = enemyData.Value<float>("strength");
-            displayName = enemyData.Value<string>("displayName");
-
-            this.ChangeHealthAndStrength(health, maxHealth, strength);
-            Name = name;
+            displayName = displayName;
+            Defeated = defeated;
+            ID = id;
         }
     }
 }

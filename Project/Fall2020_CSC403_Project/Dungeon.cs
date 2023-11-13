@@ -1,35 +1,42 @@
-﻿using System;
+﻿using Fall2020_CSC403_Project.code;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using static Fall2020_CSC403_Project.code.Game;
 
 namespace Fall2020_CSC403_Project
 {
-    public class DungeonRoom
+    public class DungeonRoom: code.DungeonRoom
     {
         public bool northDoor { get; set; }
         public bool eastDoor { get; set; }
         public bool southDoor { get; set; }
         public bool westDoor { get; set; }
-        public List<DungeonEnemyData> Enemies { get; set; }
-        public List<DungeonCoin> Coins { get; set; }
+        public List<IDungeonEnemyData> Enemies { get; set; }
+        public List<IDungeonCoin> Coins { get; set; }
         public bool visited { get; set; }
-        public DungeonPositionData TopLeft { get; set; }
-        public DungeonPositionData TopRight { get; set; }
-        public DungeonPositionData BottomLeft { get; set; }
-        public DungeonPositionData BottomRight { get; set; }
+        public IDungeonPositionData TopLeft { get; set; }
+        public IDungeonPositionData TopRight { get; set; }
+        public IDungeonPositionData BottomLeft { get; set; }
+        public IDungeonPositionData BottomRight { get; set; }
+
+        public static implicit operator DungeonRoom(Game.DungeonRoom v)
+        {
+            throw new NotImplementedException();
+        }
     }
 
-    public class DungeonCoin
+    public class DungeonCoin: IDungeonCoin
     {
         public float Amount { get; set; }
         public string Image { get; set; }
-        public DungeonPositionData Position { get; set; }
+        public Guid ID { get; set; }
+        public IDungeonPositionData Position { get; set; }
     }
 
-    public class DungeonEnemyData
+    public class DungeonEnemyData: IDungeonEnemyData
     {
         public string displayName { get; set; }
         public bool defeated { get; set; }
@@ -37,27 +44,64 @@ namespace Fall2020_CSC403_Project
         public float strength { get; set; }
         public int Health { get; set; }
         public string image { get; set; }
-        public DungeonPositionData Position { get; set; }
+        public Guid ID { get; set; }
+        public List<IEnemyDialogue> chatHistory { get; set; }
+        public IDungeonPositionData Position { get; set; }
     }
 
-    public class DungeonPositionData
+    public class DungeonPositionData : IDungeonPositionData
     {
         public float x { get; set; }
         public float y { get; set; }
     }
 
+    public class EnemyDialogue : IEnemyDialogue
+    {
+        public string UserName { get; set; }
+        public string Text { get; set; }
+    }
+
+
     public class Dungeon
     {
         public DungeonRoom[,] DungeonRooms { get; set; }
         private int N;
-        private int roomWidth = 600;
-        private int roomHeight = 800;
+        private int roomWidth = 1400;
+        private int roomHeight = 550;
         private int padding = 7;
+        private Random random = new Random();
         List<string> enemyImages = new List<string>
         {
             "enemy_cheetos.fw.png",
             "enemy_koolaid.png",
             "enemy_poisonpacket.fw.png"
+        };
+
+        List<string> cheetosNames = new List<string>
+        {
+            "Flamin' Crunch Curl",
+            "Zesty Cheese Zing",
+            "Puffmaster Delight",
+            "Jalapeño Cheesepop",
+            "Nacho Bliss Nugget"
+        };
+
+        List<string> koolaidNames = new List<string>
+        {
+            "Berry Blast Beverage",
+            "Tropical Punch Delight",
+            "Citrus Chill Elixir",
+            "Cherry Splash Quencher",
+            "Grape Fizz Fusion"
+        };
+
+        List<string> poisonPacketNames = new List<string>
+        {
+            "Toxic Enigma",
+            "Venom Vial",
+            "Lethal Dose",
+            "Hazardous Pouch",
+            "Deadly Sachet"
         };
 
         public Dungeon(int N)
@@ -76,19 +120,18 @@ namespace Fall2020_CSC403_Project
                         eastDoor = false,
                         southDoor = false,
                         westDoor = false,
-                        Enemies = new List<DungeonEnemyData>(),
-                        Coins = new List<DungeonCoin>(),
+                        Enemies = new List<IDungeonEnemyData>(),
+                        Coins = new List<IDungeonCoin>(),
                         visited = false,
                     };
-                    float roomLeft = i * (roomWidth + padding);
-                    float roomTop = j * (roomHeight + padding);
-                    float roomRight = roomLeft + roomWidth;
-                    float roomBottom = roomTop + roomHeight;
+
+                    float roomLeft = i * (roomWidth + padding) % roomWidth;
+                    float roomTop = j * (roomHeight + padding) % roomHeight;
 
                     room.TopLeft = new DungeonPositionData { x = roomLeft, y = roomTop };
-                    room.TopRight = new DungeonPositionData { x = roomRight, y = roomTop };
-                    room.BottomLeft = new DungeonPositionData { x = roomLeft, y = roomBottom };
-                    room.BottomRight = new DungeonPositionData { x = roomRight, y = roomBottom };
+                    room.TopRight = new DungeonPositionData { x = roomLeft + roomWidth, y = roomTop };
+                    room.BottomLeft = new DungeonPositionData { x = roomLeft, y = roomTop + roomHeight };
+                    room.BottomRight = new DungeonPositionData { x = roomLeft + roomWidth, y = roomTop + roomHeight };
 
                     GenerateRandomEnemies(room);
                     GenerateRandomCoins(room);
@@ -101,17 +144,17 @@ namespace Fall2020_CSC403_Project
             // generate a random starting room for the player;
             // this room should be on the outskirts of the maze itself
             int startX, startY;
-            if (new Random().NextDouble() < 0.5)
+            if (random.NextDouble() < 0.5)
             {
                 // get a random row on the top or bottom wall
-                startY = new Random().Next(0, 2) == 0 ? 0 : N - 1;
-                startX = new Random().Next(0, N);
+                startY = random.Next(0, 2) == 0 ? 0 : N - 1;
+                startX = random.Next(0, N);
             }
             else
             {
                 // get a random column on the left or right wall
-                startX = new Random().Next(0, 2) == 0 ? 0 : N - 1;
-                startY = new Random().Next(0, N);
+                startX = random.Next(0, 2) == 0 ? 0 : N - 1;
+                startY = random.Next(0, N);
             }
             
             // create the maze using DFS
@@ -141,43 +184,41 @@ namespace Fall2020_CSC403_Project
                     newX--;
 
                 // check if the new position is even valid
-                if (newX >= 0 && newX < N && newY >= 0 && newY < N)
+                if (newX >= 0 && newX < N && newY >= 0 && newY < N && !DungeonRooms[newX, newY].visited)
                 {
                     DungeonRoom nextRoom = DungeonRooms[newX, newY];
 
-                    if (!nextRoom.visited)
+                    // set doors for the room
+                    if (direction == 0) // north
                     {
-                        // set doors for the room
-                        if (direction == 0) // north
-                        {
-                            room.northDoor = true;
-                            nextRoom.southDoor = true;
-                        }
-                        else if (direction == 1) // east
-                        {
-                            room.eastDoor = true;
-                            nextRoom.westDoor = true;
-                        }
-                        else if (direction == 2) // south
-                        {
-                            room.southDoor = true;
-                            nextRoom.northDoor = true;
-                        }
-                        else if (direction == 3) // west
-                        {
-                            room.westDoor = true;
-                            nextRoom.eastDoor = true;
-                        }
-                        DepthFirstSearch(newX, newY);
+                        room.northDoor = true;
+                        nextRoom.southDoor = true;
                     }
+                    else if (direction == 1) // east
+                    {
+                        room.eastDoor = true;
+                        nextRoom.westDoor = true;
+                    }
+                    else if (direction == 2) // south
+                    {
+                        room.southDoor = true;
+                        nextRoom.northDoor = true;
+                    }
+                    else if (direction == 3) // west
+                    {
+                        room.westDoor = true;
+                        nextRoom.eastDoor = true;
+                    }
+
+                    DepthFirstSearch(newX, newY);
                 }
             }
         }
 
+
         private void Shuffle(List<int> list)
         {
             int n = list.Count;
-            Random random = new Random();
 
             for (int i = n - 1; i > 0; i--)
             {
@@ -190,31 +231,48 @@ namespace Fall2020_CSC403_Project
 
         private void GenerateRandomEnemies(DungeonRoom room)
         {
-            int numEnemies = new Random().Next(0, 3);
+            int numEnemies = random.Next(1, 5);
             for (int i = 0; i < numEnemies; i++)
             {
                 // for random health
-                int randomHealth = new Random().Next(3, 21);
-                int roundedHealth = (int)(Math.Floor(randomHealth / 10.0) * 10);
+                int randomHealth = random.Next(3, 21);
+                int roundedHealth = (int)(Math.Floor(randomHealth / 1.0) * 10);
 
                 // for random strength
-                int randomStrength = new Random().Next(3, 8);
-                int roundedStrength = (int)(Math.Floor(randomStrength / 10.0) * 10);
+                int randomStrength = random.Next(3, 8);
+                int roundedStrength = (int)(Math.Floor(randomStrength / 1.0));
 
-                // for random indexing
-                int randomIndex = new Random().Next(enemyImages.Count);
+                string enemyImage;
+                string enemyName;
+
+                if (roundedHealth >= 30 && roundedHealth <= 80)
+                {
+                    enemyImage = enemyImages[0];
+                    enemyName = cheetosNames[random.Next(0, 5)];
+                }
+                else if (roundedHealth > 80 && roundedHealth <= 160)
+                {
+                    enemyImage = enemyImages[2];
+                    enemyName = poisonPacketNames[random.Next(0, 5)];
+                }
+                else
+                {
+                    enemyImage = enemyImages[1];
+                    enemyName = koolaidNames[random.Next(0, 5)];
+                }
 
                 DungeonEnemyData enemy = new DungeonEnemyData
                 {
-                    displayName = "Enemy " + (i+1),
+                    displayName = enemyName,
                     defeated = false,
                     MaxHealth = roundedHealth,
                     strength = roundedStrength,
                     Health = roundedHealth,
-                    image = enemyImages[randomIndex],
-            };
-
-                enemy.Position = CalculateRandomPositionInRoom(room);
+                    ID = Guid.NewGuid(),
+                    image = enemyImage,
+                    chatHistory = new List<IEnemyDialogue>(),
+                    Position = CalculateRandomPositionInRoom(room),
+                };
 
                 room.Enemies.Add(enemy);
             }
@@ -222,16 +280,16 @@ namespace Fall2020_CSC403_Project
 
         private void GenerateRandomCoins(DungeonRoom room)
         {
-            int numCoins = new Random().Next(3, 8);
+            int numCoins = random.Next(1, 5);
             for (int i = 0; i < numCoins; i++)
             {
                 DungeonCoin coin = new DungeonCoin
                 {
-                    Amount = new Random().Next(1, 5),
-                    Image = "coin.png"
-                };
-
-                coin.Position = CalculateRandomPositionInRoom(room);
+                    Amount = random.Next(1, 5),
+                    Image = "coin.png",
+                    ID = Guid.NewGuid(),
+                    Position = CalculateRandomPositionInRoom(room),
+            };
 
                 room.Coins.Add(coin);
             }
@@ -239,17 +297,18 @@ namespace Fall2020_CSC403_Project
 
         private DungeonPositionData CalculateRandomPositionInRoom(DungeonRoom room)
         {
-            float minX = room.TopLeft.x;
-            float maxX = room.TopRight.x;
-            float minY = room.TopLeft.y;
-            float maxY = room.BottomLeft.y;
+            float minX = Math.Max(room.TopLeft.x + 100, 0);
+            float maxX = Math.Min(room.TopRight.x - 100, 1200);
+            float minY = Math.Max(room.TopLeft.y + 100, 0);
+            float maxY = Math.Min(room.BottomLeft.y - 100, 600);
 
             // generate random position in room
-            float randomX = (float)(minX + (maxX - minX) * new Random().NextDouble());
-            float randomY = (float)(minY + (maxY - minY) * new Random().NextDouble());
+            float randomX = (float)(minX + (maxX - minX) * random.NextDouble());
+            float randomY = (float)(minY + (maxY - minY) * random.NextDouble());
 
             return new DungeonPositionData { x = randomX, y = randomY };
         }
+
 
         public DungeonRoom GetCurrentRoom(DungeonPositionData playerPosition)
         {
