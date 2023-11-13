@@ -26,10 +26,6 @@ namespace Fall2020_CSC403_Project
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            using (CosmeticsShop cosShop = new CosmeticsShop())
-            {
-                cosShop.ShowDialog();
-            }
             using (MainMenu mainMenuForm = new MainMenu(openAiApi))
             {
                 if (mainMenuForm.ShowDialog() == DialogResult.OK)
