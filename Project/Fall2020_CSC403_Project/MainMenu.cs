@@ -30,6 +30,7 @@ namespace Fall2020_CSC403_Project
                 btnContinue.Visible = false;
             }
             btnExit.Location = new Point((this.ClientSize.Width - btnExit.Width) / 2, (this.ClientSize.Height - btnExit.Height) / 2 + 60);
+            btnCosmetics.Location = new Point((this.ClientSize.Width - btnCosmetics.Width) / 2, (this.ClientSize.Height - btnCosmetics.Height) / 2 + 120);
 
             this.openAiApi = openAiApi;
         }
@@ -78,6 +79,16 @@ namespace Fall2020_CSC403_Project
         private void btnExit_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void btnCosmetics_Click(object sender, EventArgs e)
+        {
+            CosmeticsShop hatsShop = new CosmeticsShop();
+            hatsShop.FormBorderStyle = FormBorderStyle.None;
+            hatsShop.StartPosition = FormStartPosition.Manual;
+            hatsShop.Left = this.Left + (this.Width - hatsShop.Width) / 2;
+            hatsShop.Top = this.Top + (this.Height - hatsShop.Height) / 2;
+            hatsShop.ShowDialog();
         }
 
         private void MainMenu_Load(object sender, EventArgs e)

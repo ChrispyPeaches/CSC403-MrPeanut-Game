@@ -39,16 +39,5 @@ namespace Fall2020_CSC403_Project
         {
             this.Close();
         }
-
-        private void btnCosmetics_Click(object sender, EventArgs e)
-        {
-            CosmeticsShop hatsShop = new CosmeticsShop();
-            hatsShop.FormBorderStyle = FormBorderStyle.None;
-            hatsShop.StartPosition = FormStartPosition.Manual;
-            hatsShop.Left = this.Left + (this.Width - hatsShop.Width) / 2;
-            hatsShop.Top = this.Top + (this.Height - hatsShop.Height) / 2;
-            hatsShop.Show();
-            this.Close();
-        }
     }
 }
