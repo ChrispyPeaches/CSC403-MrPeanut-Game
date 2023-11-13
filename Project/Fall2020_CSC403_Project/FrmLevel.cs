@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using static Fall2020_CSC403_Project.Controller;
+using System.Reflection;
 
 namespace Fall2020_CSC403_Project
 {
@@ -860,17 +861,6 @@ namespace Fall2020_CSC403_Project
             this.roomControls.Clear();
         }
 
-
-
-
-
-
-
-
-
-
-
-
         public void SetPlayerImage()
         {
             string appDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
@@ -878,7 +868,7 @@ namespace Fall2020_CSC403_Project
 
             if (File.Exists(playerImagePath))
             {
-                picPlayer.BackgroundImage = Image.FromFile(playerImagePath);   
+                picPlayer.BackgroundImage = System.Drawing.Image.FromFile(playerImagePath);   
             }
         }
     }
