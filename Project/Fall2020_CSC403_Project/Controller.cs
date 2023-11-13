@@ -14,6 +14,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
+using static Fall2020_CSC403_Project.code.Game;
 using static Fall2020_CSC403_Project.OpenAIApi.ChatCompletionQuery;
 using Vector2 = Fall2020_CSC403_Project.code.Vector2;
 
@@ -123,23 +124,36 @@ namespace Fall2020_CSC403_Project
             public void UpdateData(string pathToFile = "Save Data Name Here", int currentRow = 0, int currentCol= 0)
             {
                 string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                string saveDirectory = Path.Combine(appDirectory, "..", "..", "Saves", pathToFile + ".json");
+                string savesDirectoryPath = Path.Combine(appDirectory, "..", "..", "Saves");
+                string saveFilePath = Path.Combine(savesDirectoryPath, pathToFile + ".json");
 
                 try
                 {
                     Game game = Game.Instance;
                     Player player = game.player;
-                    CharacterState characterState = BattleCharacter.GetCharacterState(player);
 
                     Dungeon dungeon = new Dungeon(Game.Instance.Dungeon.GetLength(0));
+
                     for (int row = 0; row < Game.Instance.Dungeon.GetLength(0); row++)
                     {
                         for (int col = 0; col < Game.Instance.Dungeon.GetLength(1); col++)
                         {
-                            DungeonRoom room = Game.Instance.Dungeon[row, col];
-                            dungeon.DungeonRooms[col, row] = room;
+                            code.DungeonRoom sourceRoom = Game.Instance.Dungeon[row, col];
+                            DungeonRoom destinationRoom = (DungeonRoom)dungeon.DungeonRooms[col, row];
+                            destinationRoom.northDoor = sourceRoom.northDoor;
+                            destinationRoom.eastDoor = sourceRoom.eastDoor;
+                            destinationRoom.southDoor = sourceRoom.southDoor;
+                            destinationRoom.westDoor = sourceRoom.westDoor;
+                            destinationRoom.Enemies = sourceRoom.Enemies;
+                            destinationRoom.Coins = sourceRoom.Coins;
+                            destinationRoom.visited = sourceRoom.visited;
+                            destinationRoom.TopLeft = sourceRoom.TopLeft;
+                            destinationRoom.TopRight = sourceRoom.TopRight;
+                            destinationRoom.BottomLeft = sourceRoom.BottomLeft;
+                            destinationRoom.BottomRight = sourceRoom.BottomRight;
                         }
                     }
+
                     SaveData updatedSave = new SaveData
                     {
                         dungeon = dungeon,
@@ -163,7 +177,8 @@ namespace Fall2020_CSC403_Project
                     };
 
                     string jsonSaveData = JsonConvert.SerializeObject(updatedSave);
-                    File.WriteAllText(saveDirectory, jsonSaveData, Encoding.UTF8);
+                    File.WriteAllText(saveFilePath, jsonSaveData, Encoding.UTF8);
+
                 }
                 catch (Exception ex)
                 {

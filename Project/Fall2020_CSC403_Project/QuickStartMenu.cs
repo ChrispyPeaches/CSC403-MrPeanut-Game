@@ -15,7 +15,6 @@ namespace Fall2020_CSC403_Project
     public partial class QuickStartMenu : Form
     {
         private FrmLevel frmLevel;
-        private Controller.GameData gameData = new Controller.GameData();
         public QuickStartMenu(FrmLevel frmLevel)
         {
             InitializeComponent();
@@ -29,6 +28,7 @@ namespace Fall2020_CSC403_Project
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            Controller.GameData gameData = new Controller.GameData();
             string fileName = Game.Instance.player.Name;
             gameData.UpdateData(fileName, frmLevel.currentRow, frmLevel.currentCol);
             this.Close();
