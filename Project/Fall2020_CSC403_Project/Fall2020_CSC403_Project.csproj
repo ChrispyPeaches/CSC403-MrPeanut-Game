@@ -219,6 +219,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\brick_main_background.jpg" />
+    <None Include="data\right_arrow.png" />
+    <None Include="data\left_arrow.png" />
     <None Include="data\exit_sign.png" />
     <None Include="data\up_arrow.png" />
     <None Include="data\down_arrow.png" />
