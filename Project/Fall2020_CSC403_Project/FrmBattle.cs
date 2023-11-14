@@ -18,7 +18,7 @@ namespace Fall2020_CSC403_Project
         public static FrmBattle instanceForDeath { get; private set; }
         private Enemy enemy = null;
         private Player player = null;
-        public Image playerImg = null;
+        public Image playerImg {get; set;}
         public string enemyName = "";
         private IOpenAIApi _openAIApi;
         private IList<ChatMessage> chats;
@@ -38,6 +38,7 @@ namespace Fall2020_CSC403_Project
             KeyPreview = true;
             _openAIApi = openAIApi;
             instanceForDeath = this;
+            picPlayer.BackgroundImage = playerImage;
             playerImg = playerImage;
         }
 

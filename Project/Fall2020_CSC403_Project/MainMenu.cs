@@ -19,8 +19,6 @@ namespace Fall2020_CSC403_Project
     {
         private string SavesDirectoryPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "..", "..", "Saves");
 
-        public Image chatacterImage { get; set; }
-
         private IOpenAIApi openAiApi;
         public MainMenu(IOpenAIApi openAiApi)
         {

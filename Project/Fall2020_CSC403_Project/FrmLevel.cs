@@ -56,9 +56,10 @@ namespace Fall2020_CSC403_Project
         public FrmLevel(IOpenAIApi openAIApi, System.Drawing.Image characterImg)
         {
             InitializeComponent();
-            SetPlayerImage();
             _openAIApi = openAIApi;
             instanceForDeath = this;
+            picPlayer.BackgroundImage = characterImg;
+            _characterImg = characterImg;
         }
 
         public void ResetMovementBooleans()
@@ -869,14 +870,17 @@ namespace Fall2020_CSC403_Project
 
         public void SetPlayerImage()
         {
+            picPlayer.BackgroundImage = _characterImg;
+            /*
             string appDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string playerImagePath = Path.Combine(appDirectory, "..", "..", "Saves", "playerImage.png");
 
             if (File.Exists(playerImagePath))
             {
-                picPlayer.BackgroundImage = System.Drawing.Image.FromFile(playerImagePath);
+                //picPlayer.BackgroundImage = System.Drawing.Image.FromFile(playerImagePath);
                 picPlayer.BackgroundImage = _characterImg;
             }
+            */
         }
     }
 }
