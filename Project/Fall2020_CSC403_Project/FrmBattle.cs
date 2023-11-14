@@ -4,8 +4,10 @@ using Fall2020_CSC403_Project.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Media;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
@@ -18,7 +20,6 @@ namespace Fall2020_CSC403_Project
         public static FrmBattle instanceForDeath { get; private set; }
         private Enemy enemy = null;
         private Player player = null;
-        public Image playerImg {get; set;}
         public string enemyName = "";
         private IOpenAIApi _openAIApi;
         private IList<ChatMessage> chats;
@@ -32,14 +33,12 @@ namespace Fall2020_CSC403_Project
         SoundPlayer battleMusic = new SoundPlayer(Resources.battle_music);
         SoundPlayer gameOverTheme = new SoundPlayer(Resources.game_over_theme);
 
-        private FrmBattle(IOpenAIApi openAIApi, Image playerImage)
+        private FrmBattle(IOpenAIApi openAIApi)
         {
             InitializeComponent();
             KeyPreview = true;
             _openAIApi = openAIApi;
             instanceForDeath = this;
-            picPlayer.BackgroundImage = playerImage;
-            playerImg = playerImage;
         }
 
         public void Setup()
@@ -47,8 +46,8 @@ namespace Fall2020_CSC403_Project
             Game game = Game.Instance;
             Player player = game.player;
 
-            // set the correct player image
-            picPlayer.BackgroundImage = playerImg;
+            // set the player image
+            SetPlayerImage();
 
             // play battle music
             battleMusic.PlayLooping();
@@ -88,12 +87,12 @@ namespace Fall2020_CSC403_Project
             tmrFinalBattle.Enabled = true;
         }
 
-        public static FrmBattle GetInstance(Enemy enemy, IOpenAIApi openAIApi, Image playerImage)
+        public static FrmBattle GetInstance(Enemy enemy, IOpenAIApi openAIApi)
         {
             Boolean check = CheckFlag(enemy);
             if (instance == null && !check)
             {
-                instance = new FrmBattle(openAIApi, playerImage);
+                instance = new FrmBattle(openAIApi);
                 instance.enemy = enemy;
                 instance.enemyName = enemy.Name;
                 instance.Setup();
@@ -135,7 +134,7 @@ namespace Fall2020_CSC403_Project
         private void btnAttack_Click(object sender, EventArgs e)
         {
             Game game = Game.Instance;
-            FrmBattle battleForm = GetInstance(enemy, this._openAIApi, playerImg);
+            FrmBattle battleForm = GetInstance(enemy, this._openAIApi);
             if (game.player.Health > 0)
             {
                 // update hp
@@ -294,6 +293,17 @@ namespace Fall2020_CSC403_Project
 
             // Enable chat button
             btnChat.Enabled = true;
+        }
+
+        public void SetPlayerImage()
+        {
+            string appDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string playerImagePath = Path.Combine(appDirectory, "..", "..", "Saves", "playerImage.png");
+
+            if (File.Exists(playerImagePath))
+            {
+                picPlayer.BackgroundImage = Image.FromFile(playerImagePath);
+            }
         }
     }
 }

@@ -34,7 +34,6 @@ namespace Fall2020_CSC403_Project
 
         public IOpenAIApi _openAIApi;
 
-        public System.Drawing.Image _characterImg;
 
         private bool isUpPressed = false;
         private bool isDownPressed = false;
@@ -53,13 +52,12 @@ namespace Fall2020_CSC403_Project
         public int currentRow;
         public int currentCol;
 
-        public FrmLevel(IOpenAIApi openAIApi, System.Drawing.Image characterImg)
+        public FrmLevel(IOpenAIApi openAIApi)
         {
             InitializeComponent();
+            SetPlayerImage();
             _openAIApi = openAIApi;
             instanceForDeath = this;
-            picPlayer.BackgroundImage = characterImg;
-            _characterImg = characterImg;
         }
 
         public void ResetMovementBooleans()
@@ -338,7 +336,7 @@ namespace Fall2020_CSC403_Project
             player.MoveBack();
             try
             {
-                frmBattle = FrmBattle.GetInstance(enemy, _openAIApi, _characterImg);
+                frmBattle = FrmBattle.GetInstance(enemy, _openAIApi);
 
                 if (!(frmBattle == null) && enemy.Defeated != true)
                 {
@@ -870,17 +868,13 @@ namespace Fall2020_CSC403_Project
 
         public void SetPlayerImage()
         {
-            picPlayer.BackgroundImage = _characterImg;
-            /*
             string appDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             string playerImagePath = Path.Combine(appDirectory, "..", "..", "Saves", "playerImage.png");
 
             if (File.Exists(playerImagePath))
             {
-                //picPlayer.BackgroundImage = System.Drawing.Image.FromFile(playerImagePath);
-                picPlayer.BackgroundImage = _characterImg;
+                picPlayer.BackgroundImage = System.Drawing.Image.FromFile(playerImagePath);
             }
-            */
         }
     }
 }

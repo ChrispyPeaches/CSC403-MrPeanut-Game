@@ -14,6 +14,8 @@ namespace Fall2020_CSC403_Project
 {
     public partial class CosmeticsShop : Form
     {
+        public Image cosmeticPlayerImage { get; set; }
+
         IList<Hat> hats;
         int currentHatsIndex = 0;
 
@@ -24,6 +26,7 @@ namespace Fall2020_CSC403_Project
 
         public CosmeticsShop()
         {
+            cosmeticPlayerImage = Resources.mrPeanut;
             InitializeComponent();
 
             GetAvailableHats();
@@ -86,14 +89,14 @@ namespace Fall2020_CSC403_Project
             // Redraw player without a hat
             if (currentHat.Image == null)
             {
-                pictureBox_player.BackgroundImage = new Bitmap(Resources.mrPeanut);
+                pictureBox_player.BackgroundImage = new Bitmap(cosmeticPlayerImage);
                 ShouldDisplayAdjustHatHeightMenu(false);
             }
             // Redraw player with a hat
             else
             {
                 Bitmap hatImage = (Bitmap)btnSelectedHat.BackgroundImage;
-                Bitmap playerImage = new Bitmap(Resources.mrPeanut);
+                Bitmap playerImage = new Bitmap(cosmeticPlayerImage);
 
                 using (var graphics = Graphics.FromImage(playerImage))
                 {
@@ -211,5 +214,12 @@ namespace Fall2020_CSC403_Project
             }
         }
 
+        private void btnCharacterSelect_Click(object sender, EventArgs e)
+        {
+            CharacterSelect characterSelect = new CharacterSelect();
+            characterSelect.ShowDialog();
+            cosmeticPlayerImage = characterSelect.SelectedCharacterImg;
+            RedrawPlayer();
+        }
     }
 }

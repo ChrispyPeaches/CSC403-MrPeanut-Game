@@ -44,10 +44,8 @@ namespace Fall2020_CSC403_Project
             savesSelectForm.Top = this.Top + (this.Height - savesSelectForm.Height) / 2;
             savesSelectForm.ShowDialog();
 
-            //CharacterSelect characterSelect = new CharacterSelect();
-            Image selectedImg = savesSelectForm.selectedCharacterImg;
 
-            FrmLevel frmLevel = new FrmLevel(openAiApi, selectedImg);
+            FrmLevel frmLevel = new FrmLevel(openAiApi);
             Rectangle workingArea = Screen.GetWorkingArea(this);
 
             int desiredWidth = workingArea.Width;
@@ -69,7 +67,7 @@ namespace Fall2020_CSC403_Project
                 savesSelectForm.ShowDialog();
             }
 
-            FrmLevel frmLevel = new FrmLevel(openAiApi, Resources.phil);
+            FrmLevel frmLevel = new FrmLevel(openAiApi);
             Rectangle workingArea = Screen.GetWorkingArea(this);
 
             int desiredWidth = workingArea.Width;

@@ -38,6 +38,8 @@
             this.btn_AdjustHat_Title = new System.Windows.Forms.Button();
             this.btn_AdjustHatHeight_DownArrow = new System.Windows.Forms.Button();
             this.btn_AdjustHatHeight_UpArrow = new System.Windows.Forms.Button();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.btnCharacterSelect = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_player)).BeginInit();
             this.SuspendLayout();
             // 
@@ -164,6 +166,20 @@
             this.btn_AdjustHatHeight_UpArrow.UseVisualStyleBackColor = false;
             this.btn_AdjustHatHeight_UpArrow.Click += new System.EventHandler(this.btn_AdjustHatHeight_UpArrow_Click);
             // 
+            // btnCharacterSelect
+            // 
+            this.btnCharacterSelect.BackColor = System.Drawing.Color.White;
+            this.btnCharacterSelect.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnCharacterSelect.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCharacterSelect.Location = new System.Drawing.Point(325, 278);
+            this.btnCharacterSelect.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCharacterSelect.Name = "btnCharacterSelect";
+            this.btnCharacterSelect.Size = new System.Drawing.Size(199, 66);
+            this.btnCharacterSelect.TabIndex = 9;
+            this.btnCharacterSelect.Text = "Change Character";
+            this.btnCharacterSelect.UseVisualStyleBackColor = false;
+            this.btnCharacterSelect.Click += new System.EventHandler(this.btnCharacterSelect_Click);
+            // 
             // CosmeticsShop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -171,6 +187,7 @@
             this.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.shopkeeper_background;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(919, 518);
+            this.Controls.Add(this.btnCharacterSelect);
             this.Controls.Add(this.btn_AdjustHatHeight_DownArrow);
             this.Controls.Add(this.btn_AdjustHatHeight_UpArrow);
             this.Controls.Add(this.btn_AdjustHat_Title);
@@ -197,5 +214,7 @@
         private System.Windows.Forms.Button btn_AdjustHat_Title;
         private System.Windows.Forms.Button btn_AdjustHatHeight_DownArrow;
         private System.Windows.Forms.Button btn_AdjustHatHeight_UpArrow;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.Button btnCharacterSelect;
     }
 }

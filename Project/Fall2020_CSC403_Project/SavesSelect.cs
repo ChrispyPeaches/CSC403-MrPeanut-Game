@@ -1,4 +1,5 @@
 ﻿using Fall2020_CSC403_Project.code;
+using Fall2020_CSC403_Project.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -69,10 +70,7 @@ namespace Fall2020_CSC403_Project
         {
 
             string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            //string imageLocation = Path.GetFullPath(Path.Combine(appDirectory, "..", "..", "data", "characters", "mrPeanut.png"));
-            CharacterSelect characterSelect = new CharacterSelect();
-            characterSelect.ShowDialog();
-            selectedCharacterImg = characterSelect.SelectedCharacterImg;
+            string imageLocation = Path.GetFullPath(Path.Combine(appDirectory, "..", "..", "data", "playerImage.png"));
 
             Label lblNewFileName = new Label
             {
@@ -98,7 +96,8 @@ namespace Fall2020_CSC403_Project
 
             PictureBox pictureBox = new PictureBox
             {
-                Image = selectedCharacterImg,
+                Image = Resources.enemy_hotsauce,
+                //Image = Image.FromFile(imageLocation),
                 Location = new Point((ClientSize.Width - 175) / 2, btnCreateNewSave.Bottom + 10),
                 SizeMode = PictureBoxSizeMode.StretchImage,
                 Size = new Size(200, 350)
