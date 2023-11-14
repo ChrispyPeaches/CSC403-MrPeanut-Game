@@ -11,6 +11,7 @@ using static Fall2020_CSC403_Project.Controller;
 using Fall2020_CSC403_Project.code;
 using System.IO;
 using Refit;
+using Fall2020_CSC403_Project.Properties;
 
 namespace Fall2020_CSC403_Project
 {
@@ -42,6 +43,7 @@ namespace Fall2020_CSC403_Project
             savesSelectForm.Left = this.Left + (this.Width - savesSelectForm.Width) / 2;
             savesSelectForm.Top = this.Top + (this.Height - savesSelectForm.Height) / 2;
             savesSelectForm.ShowDialog();
+
 
             FrmLevel frmLevel = new FrmLevel(openAiApi);
             Rectangle workingArea = Screen.GetWorkingArea(this);

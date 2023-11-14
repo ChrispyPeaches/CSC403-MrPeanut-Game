@@ -53,6 +53,12 @@
       <DependentUpon>CosmeticsResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Cosmetics\Hat.cs" />
+    <Compile Include="CharacterSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CharacterSelect.Designer.cs">
+      <DependentUpon>CharacterSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dungeon.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="DeathScreen.cs">
@@ -67,6 +73,7 @@
     <Compile Include="Cosmetics\CosmeticsShop.Designer.cs">
       <DependentUpon>CosmeticsShop.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dungeon.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -115,6 +122,9 @@
     <Compile Include="SavesSelect.Designer.cs">
       <DependentUpon>SavesSelect.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="CharacterSelect.resx">
+      <DependentUpon>CharacterSelect.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DeathScreen.resx">
       <DependentUpon>DeathScreen.cs</DependentUpon>
     </EmbeddedResource>
@@ -164,22 +174,10 @@
     <None Include="data\final_battle.wav" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\player.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="data\battle_screen.fw.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\wall.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="data\enemy_cheetos.fw.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="data\enemy_poisonpacket.fw.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="data\enemy_koolaid.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="code\" />
@@ -221,12 +219,22 @@
     <Content Include="data\brick_main_background.jpg" />
     <None Include="data\right_arrow.png" />
     <None Include="data\left_arrow.png" />
+    <None Include="data\phil.png" />
+    <None Include="data\pepsiMan.png" />
+    <None Include="data\mrPeanut.png" />
+    <None Include="data\grimace.png" />
+    <None Include="data\enemy_poisonpacket.fw.png" />
+    <None Include="data\enemy_koolaid.png" />
+    <None Include="data\enemy_hotsauce.png" />
+    <None Include="data\enemy_hamburglar.png" />
+    <None Include="data\enemy_cheetos.fw.png" />
     <None Include="data\exit_sign.png" />
     <None Include="data\up_arrow.png" />
     <None Include="data\down_arrow.png" />
     <None Include="data\cosmetics\skyrim_helmet.png" />
     <None Include="data\cosmetics\hat_foam.png" />
     <None Include="data\raw images\player_mrpeanut_bald.png" />
+    <None Include="data\missingTextures.jpg" />
     <None Include="data\raw images\exit_sign.png" />
     <None Include="data\raw images\skyrim_helmet.png" />
     <None Include="data\raw images\hat_foam.png" />

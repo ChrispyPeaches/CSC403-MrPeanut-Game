@@ -1,4 +1,5 @@
 ﻿using Fall2020_CSC403_Project.code;
+using Fall2020_CSC403_Project.Properties;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +16,7 @@ namespace Fall2020_CSC403_Project
 {
     public partial class SavesSelect : Form
     {
+        public Image selectedCharacterImg { get; set; }
         public bool selectExistingSave { get; set; }
         public string newFileName { get; set; }
         private TextBox txtNewFileName { get; set; }
@@ -68,8 +70,7 @@ namespace Fall2020_CSC403_Project
         {
 
             string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            string imageLocation = Path.GetFullPath(Path.Combine(appDirectory, "..", "..", "data", "player.png"));
-
+            string imageLocation = Path.GetFullPath(Path.Combine(appDirectory, "..", "..", "data", "playerImage.png"));
 
             Label lblNewFileName = new Label
             {
@@ -95,7 +96,8 @@ namespace Fall2020_CSC403_Project
 
             PictureBox pictureBox = new PictureBox
             {
-                Image = Image.FromFile(imageLocation),
+                Image = Resources.enemy_hotsauce,
+                //Image = Image.FromFile(imageLocation),
                 Location = new Point((ClientSize.Width - 175) / 2, btnCreateNewSave.Bottom + 10),
                 SizeMode = PictureBoxSizeMode.StretchImage,
                 Size = new Size(200, 350)

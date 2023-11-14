@@ -74,7 +74,9 @@ namespace Fall2020_CSC403_Project
         {
             "enemy_cheetos.fw.png",
             "enemy_koolaid.png",
-            "enemy_poisonpacket.fw.png"
+            "enemy_poisonpacket.fw.png",
+            "enemy_hotsauce.png",
+            "enemy_hamburglar.png"
         };
 
         List<string> cheetosNames = new List<string>
@@ -102,6 +104,24 @@ namespace Fall2020_CSC403_Project
             "Lethal Dose",
             "Hazardous Pouch",
             "Deadly Sachet"
+        };
+
+        List<string> hotSauceNames = new List<string>
+        {
+            "Fiery Fiasco",
+            "Salsa Scoundrel",
+            "Pepper Pilferer",
+            "Hot Tamale Trickster",
+            "Sir Spice Snatcher"
+        };
+
+        List<string> hamburglarNames = new List<string>
+        {
+            "Patty Pilferer",
+            "Beef Bandit",
+            "Bun Bungler",
+            "Sir Steal-a-Lot",
+            "Patty Plunderer"
         };
 
         public Dungeon(int N)
@@ -254,6 +274,16 @@ namespace Fall2020_CSC403_Project
                 {
                     enemyImage = enemyImages[2];
                     enemyName = poisonPacketNames[random.Next(0, 5)];
+                }
+                else if (roundedHealth > 80 && roundedHealth <= 160)
+                {
+                    enemyImage = enemyImages[3];
+                    enemyName = hotSauceNames[random.Next(0, 5)];
+                }
+                else if (roundedHealth > 100 && roundedHealth <= 200)
+                {
+                    enemyImage = enemyImages[4];
+                    enemyName = hamburglarNames[random.Next(0, 5)];
                 }
                 else
                 {

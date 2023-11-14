@@ -53,9 +53,10 @@
             this.pictureBox_player.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox_player.ErrorImage = null;
             this.pictureBox_player.InitialImage = null;
-            this.pictureBox_player.Location = new System.Drawing.Point(4, 132);
+            this.pictureBox_player.Location = new System.Drawing.Point(5, 162);
+            this.pictureBox_player.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pictureBox_player.Name = "pictureBox_player";
-            this.pictureBox_player.Size = new System.Drawing.Size(275, 323);
+            this.pictureBox_player.Size = new System.Drawing.Size(367, 398);
             this.pictureBox_player.TabIndex = 1;
             this.pictureBox_player.TabStop = false;
             // 
@@ -66,9 +67,10 @@
             this.btn_ChooseHat_UpArrow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_ChooseHat_UpArrow.FlatAppearance.BorderSize = 0;
             this.btn_ChooseHat_UpArrow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_ChooseHat_UpArrow.Location = new System.Drawing.Point(842, 12);
+            this.btn_ChooseHat_UpArrow.Location = new System.Drawing.Point(1123, 15);
+            this.btn_ChooseHat_UpArrow.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_ChooseHat_UpArrow.Name = "btn_ChooseHat_UpArrow";
-            this.btn_ChooseHat_UpArrow.Size = new System.Drawing.Size(65, 61);
+            this.btn_ChooseHat_UpArrow.Size = new System.Drawing.Size(87, 75);
             this.btn_ChooseHat_UpArrow.TabIndex = 2;
             this.btn_ChooseHat_UpArrow.UseVisualStyleBackColor = false;
             this.btn_ChooseHat_UpArrow.Click += new System.EventHandler(this.btn_ChooseHat_UpArrow_Click);
@@ -80,9 +82,10 @@
             this.btn_ChooseHat_DownArrow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_ChooseHat_DownArrow.FlatAppearance.BorderSize = 0;
             this.btn_ChooseHat_DownArrow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_ChooseHat_DownArrow.Location = new System.Drawing.Point(842, 82);
+            this.btn_ChooseHat_DownArrow.Location = new System.Drawing.Point(1123, 101);
+            this.btn_ChooseHat_DownArrow.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_ChooseHat_DownArrow.Name = "btn_ChooseHat_DownArrow";
-            this.btn_ChooseHat_DownArrow.Size = new System.Drawing.Size(65, 61);
+            this.btn_ChooseHat_DownArrow.Size = new System.Drawing.Size(87, 75);
             this.btn_ChooseHat_DownArrow.TabIndex = 3;
             this.btn_ChooseHat_DownArrow.UseVisualStyleBackColor = false;
             this.btn_ChooseHat_DownArrow.Click += new System.EventHandler(this.btn_ChooseHat_DownArrow_Click);
@@ -95,9 +98,10 @@
             this.btnSelectedHat.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Linen;
             this.btnSelectedHat.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Linen;
             this.btnSelectedHat.ForeColor = System.Drawing.Color.Transparent;
-            this.btnSelectedHat.Location = new System.Drawing.Point(657, 12);
+            this.btnSelectedHat.Location = new System.Drawing.Point(876, 15);
+            this.btnSelectedHat.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnSelectedHat.Name = "btnSelectedHat";
-            this.btnSelectedHat.Size = new System.Drawing.Size(180, 131);
+            this.btnSelectedHat.Size = new System.Drawing.Size(240, 161);
             this.btnSelectedHat.TabIndex = 0;
             this.btnSelectedHat.UseVisualStyleBackColor = false;
             // 
@@ -108,9 +112,10 @@
             this.btnExit.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btnExit.FlatAppearance.BorderSize = 0;
             this.btnExit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExit.Location = new System.Drawing.Point(4, 4);
+            this.btnExit.Location = new System.Drawing.Point(5, 5);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(87, 61);
+            this.btnExit.Size = new System.Drawing.Size(116, 75);
             this.btnExit.TabIndex = 4;
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
@@ -120,10 +125,10 @@
             this.button1.BackColor = System.Drawing.Color.White;
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(657, 149);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
+            this.button1.Location = new System.Drawing.Point(876, 183);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(250, 47);
+            this.button1.Size = new System.Drawing.Size(333, 58);
             this.button1.TabIndex = 5;
             this.button1.Text = "Choose Hat";
             this.button1.UseVisualStyleBackColor = false;
@@ -133,10 +138,10 @@
             this.btn_AdjustHat_Title.BackColor = System.Drawing.Color.White;
             this.btn_AdjustHat_Title.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btn_AdjustHat_Title.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_AdjustHat_Title.Location = new System.Drawing.Point(526, 63);
-            this.btn_AdjustHat_Title.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_AdjustHat_Title.Location = new System.Drawing.Point(701, 78);
+            this.btn_AdjustHat_Title.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_AdjustHat_Title.Name = "btn_AdjustHat_Title";
-            this.btn_AdjustHat_Title.Size = new System.Drawing.Size(78, 64);
+            this.btn_AdjustHat_Title.Size = new System.Drawing.Size(104, 79);
             this.btn_AdjustHat_Title.TabIndex = 6;
             this.btn_AdjustHat_Title.Text = "Adjust Hat";
             this.btn_AdjustHat_Title.UseVisualStyleBackColor = false;
@@ -148,9 +153,10 @@
             this.btn_AdjustHatHeight_DownArrow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_AdjustHatHeight_DownArrow.FlatAppearance.BorderSize = 0;
             this.btn_AdjustHatHeight_DownArrow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_AdjustHatHeight_DownArrow.Location = new System.Drawing.Point(537, 132);
+            this.btn_AdjustHatHeight_DownArrow.Location = new System.Drawing.Point(716, 162);
+            this.btn_AdjustHatHeight_DownArrow.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_AdjustHatHeight_DownArrow.Name = "btn_AdjustHatHeight_DownArrow";
-            this.btn_AdjustHatHeight_DownArrow.Size = new System.Drawing.Size(51, 43);
+            this.btn_AdjustHatHeight_DownArrow.Size = new System.Drawing.Size(68, 53);
             this.btn_AdjustHatHeight_DownArrow.TabIndex = 8;
             this.btn_AdjustHatHeight_DownArrow.UseVisualStyleBackColor = false;
             this.btn_AdjustHatHeight_DownArrow.Click += new System.EventHandler(this.btn_AdjustHatHeight_DownArrow_Click);
@@ -162,9 +168,10 @@
             this.btn_AdjustHatHeight_UpArrow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_AdjustHatHeight_UpArrow.FlatAppearance.BorderSize = 0;
             this.btn_AdjustHatHeight_UpArrow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_AdjustHatHeight_UpArrow.Location = new System.Drawing.Point(537, 16);
+            this.btn_AdjustHatHeight_UpArrow.Location = new System.Drawing.Point(716, 20);
+            this.btn_AdjustHatHeight_UpArrow.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_AdjustHatHeight_UpArrow.Name = "btn_AdjustHatHeight_UpArrow";
-            this.btn_AdjustHatHeight_UpArrow.Size = new System.Drawing.Size(51, 42);
+            this.btn_AdjustHatHeight_UpArrow.Size = new System.Drawing.Size(68, 52);
             this.btn_AdjustHatHeight_UpArrow.TabIndex = 7;
             this.btn_AdjustHatHeight_UpArrow.UseVisualStyleBackColor = false;
             this.btn_AdjustHatHeight_UpArrow.Click += new System.EventHandler(this.btn_AdjustHatHeight_UpArrow_Click);
@@ -176,9 +183,10 @@
             this.btn_AdjustHatHeight_LeftArrow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_AdjustHatHeight_LeftArrow.FlatAppearance.BorderSize = 0;
             this.btn_AdjustHatHeight_LeftArrow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_AdjustHatHeight_LeftArrow.Location = new System.Drawing.Point(483, 71);
+            this.btn_AdjustHatHeight_LeftArrow.Location = new System.Drawing.Point(644, 87);
+            this.btn_AdjustHatHeight_LeftArrow.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_AdjustHatHeight_LeftArrow.Name = "btn_AdjustHatHeight_LeftArrow";
-            this.btn_AdjustHatHeight_LeftArrow.Size = new System.Drawing.Size(38, 50);
+            this.btn_AdjustHatHeight_LeftArrow.Size = new System.Drawing.Size(51, 62);
             this.btn_AdjustHatHeight_LeftArrow.TabIndex = 9;
             this.btn_AdjustHatHeight_LeftArrow.UseVisualStyleBackColor = false;
             this.btn_AdjustHatHeight_LeftArrow.Click += new System.EventHandler(this.btn_AdjustHatHeight_LeftArrow_Click);
@@ -190,9 +198,10 @@
             this.btn_AdjustHatHeight_RightArrow.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.btn_AdjustHatHeight_RightArrow.FlatAppearance.BorderSize = 0;
             this.btn_AdjustHatHeight_RightArrow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_AdjustHatHeight_RightArrow.Location = new System.Drawing.Point(610, 71);
+            this.btn_AdjustHatHeight_RightArrow.Location = new System.Drawing.Point(813, 87);
+            this.btn_AdjustHatHeight_RightArrow.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btn_AdjustHatHeight_RightArrow.Name = "btn_AdjustHatHeight_RightArrow";
-            this.btn_AdjustHatHeight_RightArrow.Size = new System.Drawing.Size(36, 50);
+            this.btn_AdjustHatHeight_RightArrow.Size = new System.Drawing.Size(48, 62);
             this.btn_AdjustHatHeight_RightArrow.TabIndex = 10;
             this.btn_AdjustHatHeight_RightArrow.UseVisualStyleBackColor = false;
             this.btn_AdjustHatHeight_RightArrow.Click += new System.EventHandler(this.btn_AdjustHatHeight_RightArrow_Click);
@@ -202,10 +211,10 @@
             this.button4.BackColor = System.Drawing.Color.White;
             this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(4, 460);
-            this.button4.Margin = new System.Windows.Forms.Padding(2);
+            this.button4.Location = new System.Drawing.Point(5, 566);
+            this.button4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(275, 47);
+            this.button4.Size = new System.Drawing.Size(367, 58);
             this.button4.TabIndex = 13;
             this.button4.Text = "Choose Character";
             this.button4.UseVisualStyleBackColor = false;
@@ -238,11 +247,11 @@
             // 
             // CosmeticsShop
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Fall2020_CSC403_Project.Properties.Resources.shopkeeper_background;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(919, 518);
+            this.ClientSize = new System.Drawing.Size(1225, 638);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button4);
@@ -257,6 +266,7 @@
             this.Controls.Add(this.btn_ChooseHat_UpArrow);
             this.Controls.Add(this.pictureBox_player);
             this.Controls.Add(this.btnSelectedHat);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "CosmeticsShop";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_player)).EndInit();

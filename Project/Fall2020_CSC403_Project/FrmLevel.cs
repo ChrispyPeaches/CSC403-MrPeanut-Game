@@ -16,6 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using static Fall2020_CSC403_Project.Controller;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Fall2020_CSC403_Project
 {
@@ -32,6 +33,7 @@ namespace Fall2020_CSC403_Project
         public static FrmLevel instanceForDeath { get; private set; }
 
         public IOpenAIApi _openAIApi;
+
 
         private bool isUpPressed = false;
         private bool isDownPressed = false;
@@ -871,7 +873,7 @@ namespace Fall2020_CSC403_Project
 
             if (File.Exists(playerImagePath))
             {
-                picPlayer.BackgroundImage = System.Drawing.Image.FromFile(playerImagePath);   
+                picPlayer.BackgroundImage = System.Drawing.Image.FromFile(playerImagePath);
             }
         }
     }

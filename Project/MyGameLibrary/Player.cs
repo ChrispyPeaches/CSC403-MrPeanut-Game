@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Fall2020_CSC403_Project.code
 {
@@ -11,6 +12,7 @@ namespace Fall2020_CSC403_Project.code
     {
         public string Name { get; set; }
         public int coinCounter { get; set; }
+
         public Player(Vector2 initPos, Collider collider, JObject playerData) : base(initPos, collider)
         {
             int health = playerData.Value<int>("Health");

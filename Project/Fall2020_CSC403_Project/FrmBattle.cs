@@ -4,8 +4,10 @@ using Fall2020_CSC403_Project.Properties;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Media;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
@@ -43,6 +45,9 @@ namespace Fall2020_CSC403_Project
         {
             Game game = Game.Instance;
             Player player = game.player;
+
+            // set the player image
+            SetPlayerImage();
 
             // play battle music
             battleMusic.PlayLooping();
@@ -149,15 +154,15 @@ namespace Fall2020_CSC403_Project
                     enemy.Collider = null;
                     SendKeys.SendWait("{ESC}");
                 }
-            }
-            else
-            {
-                FrmLevel frmLevel = FrmLevel.instanceForDeath;
-                frmLevel.Opacity = .01;
-                this.Opacity = 0;
-                gameOverTheme.Play();
-                deathScreen = new DeathScreen();
-                deathScreen.ShowDialog();
+                if (game.player.Health <= 0)
+                {
+                    FrmLevel frmLevel = FrmLevel.instanceForDeath;
+                    frmLevel.Opacity = .01;
+                    this.Opacity = 0;
+                    gameOverTheme.Play();
+                    deathScreen = new DeathScreen();
+                    deathScreen.ShowDialog();
+                }
             }
         }
 
@@ -288,6 +293,17 @@ namespace Fall2020_CSC403_Project
 
             // Enable chat button
             btnChat.Enabled = true;
+        }
+
+        public void SetPlayerImage()
+        {
+            string appDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string playerImagePath = Path.Combine(appDirectory, "..", "..", "Saves", "playerImage.png");
+
+            if (File.Exists(playerImagePath))
+            {
+                picPlayer.BackgroundImage = Image.FromFile(playerImagePath);
+            }
         }
     }
 }
