@@ -122,6 +122,7 @@
     <Compile Include="SavesSelect.Designer.cs">
       <DependentUpon>SavesSelect.cs</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <EmbeddedResource Include="CharacterSelect.resx">
       <DependentUpon>CharacterSelect.cs</DependentUpon>
     </EmbeddedResource>

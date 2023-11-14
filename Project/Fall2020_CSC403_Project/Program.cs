@@ -1,6 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using Fall2020_CSC403_Project.Properties;
+using Newtonsoft.Json;
 using Refit;
 using System;
+using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace Fall2020_CSC403_Project
@@ -23,6 +26,9 @@ namespace Fall2020_CSC403_Project
                 .For<IOpenAIApi>(
                     "https://api.openai.com/",
                     GlobalRefitSettings);
+
+            Settings.Default.AppDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            Settings.Default.SavesDirectory = Path.Combine(Settings.Default.AppDirectory, "..", "..", "Saves");
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
