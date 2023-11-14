@@ -187,19 +187,7 @@ namespace Fall2020_CSC403_Project
         private void btnExit_Click(object sender, EventArgs e)
         {
             SaveNewPlayerImage(new Bitmap(pictureBox_player.BackgroundImage));
-            SaveHatPreferences();
             Close();
-        }
-
-        /// <summary>
-        /// Save the hat preferences to a save file
-        /// </summary>
-        public void SaveHatPreferences()
-        {
-            /*foreach (Hat hat in hats.Where(hat => hat.Image != null))
-            {
-                
-            }*/
         }
 
         /// <summary>
