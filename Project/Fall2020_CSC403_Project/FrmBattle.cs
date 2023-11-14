@@ -277,7 +277,7 @@ namespace Fall2020_CSC403_Project
 
             // Display enemy's response in chat history
             string enemyResponse = response.Choices.First().Message.Content;
-            textboxChatHistory.AppendText($"\n{enemy.displayName}: {enemyResponse}");
+            textboxChatHistory.AppendText($"\n {enemyResponse}");
 
             chats.Add(new ChatMessage()
             {
