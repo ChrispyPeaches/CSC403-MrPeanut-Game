@@ -283,7 +283,7 @@ namespace Fall2020_CSC403_Project
                 else if (roundedHealth > 100 && roundedHealth <= 200)
                 {
                     enemyImage = enemyImages[4];
-                    enemyName = poisonPacketNames[random.Next(0, 5)];
+                    enemyName = hamburglarNames[random.Next(0, 5)];
                 }
                 else
                 {
