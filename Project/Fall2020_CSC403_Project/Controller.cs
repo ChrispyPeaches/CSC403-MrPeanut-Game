@@ -1,6 +1,7 @@
 ﻿// imports
 using Fall2020_CSC403_Project.code;
 using Fall2020_CSC403_Project.OpenAIApi;
+using Fall2020_CSC403_Project.Properties;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
@@ -66,13 +67,11 @@ namespace Fall2020_CSC403_Project
             {
                 try
                 {
-                    string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                    string savesDirectoryPath = Path.Combine(appDirectory, "..", "..", "Saves");
-                    if (!Directory.Exists(savesDirectoryPath))
+                    if (!Directory.Exists(Settings.Default.SavesDirectory))
                     {
-                        Directory.CreateDirectory(savesDirectoryPath);
+                        Directory.CreateDirectory(Settings.Default.SavesDirectory);
                     }
-                    string saveFilePath = Path.Combine(savesDirectoryPath, pathToFile + ".json");
+                    string saveFilePath = Path.Combine(Settings.Default.SavesDirectory, pathToFile + ".json");
                     if (!File.Exists(saveFilePath))
                     {
                         // get dungeon size
@@ -123,9 +122,7 @@ namespace Fall2020_CSC403_Project
 
             public void UpdateData(string pathToFile = "Save Data Name Here", int currentRow = 0, int currentCol= 0)
             {
-                string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                string savesDirectoryPath = Path.Combine(appDirectory, "..", "..", "Saves");
-                string saveFilePath = Path.Combine(savesDirectoryPath, pathToFile + ".json");
+                string saveFilePath = Path.Combine(Settings.Default.SavesDirectory, pathToFile + ".json");
 
                 try
                 {
@@ -190,8 +187,7 @@ namespace Fall2020_CSC403_Project
             {
                 try
                 {
-                    string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                    string saveDirectory = Path.Combine(appDirectory, "..", "..", "Saves", pathToFile + ".json");
+                    string saveDirectory = Path.Combine(Settings.Default.SavesDirectory, pathToFile + ".json");
                     string jsonString = File.ReadAllText(saveDirectory);
                     var savedData = JsonConvert.DeserializeObject<Dictionary<string, object>>(jsonString);
                     return savedData;

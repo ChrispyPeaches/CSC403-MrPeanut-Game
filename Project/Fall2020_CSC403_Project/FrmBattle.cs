@@ -297,8 +297,7 @@ namespace Fall2020_CSC403_Project
 
         public void SetPlayerImage()
         {
-            string appDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string playerImagePath = Path.Combine(appDirectory, "..", "..", "Saves", "playerImage.png");
+            string playerImagePath = Path.Combine(Settings.Default.SavesDirectory, "playerImage.png");
 
             if (File.Exists(playerImagePath))
             {

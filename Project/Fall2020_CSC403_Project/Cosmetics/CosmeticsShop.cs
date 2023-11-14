@@ -195,14 +195,11 @@ namespace Fall2020_CSC403_Project
         /// </summary>
         private async void SaveNewPlayerImage(Bitmap playerImage)
         {
-            string appDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string savesDirectoryPath = Path.Combine(appDirectory, "..", "..", "Saves");
-
-            if (!Directory.Exists(savesDirectoryPath))
+            if (!Directory.Exists(Settings.Default.SavesDirectory))
             {
-                Directory.CreateDirectory(savesDirectoryPath);
+                Directory.CreateDirectory(Settings.Default.SavesDirectory);
             }
-            using (FileStream playerImageStream = File.Create(Path.Combine(savesDirectoryPath, "playerImage.png")))
+            using (FileStream playerImageStream = File.Create(Path.Combine(Settings.Default.SavesDirectory, "playerImage.png")))
             {
                 playerImage.Save(
                     playerImageStream,
