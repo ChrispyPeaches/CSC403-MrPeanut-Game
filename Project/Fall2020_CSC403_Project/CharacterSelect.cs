@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fall2020_CSC403_Project.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,7 +13,7 @@ namespace Fall2020_CSC403_Project
 {
     public partial class CharacterSelect : Form
     {
-        public string SelectedCharacterImg { get; set; }
+        public Image SelectedCharacterImg { get; set; }
 
         public CharacterSelect()
         {
@@ -21,25 +22,25 @@ namespace Fall2020_CSC403_Project
 
         private void grimace_Click(object sender, EventArgs e)
         {
-            SelectedCharacterImg = "grimace";
+            SelectedCharacterImg = Resources.grimace;
             this.Close();
         }
 
         private void pepsiMan_Click(object sender, EventArgs e)
         {
-            SelectedCharacterImg = "pepsiMan";
+            SelectedCharacterImg = Resources.pepsiMan;
             this.Close();
         }
 
         private void phil_Click(object sender, EventArgs e)
         {
-            SelectedCharacterImg = "phil";
+            SelectedCharacterImg = Resources.phil;
             this.Close();
         }
 
         private void mrPeanut_Click(object sender, EventArgs e)
         {
-            SelectedCharacterImg = "mrPeanut";
+            SelectedCharacterImg = Resources.mrPeanut;
             this.Close();
         }
     }

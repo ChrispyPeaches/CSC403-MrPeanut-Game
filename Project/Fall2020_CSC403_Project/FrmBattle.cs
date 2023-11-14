@@ -17,6 +17,7 @@ namespace Fall2020_CSC403_Project
         public static FrmBattle instanceForDeath { get; private set; }
         private Enemy enemy = null;
         private Player player = null;
+        public Image playerImg = null;
         public string enemyName = "";
         private IOpenAIApi _openAIApi;
         private IList<ChatMessage> chats;
@@ -30,19 +31,23 @@ namespace Fall2020_CSC403_Project
         SoundPlayer battleMusic = new SoundPlayer(Resources.battle_music);
         SoundPlayer gameOverTheme = new SoundPlayer(Resources.game_over_theme);
 
-        private FrmBattle(IOpenAIApi openAIApi, FrmLevel frmLevel)
+        private FrmBattle(IOpenAIApi openAIApi, FrmLevel frmLevel, Image playerImage)
         {
             InitializeComponent();
             KeyPreview = true;
             _openAIApi = openAIApi;
             instanceForDeath = this;
             this.frmLevel = frmLevel;
+            playerImg = playerImage;
         }
 
         public void Setup()
         {
             Game game = Game.Instance;
             Player player = game.player;
+
+            // set the correct player image
+            picPlayer.BackgroundImage = playerImg;
 
             // play battle music
             battleMusic.PlayLooping();
@@ -82,12 +87,12 @@ namespace Fall2020_CSC403_Project
             tmrFinalBattle.Enabled = true;
         }
 
-        public static FrmBattle GetInstance(Enemy enemy, IOpenAIApi openAIApi, FrmLevel frmLevel)
+        public static FrmBattle GetInstance(Enemy enemy, IOpenAIApi openAIApi, FrmLevel frmLevel, Image playerImage)
         {
             Boolean check = CheckFlag(enemy);
             if (instance == null && !check)
             {
-                instance = new FrmBattle(openAIApi, frmLevel);
+                instance = new FrmBattle(openAIApi, frmLevel, playerImage);
                 instance.enemy = enemy;
                 instance.enemyName = enemy.Name;
                 instance.Setup();
@@ -145,7 +150,7 @@ namespace Fall2020_CSC403_Project
         private void btnAttack_Click(object sender, EventArgs e)
         {
             Game game = Game.Instance;
-            FrmBattle battleForm = GetInstance(enemy, this._openAIApi, frmLevel);
+            FrmBattle battleForm = GetInstance(enemy, this._openAIApi, frmLevel, playerImg);
             if (game.player.Health > 0)
             {
                 // update hp
@@ -184,15 +189,15 @@ namespace Fall2020_CSC403_Project
                     }
                     SendKeys.SendWait("{ESC}");
                 }
-            }
-            else
-            {
-                FrmLevel frmLevel = FrmLevel.instanceForDeath;
-                frmLevel.Opacity = .01;
-                this.Opacity = 0;
-                gameOverTheme.Play();
-                deathScreen = new DeathScreen();
-                deathScreen.ShowDialog();
+                if (game.player.Health <= 0)
+                {
+                    FrmLevel frmLevel = FrmLevel.instanceForDeath;
+                    frmLevel.Opacity = .01;
+                    this.Opacity = 0;
+                    gameOverTheme.Play();
+                    deathScreen = new DeathScreen();
+                    deathScreen.ShowDialog();
+                }
             }
         }
 

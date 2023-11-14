@@ -33,14 +33,14 @@ namespace Fall2020_CSC403_Project
 
         public IOpenAIApi _openAIApi;
 
-        public string _characterImg;
+        public Image _characterImg;
 
         private bool isUpPressed = false;
         private bool isDownPressed = false;
         private bool isLeftPressed = false;
         private bool isRightPressed = false;
 
-        public FrmLevel(IOpenAIApi openAIApi, string characterImg)
+        public FrmLevel(IOpenAIApi openAIApi, Image characterImg)
         {
             InitializeComponent();
             _openAIApi = openAIApi;
@@ -101,7 +101,7 @@ namespace Fall2020_CSC403_Project
             game.player.Position = CreatePosition(picPlayer);
             game.player.Collider = CreateCollider(picPlayer, PADDING);
 
-            setPlayerImage(_characterImg);
+            picPlayer.BackgroundImage = _characterImg;
 
             game.bossKoolaid.Position = CreatePosition(picBossKoolAid);
             game.bossKoolaid.Collider = CreateCollider(picBossKoolAid, PADDING);
@@ -144,26 +144,6 @@ namespace Fall2020_CSC403_Project
                 walls[w] = new Character(CreatePosition(pic), CreateCollider(pic, PADDING));
             }
             timeBegin = DateTime.Now;
-        }
-
-        public void setPlayerImage(string imgName)
-        {
-            if (imgName == "grimace")
-            {
-                picPlayer.BackgroundImage = Resources.grimace;
-            }
-            else if (imgName == "pepsiMan") 
-            {
-                picPlayer.BackgroundImage = Resources.pepsiMan;
-            }
-            else if (imgName == "phil")
-            {
-                picPlayer.BackgroundImage = Resources.phil;
-            }
-            else if (imgName == "mrPeanut")
-            {
-                picPlayer.BackgroundImage = Resources.mrPeanut;
-            }
         }
 
         private static Vector2 CreatePosition(PictureBox pic)
@@ -302,7 +282,7 @@ namespace Fall2020_CSC403_Project
             player.MoveBack();
             try
             {
-                frmBattle = FrmBattle.GetInstance(enemy, _openAIApi, this);
+                frmBattle = FrmBattle.GetInstance(enemy, _openAIApi, this, _characterImg);
                 if (!(frmBattle == null))
                 {
                     if (enemy == game.bossKoolaid)

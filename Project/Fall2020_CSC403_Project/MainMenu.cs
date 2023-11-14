@@ -11,6 +11,7 @@ using static Fall2020_CSC403_Project.Controller;
 using Fall2020_CSC403_Project.code;
 using System.IO;
 using Refit;
+using Fall2020_CSC403_Project.Properties;
 
 namespace Fall2020_CSC403_Project
 {
@@ -44,7 +45,7 @@ namespace Fall2020_CSC403_Project
 
             CharacterSelect characterSelect = new CharacterSelect();
             characterSelect.ShowDialog();
-            string selectedImg = characterSelect.SelectedCharacterImg;
+            Image selectedImg = characterSelect.SelectedCharacterImg;
 
             FrmLevel frmLevel = new FrmLevel(openAiApi, selectedImg);
             this.ShowInTaskbar = false;
@@ -63,7 +64,7 @@ namespace Fall2020_CSC403_Project
                 savesSelectForm.ShowDialog();
             }
 
-            FrmLevel frmLevel = new FrmLevel(openAiApi, "phil");
+            FrmLevel frmLevel = new FrmLevel(openAiApi, Resources.phil);
             this.ShowInTaskbar = false;
             this.Opacity = 0;
             frmLevel.ShowDialog();
