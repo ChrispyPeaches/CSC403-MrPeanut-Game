@@ -63,10 +63,9 @@ namespace Fall2020_CSC403_Project.OpenAIApi
                     [JsonProperty("properties")]
                     public Property Properties { get; set; }
 
+                    // Remain empty for our purposes
                     public class Property
                     {
-                        [JsonProperty("type")]
-                        public string Type { get; set; } = "object";
                     }
                 }
             }

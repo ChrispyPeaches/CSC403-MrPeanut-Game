@@ -67,7 +67,7 @@ namespace Fall2020_CSC403_Project
                     Content = $"We are in a battle to the death." +
                                 $"You are playing the role of {enemy.displayName}. I am playing the role of {Game.Instance.player.Name}." +
                                 $"We will each send one message at a time to create a dialogue. If attempts at peace are made, you are abrasive at first but are eventually swayed." +
-                                $"If you have clearly agreed to peace. Call the makePeace function"
+                                $"You should only send messages from the Enemy's point of view."
                 }
             };
         }
