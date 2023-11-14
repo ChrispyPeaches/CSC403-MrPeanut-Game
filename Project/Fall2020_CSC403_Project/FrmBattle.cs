@@ -276,9 +276,15 @@ namespace Fall2020_CSC403_Project
                 });
 
             // Display enemy's response in chat history
-            string enemyResponse = response.Choices.First().Message.Content
-                .Substring(response.Choices.First().Message.Content.IndexOf(':') + 1)
-                .TrimStart('\n');
+            string enemyResponse = response.Choices.First().Message.Content;
+
+            // Remove enemy name if chatGPT sent it
+            if (enemyResponse.Count(a => a == ':') == 2)
+            {
+                enemyResponse = enemyResponse
+                    .Substring(enemyResponse.IndexOf(':') + 1)
+                    .TrimStart('\n');
+            }
             textboxChatHistory.AppendText($"\n {enemyResponse}");
 
             chats.Add(new ChatMessage()
