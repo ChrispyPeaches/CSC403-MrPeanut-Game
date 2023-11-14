@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Fall2020_CSC403_Project
 {
-    [Headers("Content-Type: application/json", "Authorization: Bearer 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")]
+    [Headers("Content-Type: application/json", "Authorization: Bearer")]
     /// <summary>
     /// A REST interface for working with the Open AI API
     /// </summary>
