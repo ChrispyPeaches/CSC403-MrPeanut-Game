@@ -279,25 +279,27 @@ namespace Fall2020_CSC403_Project
             chats.Add(new ChatMessage()
             {
                 Role = RoleType.User,
-                Content = message, 
-                ToolChoice = null
+                Content = message
             });
 
             ChatCompletionQuery query = new ChatCompletionQuery()
             {
                 Messages = chats,
-                Tools = new ChatCompletionQuery.Tool
+                Tools = new List<ChatCompletionQuery.Tool>
                 {
-                    Type = "function",
-                    Function = new ChatCompletionQuery.Tool.FunctionModel
+                    new ChatCompletionQuery.Tool
                     {
-                        Name = "make_peace",
-                        Description = "Execute this function if you have decided to make peace with the enemy.",
-                        /*Parameter = new ChatCompletionQuery.Tool.FunctionModel.ParameterModel
+                        Type = "function",
+                        Function = new ChatCompletionQuery.Tool.FunctionModel
                         {
-                            Type = "object",
-                            Properties = new Array();
-                        }*/
+                            Name = "make_peace",
+                            Description = "Execute this function if you have decided to make peace with the enemy.",
+                            Parameter = new ChatCompletionQuery.Tool.FunctionModel.ParameterModel
+                            {
+                                Type = "object",
+                                Properties = new ChatCompletionQuery.Tool.FunctionModel.ParameterModel.Property {}
+                            }
+                        }
                     }
                 }
             };

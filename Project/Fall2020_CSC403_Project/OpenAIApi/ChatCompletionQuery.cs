@@ -22,11 +22,14 @@ namespace Fall2020_CSC403_Project.OpenAIApi
         [JsonProperty("model")]
         public string Model { get; set; } = "gpt-3.5-turbo";
 
+        [JsonProperty("tool_choice")]
+        public string ToolChoice { get; set; } = "auto";
+
         /// <summary>
         /// The functions available
         /// </summary>
         [JsonProperty(PropertyName = "tools")]
-        public Tool Tools { get; set; }
+        public List<Tool> Tools { get; set; }
 
         public class Tool
         {
@@ -58,7 +61,13 @@ namespace Fall2020_CSC403_Project.OpenAIApi
                     public string Type { get; set; }
 
                     [JsonProperty("properties")]
-                    public Array Properties { get; set; }
+                    public Property Properties { get; set; }
+
+                    public class Property
+                    {
+                        [JsonProperty("type")]
+                        public string Type { get; set; } = "object";
+                    }
                 }
             }
         }

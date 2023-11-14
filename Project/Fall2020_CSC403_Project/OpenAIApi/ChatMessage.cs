@@ -23,7 +23,10 @@ namespace Fall2020_CSC403_Project.OpenAIApi
             /// </summary>
             [JsonProperty(PropertyName = "content")]
             public string Content { get; set; }
+        }
 
+        public class ChatMessageAssistant : ChatMessage
+        {
             /// <summary>
             /// The function (if AI decides to call one)
             /// </summary>
