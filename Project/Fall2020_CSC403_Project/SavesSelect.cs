@@ -68,9 +68,13 @@ namespace Fall2020_CSC403_Project
 
         private void InitializeForNewSave()
         {
-
-            string appDirectory = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            string imageLocation = Path.GetFullPath(Path.Combine(appDirectory, "..", "..", "data", "playerImage.png"));
+            string imageLocation = Path.GetFullPath(Path.Combine(Settings.Default.SavesDirectory, "playerImage.png"));
+            
+            Image playerImage = null;
+            if (File.Exists(imageLocation))
+            {
+                playerImage = Image.FromFile(imageLocation);
+            }
 
             Label lblNewFileName = new Label
             {
@@ -96,7 +100,7 @@ namespace Fall2020_CSC403_Project
 
             PictureBox pictureBox = new PictureBox
             {
-                Image = Resources.enemy_hotsauce,
+                Image = playerImage ?? Resources.mrPeanut,
                 //Image = Image.FromFile(imageLocation),
                 Location = new Point((ClientSize.Width - 175) / 2, btnCreateNewSave.Bottom + 10),
                 SizeMode = PictureBoxSizeMode.StretchImage,
