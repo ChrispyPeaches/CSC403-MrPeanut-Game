@@ -231,7 +231,7 @@ namespace Fall2020_CSC403_Project
             if (!checkedMessages)
             {
                 List<string> chatLines = enemy.chatHistory
-                    .Select(dialogue => $"{dialogue.UserName}: {dialogue.Text}")
+                    .Select(dialogue => $"{dialogue.Text}")
                     .ToList();
 
                 textboxChatHistory.Lines = chatLines.ToArray();

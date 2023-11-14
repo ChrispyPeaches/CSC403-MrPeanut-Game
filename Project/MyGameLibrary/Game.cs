@@ -13,6 +13,9 @@ using System.Drawing.Printing;
 using System.Collections;
 using Newtonsoft.Json.Linq;
 using Fall2020_CSC403_Project;
+using Newtonsoft.Json;
+using static Fall2020_CSC403_Project.code.Game;
+using System.Runtime;
 
 namespace Fall2020_CSC403_Project.code
 {
@@ -60,6 +63,13 @@ namespace Fall2020_CSC403_Project.code
             public float y { get; set; }
         }
 
+        public class EnemyDialogue : IEnemyDialogue
+        {
+            public string UserName { get; set; }
+            public string Text { get; set; }
+        }
+
+
         public static Game instance;
         public Player player { get; set; }
         public Enemy bossKoolaid { get; set; }
@@ -99,6 +109,20 @@ namespace Fall2020_CSC403_Project.code
             return this.column;
         }
 
+        public class EnemyDialogueConverter : JsonConverter<IEnemyDialogue>
+        {
+            public override IEnemyDialogue ReadJson(JsonReader reader, Type objectType, IEnemyDialogue existingValue, bool hasExistingValue, JsonSerializer serializer)
+            {
+                JObject jsonObject = JObject.Load(reader);
+                return jsonObject.ToObject<EnemyDialogue>();
+            }
+
+            public override void WriteJson(JsonWriter writer, IEnemyDialogue value, JsonSerializer serializer)
+            {
+                serializer.Serialize(writer, value);
+            }
+        }
+
         public void InitializeGameEntities(Dictionary<string, object> save)
         {
             JObject playerData = (JObject)save["playerData"];
@@ -136,7 +160,10 @@ namespace Fall2020_CSC403_Project.code
                         };
 
                         JArray chatHistoryArray = (JArray)enemyData["chatHistory"];
-                        List<IEnemyDialogue> chatHistoryList = chatHistoryArray.ToObject<List<IEnemyDialogue>>();
+                        List<IEnemyDialogue> chatHistoryList = chatHistoryArray.ToObject<List<IEnemyDialogue>>(new JsonSerializer
+                        {
+                            Converters = { new EnemyDialogueConverter() }
+                        });
                         enemy.chatHistory = chatHistoryList;
 
                         enemies.Add(enemy);
