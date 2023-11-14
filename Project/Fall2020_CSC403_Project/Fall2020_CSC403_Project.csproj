@@ -216,6 +216,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\brick_main_background.jpg" />
+    <None Include="data\phil.png" />
+    <None Include="data\pepsiMan.png" />
+    <None Include="data\mrPeanut.png" />
+    <None Include="data\grimace.png" />
+    <None Include="data\enemy_poisonpacket.fw.png" />
+    <None Include="data\enemy_koolaid.png" />
+    <None Include="data\enemy_hotsauce.png" />
+    <None Include="data\enemy_hamburglar.png" />
+    <None Include="data\enemy_cheetos.fw.png" />
     <None Include="data\exit_sign.png" />
     <None Include="data\up_arrow.png" />
     <None Include="data\down_arrow.png" />

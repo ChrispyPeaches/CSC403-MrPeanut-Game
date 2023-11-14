@@ -163,34 +163,34 @@
   <data name="exit_sign" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\data\exit_sign.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="enemy_cheetos" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\data\enemies\enemy_cheetos.fw.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="enemy_hamburglar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\data\enemies\enemy_hamburglar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="enemy_hotsauce" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\data\enemies\enemy_hotsauce.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="enemy_koolaid" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\data\enemies\enemy_koolaid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="enemy_poisonpacket" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\data\enemies\enemy_poisonpacket.fw.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="grimace" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\data\characters\grimace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="mrPeanut" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\data\characters\mrPeanut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="pepsiMan" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\data\characters\pepsiMan.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="phil" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\data\characters\phil.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="missingTextures" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\data\missingTextures.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="enemy_cheetos" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\enemy_cheetos.fw.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="enemy_hamburglar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\enemy_hamburglar.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="enemy_hotsauce" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\enemy_hotsauce.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="enemy_koolaid" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\enemy_koolaid.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="enemy_poisonpacket" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\enemy_poisonpacket.fw.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="grimace" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\grimace.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="mrPeanut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\mrPeanut.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="pepsiMan" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\pepsiMan.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="phil" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\phil.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
