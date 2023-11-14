@@ -279,13 +279,13 @@ namespace Fall2020_CSC403_Project
             string enemyResponse = response.Choices.First().Message.Content;
 
             // Remove enemy name if chatGPT sent it
-            if (enemyResponse.Count(a => a == ':') == 2)
+            if (enemyResponse.Count(a => a == ':') >= 2)
             {
                 enemyResponse = enemyResponse
-                    .Substring(enemyResponse.IndexOf(':') + 1)
+                    .Substring(enemyResponse.IndexOf(':') + 2)
                     .TrimStart('\n');
             }
-            textboxChatHistory.AppendText($"\n {enemyResponse}");
+            textboxChatHistory.AppendText($"\n{enemyResponse}");
 
             chats.Add(new ChatMessage()
             {
@@ -310,6 +310,10 @@ namespace Fall2020_CSC403_Project
             if (File.Exists(playerImagePath))
             {
                 picPlayer.BackgroundImage = Image.FromFile(playerImagePath);
+            }
+            else
+            {
+                picPlayer.BackgroundImage = Resources.mrPeanut;
             }
         }
     }
