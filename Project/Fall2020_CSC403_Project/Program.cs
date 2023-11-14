@@ -28,10 +28,13 @@ namespace Fall2020_CSC403_Project
             Application.SetCompatibleTextRenderingDefault(false);
             using (MainMenu mainMenuForm = new MainMenu(openAiApi))
             {
+                mainMenuForm.WindowState = FormWindowState.Maximized;
+
                 if (mainMenuForm.ShowDialog() == DialogResult.OK)
                 {
                 }
             }
+
         }
     }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Media;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Fall2020_CSC403_Project
 {
@@ -21,7 +22,7 @@ namespace Fall2020_CSC403_Project
         public string enemyName = "";
         private IOpenAIApi _openAIApi;
         private IList<ChatMessage> chats;
-        private FrmLevel frmLevel;
+        private bool checkedMessages = false;
 
         public static DeathScreen deathScreen = null;
 
@@ -31,13 +32,12 @@ namespace Fall2020_CSC403_Project
         SoundPlayer battleMusic = new SoundPlayer(Resources.battle_music);
         SoundPlayer gameOverTheme = new SoundPlayer(Resources.game_over_theme);
 
-        private FrmBattle(IOpenAIApi openAIApi, FrmLevel frmLevel, Image playerImage)
+        private FrmBattle(IOpenAIApi openAIApi, Image playerImage)
         {
             InitializeComponent();
             KeyPreview = true;
             _openAIApi = openAIApi;
             instanceForDeath = this;
-            this.frmLevel = frmLevel;
             playerImg = playerImage;
         }
 
@@ -87,12 +87,12 @@ namespace Fall2020_CSC403_Project
             tmrFinalBattle.Enabled = true;
         }
 
-        public static FrmBattle GetInstance(Enemy enemy, IOpenAIApi openAIApi, FrmLevel frmLevel, Image playerImage)
+        public static FrmBattle GetInstance(Enemy enemy, IOpenAIApi openAIApi, Image playerImage)
         {
             Boolean check = CheckFlag(enemy);
             if (instance == null && !check)
             {
-                instance = new FrmBattle(openAIApi, frmLevel, playerImage);
+                instance = new FrmBattle(openAIApi, playerImage);
                 instance.enemy = enemy;
                 instance.enemyName = enemy.Name;
                 instance.Setup();
@@ -103,23 +103,7 @@ namespace Fall2020_CSC403_Project
 
         public static Boolean CheckFlag(Enemy enemy)
         {
-            string enemyName = enemy.Name;
-            if (enemyName.Contains("enemy_cheetos"))
-            {
-                return Game.Instance.IsCheetosDefeated;
-            }
-            else if (enemyName.Contains("enemy_koolaid"))
-            {
-                return Game.Instance.IsKoolAidDefeated;
-            }
-            else if (enemyName.Contains("enemy_poisonpacket"))
-            {
-                return Game.Instance.IsPoisonPacketDefeated;
-            }
-            else
-            {
-                return true;
-            }
+            return enemy.Defeated;
         }
 
         public void SetPlayerHealth(int health)
@@ -150,7 +134,7 @@ namespace Fall2020_CSC403_Project
         private void btnAttack_Click(object sender, EventArgs e)
         {
             Game game = Game.Instance;
-            FrmBattle battleForm = GetInstance(enemy, this._openAIApi, frmLevel, playerImg);
+            FrmBattle battleForm = GetInstance(enemy, this._openAIApi, playerImg);
             if (game.player.Health > 0)
             {
                 // update hp
@@ -163,30 +147,11 @@ namespace Fall2020_CSC403_Project
 
                 if (enemy.Health <= 0)
                 {
-                    if (this.enemyName.Contains("enemy_cheetos"))
-                    {
-                        Game.Instance.player.MaxHealth += 20;
-                        Game.Instance.player.Health = Game.Instance.player.MaxHealth;
-                        Game.Instance.player.strength += 2;
-                        game.IsCheetosDefeated = true;
-                        frmLevel.DefeatEnemy("picEnemyCheeto");
-                        Game.Instance.enemyCheeto.Collider = null;
-                    }
-                    else if (this.enemyName.Contains("enemy_koolaid"))
-                    {
-                        game.IsKoolAidDefeated = true;
-                        frmLevel.DefeatEnemy("picBossKoolAid");
-                        Game.Instance.bossKoolaid.Collider = null;
-                    }
-                    else if (this.enemyName.Contains("enemy_poisonpacket"))
-                    {
-                        Game.Instance.player.MaxHealth += 20;
-                        Game.Instance.player.Health = Game.Instance.player.MaxHealth;
-                        Game.Instance.player.strength += 2;
-                        game.IsPoisonPacketDefeated = true;
-                        frmLevel.DefeatEnemy("picEnemyPoisonPacket");
-                        Game.Instance.enemyPoisonPacket.Collider = null;
-                    }
+                    Game.Instance.player.MaxHealth += 20;
+                    Game.Instance.player.Health = Game.Instance.player.MaxHealth;
+                    Game.Instance.player.strength += 2;
+                    enemy.Defeated = true;
+                    enemy.Collider = null;
                     SendKeys.SendWait("{ESC}");
                 }
                 if (game.player.Health <= 0)
@@ -263,6 +228,16 @@ namespace Fall2020_CSC403_Project
         /// <param name="e"></param>
         private async void btnChat_Click(object sender, EventArgs e)
         {
+            if (!checkedMessages)
+            {
+                List<string> chatLines = enemy.chatHistory
+                    .Select(dialogue => $"{dialogue.UserName}: {dialogue.Text}")
+                    .ToList();
+
+                textboxChatHistory.Lines = chatLines.ToArray();
+                checkedMessages = true;
+            }
+
             if (string.IsNullOrEmpty(textboxChatInput.Text))
             {
                 return;
@@ -276,22 +251,21 @@ namespace Fall2020_CSC403_Project
             Player player = game.player;
 
             // Display user message in chat history
-            List<string> chatHistory = textboxChatHistory.Lines.ToList();
-            chatHistory.Add($"\n{player.Name}:");
-            chatHistory.AddRange(textboxChatInput.Lines);
-            textboxChatHistory.Lines = chatHistory.ToArray();
-            textboxChatInput.Text = String.Empty;
+            string userMessage = $"{player.Name}: {textboxChatInput.Text}";
+            textboxChatHistory.AppendText($"\n{userMessage}");
+            textboxChatInput.Text = string.Empty;
 
             // Format message for OpenAI
-            string message = "";
-            message = chatHistory.Aggregate(
-                (combinedString, currentString) =>
-                    combinedString = $"{combinedString}\n{currentString}");
-
             chats.Add(new ChatMessage()
             {
                 Role = RoleType.User,
-                Content = message
+                Content = userMessage
+            });
+
+            enemy.chatHistory.Add(new EnemyDialogue()
+            {
+                UserName = player.Name,
+                Text = userMessage,
             });
 
             // Send to OpenAI
@@ -302,18 +276,20 @@ namespace Fall2020_CSC403_Project
                 });
 
             // Display enemy's response in chat history
+            string enemyResponse = response.Choices.First().Message.Content;
+            textboxChatHistory.AppendText($"\n{enemy.displayName}: {enemyResponse}");
+
             chats.Add(new ChatMessage()
             {
                 Role = RoleType.Assistant,
-                Content = response.Choices.First().Message.Content
+                Content = enemyResponse
             });
 
-            // Display enemy message in chat history
-            chatHistory.Add($"\n{enemy.displayName}:");
-            chatHistory.Add(chats.Last().Content
-                .Substring(chats.Last().Content.IndexOf(':') + 1)
-                .TrimStart('\n'));
-            textboxChatHistory.Lines = chatHistory.ToArray();
+            enemy.chatHistory.Add(new EnemyDialogue()
+            {
+                UserName = enemy.displayName,
+                Text = enemyResponse,
+            });
 
             // Enable chat button
             btnChat.Enabled = true;

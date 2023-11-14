@@ -51,6 +51,7 @@
     <Compile Include="Character.cs" />
     <Compile Include="Coin.cs" />
     <Compile Include="Collider.cs" />
+    <Compile Include="DungeonInterface.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="NPC.cs" />
@@ -60,6 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Fall2020_CSC403_Project.Properties {
+namespace Fall2020_CSC403_Project.Cosmetics {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Fall2020_CSC403_Project.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fall2020_CSC403_Project.Properties.CosmeticsResources", typeof(CosmeticsResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Fall2020_CSC403_Project.Cosmetics.CosmeticsResources", typeof(CosmeticsResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,21 +61,47 @@ namespace Fall2020_CSC403_Project.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized string similar to {
+        ///    &quot;Name&quot;: &quot;Foam Cowboy Hat&quot;,
+        ///    &quot;YCoordinate&quot;: 1,
+        ///    &quot;ImageResourceName&quot;: &quot;hat_foam_image&quot;
+        ///}.
         /// </summary>
-        public static System.Drawing.Bitmap hat_foam {
+        public static string hat_foam {
             get {
-                object obj = ResourceManager.GetObject("hat_foam", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ResourceManager.GetString("hat_foam", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap hat_skyrimhelmet {
+        public static System.Drawing.Bitmap hat_foam_image {
             get {
-                object obj = ResourceManager.GetObject("hat_skyrimhelmet", resourceCulture);
+                object obj = ResourceManager.GetObject("hat_foam_image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;Name&quot;: &quot;Skyrim Helmet&quot;,
+        ///    &quot;YCoordinate&quot;: 2,
+        ///    &quot;ImageResourceName&quot;: &quot;hat_skyrimhelmet_image&quot;
+        ///}.
+        /// </summary>
+        public static string hat_skyrimhelmet {
+            get {
+                return ResourceManager.GetString("hat_skyrimhelmet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap hat_skyrimhelmet_image {
+            get {
+                object obj = ResourceManager.GetObject("hat_skyrimhelmet_image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

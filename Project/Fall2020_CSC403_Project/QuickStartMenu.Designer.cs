@@ -50,7 +50,7 @@
             // btnSave
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Size = new System.Drawing.Size(200, 60);
-            this.btnSave.Location = new System.Drawing.Point((this.ClientSize.Width - this.btnSave.Width) / 2, (this.ClientSize.Height - this.btnSave.Height) / 2 - 40);
+            this.btnSave.Location = new System.Drawing.Point((this.ClientSize.Width - this.btnSave.Width) / 2, (this.ClientSize.Height - this.btnSave.Height) / 3 - 40);
             this.btnSave.TabIndex = 9;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -59,7 +59,7 @@
             // btnExit
             this.btnExit.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExit.Size = new System.Drawing.Size(200, 60);
-            this.btnExit.Location = new System.Drawing.Point((this.ClientSize.Width - this.btnExit.Width) / 2, (this.ClientSize.Height - this.btnExit.Height) / 2 + 40); 
+            this.btnExit.Location = new System.Drawing.Point((this.ClientSize.Width - this.btnExit.Width) / 2, (this.ClientSize.Height - this.btnExit.Height) / 3 + 40); 
             this.btnExit.TabIndex = 10;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;

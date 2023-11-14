@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace Fall2020_CSC403_Project.code
 {
@@ -15,15 +16,19 @@ namespace Fall2020_CSC403_Project.code
         /// </summary>
         public Image Img { get; set; }
 
+        public int Amount { get; set; }
+        public Guid ID { get; set; }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="initPos">this is the initial position of the coin</param>
         /// <param name="collider">this is the collider for the coin</param>
-        public Coin(Vector2 initPos, Collider collider)
+        public Coin(Vector2 initPos, Collider collider, int amount = 1, Guid guid = new Guid())
         {
             Position = initPos;
             Collider = collider;
+            Amount = amount;
+            ID = guid;
         }
     }
 }

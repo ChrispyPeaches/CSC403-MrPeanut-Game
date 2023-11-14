@@ -47,6 +47,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cosmetics\CosmeticsResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CosmeticsResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Cosmetics\Hat.cs" />
     <Compile Include="CharacterSelect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -61,16 +67,17 @@
     <Compile Include="DeathScreen.Designer.cs">
       <DependentUpon>DeathScreen.cs</DependentUpon>
     </Compile>
-    <Compile Include="CosmeticsShop.cs">
+    <Compile Include="Cosmetics\CosmeticsShop.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CosmeticsShop.Designer.cs">
+    <Compile Include="Cosmetics\CosmeticsShop.Designer.cs">
       <DependentUpon>CosmeticsShop.cs</DependentUpon>
     </Compile>
-    <Compile Include="Properties\CosmeticsResources.Designer.cs">
+    <Compile Include="Dungeon.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>CosmeticsResources.resx</DependentUpon>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="QuickStartMenu.cs">
       <SubType>Form</SubType>
@@ -120,7 +127,7 @@
     <EmbeddedResource Include="DeathScreen.resx">
       <DependentUpon>DeathScreen.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="CosmeticsShop.resx">
+    <EmbeddedResource Include="Cosmetics\CosmeticsShop.resx">
       <DependentUpon>CosmeticsShop.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmBattle.resx">
@@ -133,7 +140,7 @@
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\CosmeticsResources.resx">
+    <EmbeddedResource Include="Cosmetics\CosmeticsResources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CosmeticsResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
@@ -153,11 +160,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
@@ -214,6 +216,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="data\brick_main_background.jpg" />
+    <None Include="data\exit_sign.png" />
+    <None Include="data\up_arrow.png" />
+    <None Include="data\down_arrow.png" />
+    <None Include="data\cosmetics\skyrim_helmet.png" />
+    <None Include="data\cosmetics\hat_foam.png" />
+    <None Include="data\raw images\player_mrpeanut_bald.png" />
     <None Include="data\missingTextures.jpg" />
     <None Include="data\raw images\exit_sign.png" />
     <None Include="data\raw images\skyrim_helmet.png" />
