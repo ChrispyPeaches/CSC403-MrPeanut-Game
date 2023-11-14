@@ -25,6 +25,11 @@ namespace Fall2020_CSC403_Project.code
         public string displayName { get; set; }
 
         /// <summary>
+        /// this determines if the enemy has made peace
+        /// </summary>
+        public bool isPeaceful { get; set; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="initPos">this is the initial position of the enemy</param>
@@ -35,6 +40,7 @@ namespace Fall2020_CSC403_Project.code
             int maxHealth = enemyData.Value<int>("MaxHealth");
             float strength = enemyData.Value<float>("strength");
             displayName = enemyData.Value<string>("displayName");
+            isPeaceful = false;
 
             this.ChangeHealthAndStrength(health, maxHealth, strength);
             Name = name;

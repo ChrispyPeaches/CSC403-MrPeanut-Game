@@ -66,7 +66,8 @@ namespace Fall2020_CSC403_Project
                     Role = RoleType.System,
                     Content = $"We are in a battle to the death." +
                                 $"You are playing the role of {enemy.displayName}. I am playing the role of {Game.Instance.player.Name}." +
-                                $"We will each send one message at a time to create a dialogue. "
+                                $"We will each send one message at a time to create a dialogue. If attempts at peace are made, you are abrasive at first but are eventually swayed." +
+                                $"If you have clearly agreed to peace. Call the makePeace function"
                 }
             };
         }
@@ -278,15 +279,38 @@ namespace Fall2020_CSC403_Project
             chats.Add(new ChatMessage()
             {
                 Role = RoleType.User,
-                Content = message
+                Content = message, 
+                ToolChoice = null
             });
+
+            ChatCompletionQuery query = new ChatCompletionQuery()
+            {
+                Messages = chats,
+                Tools = new ChatCompletionQuery.Tool
+                {
+                    Type = "function",
+                    Function = new ChatCompletionQuery.Tool.FunctionModel
+                    {
+                        Name = "make_peace",
+                        Description = "Execute this function if you have decided to make peace with the enemy.",
+                        /*Parameter = new ChatCompletionQuery.Tool.FunctionModel.ParameterModel
+                        {
+                            Type = "object",
+                            Properties = new Array();
+                        }*/
+                    }
+                }
+            };
 
             // Send to OpenAI
             ChatCompletionResponse response = await _openAIApi
-                .GetChatCompletion(new ChatCompletionQuery()
-                {
-                    Messages = chats
-                });
+                .GetChatCompletion(query);
+
+            // Check if AI wants to make peace
+            //if (response.Choices.First().Message.ToolChoice != null)
+            //{
+            //    makePeace();
+            //}
 
             // Display enemy's response in chat history
             chats.Add(new ChatMessage()
@@ -304,6 +328,11 @@ namespace Fall2020_CSC403_Project
 
             // Enable chat button
             btnChat.Enabled = true;
+        }
+
+        public void makePeace()
+        {
+            this.enemy.isPeaceful = true;
         }
     }
 }
