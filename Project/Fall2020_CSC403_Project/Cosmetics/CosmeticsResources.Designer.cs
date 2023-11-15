@@ -86,6 +86,30 @@ namespace Fall2020_CSC403_Project.Cosmetics {
         
         /// <summary>
         ///   Looks up a localized string similar to {
+        ///    &quot;Name&quot;: &quot;Shrek Hat&quot;,
+        ///    &quot;XCoordinate&quot;: 1,
+        ///    &quot;YCoordinate&quot;: 1,
+        ///    &quot;ImageResourceName&quot;: &quot;hat_shrek_image&quot;
+        ///}.
+        /// </summary>
+        public static string hat_shrek {
+            get {
+                return ResourceManager.GetString("hat_shrek", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap hat_shrek_image {
+            get {
+                object obj = ResourceManager.GetObject("hat_shrek_image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
         ///    &quot;Name&quot;: &quot;Skyrim Helmet&quot;,
         ///    &quot;XCoordinate&quot;: 1,
         ///    &quot;YCoordinate&quot;: 2,
@@ -104,6 +128,54 @@ namespace Fall2020_CSC403_Project.Cosmetics {
         public static System.Drawing.Bitmap hat_skyrimhelmet_image {
             get {
                 object obj = ResourceManager.GetObject("hat_skyrimhelmet_image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;Name&quot;: &quot;Steve Mincreaft Head&quot;,
+        ///    &quot;XCoordinate&quot;: 1,
+        ///    &quot;YCoordinate&quot;: 1,
+        ///    &quot;ImageResourceName&quot;: &quot;hat_steveminecrafthead_image&quot;
+        ///}.
+        /// </summary>
+        public static string hat_steveminecrafthead {
+            get {
+                return ResourceManager.GetString("hat_steveminecrafthead", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap hat_steveminecrafthead_image {
+            get {
+                object obj = ResourceManager.GetObject("hat_steveminecrafthead_image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {
+        ///    &quot;Name&quot;: &quot;Tin Foil Hat&quot;,
+        ///    &quot;XCoordinate&quot;: 1,
+        ///    &quot;YCoordinate&quot;: 1,
+        ///    &quot;ImageResourceName&quot;: &quot;hat_tinfoil_image&quot;
+        ///}.
+        /// </summary>
+        public static string hat_tinfoil {
+            get {
+                return ResourceManager.GetString("hat_tinfoil", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap hat_tinfoil_image {
+            get {
+                object obj = ResourceManager.GetObject("hat_tinfoil_image", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

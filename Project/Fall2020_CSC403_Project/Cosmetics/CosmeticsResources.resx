@@ -129,6 +129,17 @@
   <data name="hat_foam_image" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\data\cosmetics\hat_foam.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="hat_shrek" xml:space="preserve">
+    <value>{
+    "Name": "Shrek Hat",
+    "XCoordinate": 1,
+    "YCoordinate": 1,
+    "ImageResourceName": "hat_shrek_image"
+}</value>
+  </data>
+  <data name="hat_shrek_image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\cosmetics\hat_shrek.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="hat_skyrimhelmet" xml:space="preserve">
     <value>{
     "Name": "Skyrim Helmet",
@@ -139,5 +150,27 @@
   </data>
   <data name="hat_skyrimhelmet_image" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\data\cosmetics\skyrim_helmet.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hat_steveminecrafthead" xml:space="preserve">
+    <value>{
+    "Name": "Steve Mincreaft Head",
+    "XCoordinate": 1,
+    "YCoordinate": 1,
+    "ImageResourceName": "hat_steveminecrafthead_image"
+}</value>
+  </data>
+  <data name="hat_steveminecrafthead_image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\cosmetics\hat_steveminecrafthead.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="hat_tinfoil" xml:space="preserve">
+    <value>{
+    "Name": "Tin Foil Hat",
+    "XCoordinate": 1,
+    "YCoordinate": 1,
+    "ImageResourceName": "hat_tinfoil_image"
+}</value>
+  </data>
+  <data name="hat_tinfoil_image" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\data\cosmetics\hat_tinfoil.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>
