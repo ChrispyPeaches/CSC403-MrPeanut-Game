@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 
 namespace Fall2020_CSC403_Project.OpenAIApi
@@ -13,7 +14,7 @@ namespace Fall2020_CSC403_Project.OpenAIApi
         public class Choice
         {
             [JsonProperty("message")]
-            public ChatMessage Message { get; set; }
+            public ChatMessageAssistant Message { get; set; }
         }
     }
 }

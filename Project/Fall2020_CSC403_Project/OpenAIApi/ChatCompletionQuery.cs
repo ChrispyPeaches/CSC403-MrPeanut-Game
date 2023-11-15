@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using System;
 using System.Collections.Generic;
 
 namespace Fall2020_CSC403_Project.OpenAIApi
@@ -20,5 +21,69 @@ namespace Fall2020_CSC403_Project.OpenAIApi
         /// </summary>
         [JsonProperty("model")]
         public string Model { get; set; } = "gpt-3.5-turbo";
+
+        [JsonProperty("tool_choice")]
+        public string ToolChoice { get; set; } = "auto";
+
+        /// <summary>
+        /// The functions available
+        /// </summary>
+        [JsonProperty(PropertyName = "tools")]
+        public List<Tool> Tools { get; set; }
+
+        public class Tool
+        {
+            // Will always be "function"
+            [JsonProperty("type")]
+            public string Type { get; set; }
+
+
+            [JsonProperty("function")]
+            public FunctionModel Function { get; set; }
+
+            public class FunctionModel
+            {
+                // Name of functions to call
+                [JsonProperty("name")]
+                public string Name { get; set; }
+
+                // When the AI should call this function
+                [JsonProperty("description")]
+                public string Description { get; set; }
+
+                // Parameters the function accepts
+                [JsonProperty("parameters")]
+                public ParameterModel Parameter { get; set; }
+
+                public class ParameterModel
+                {
+                    [JsonProperty("type")]
+                    public string Type { get; set; }
+
+                    [JsonProperty("properties")]
+                    public Property Properties { get; set; }
+
+                    // Remain empty for our purposes
+                    public class Property
+                    {
+                        // Name of property
+                        [JsonProperty("response")]
+                        public PropertyStuff Response { get; set; }
+
+                        public class PropertyStuff
+                        {
+                            [JsonProperty("type")]
+                            public string Type { get; set; }
+
+                            [JsonProperty("description")]
+                            public string Description { get; set; }
+                        }
+                    }
+
+                    [JsonProperty("required")]
+                    public List<string> Required { get; set; }
+                }
+            }
+        }
     }
 }

@@ -29,6 +29,11 @@ namespace Fall2020_CSC403_Project.code
         public Guid ID { get; set; }
         public List<IEnemyDialogue> chatHistory { get; set; }
         /// <summary>
+        /// this determines if the enemy has made peace
+        /// </summary>
+        public bool isPeaceful { get; set; }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="initPos">this is the initial position of the enemy</param>
@@ -38,6 +43,7 @@ namespace Fall2020_CSC403_Project.code
             displayName = displayName;
             Defeated = defeated;
             ID = id;
+            isPeaceful = false;
         }
     }
 }
