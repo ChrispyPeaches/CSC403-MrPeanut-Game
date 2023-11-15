@@ -1,6 +1,7 @@
 ﻿using Fall2020_CSC403_Project.code;
 using Fall2020_CSC403_Project.OpenAIApi;
 using Fall2020_CSC403_Project.Properties;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -280,7 +281,7 @@ namespace Fall2020_CSC403_Project
                         Function = new ChatCompletionQuery.Tool.FunctionModel
                         {
                             Name = "make_peace",
-                            Description = "Execute this function if player expresses satisfaction about new truce",
+                            Description = $"Execute this function if {player.Name} expresses satisfaction after a new truce",
                             Parameter = new ChatCompletionQuery.Tool.FunctionModel.ParameterModel
                             {
                                 Type = "object",
@@ -289,7 +290,7 @@ namespace Fall2020_CSC403_Project
                                     Response = new ChatCompletionQuery.Tool.FunctionModel.ParameterModel.Property.PropertyStuff
                                     {
                                         Type = "string",
-                                        Description = "Final response about the new truce made between fighters."
+                                        Description = $"Final speech from you about the new truce made between fighters."
                                     }
                                 },
                                 Required = new List<string> {"response"}
@@ -306,44 +307,34 @@ namespace Fall2020_CSC403_Project
             // Check if AI wants to make peace
             if (response.Choices.First().Message.ToolChoice != null)
             {
+                // Grab response from tool response
+                string enemyResponse = response.Choices.First().Message.ToolChoice.First().Function.Argument;
+
+                // Deserialize JSON
+                JObject jsonResponse = JObject.Parse(enemyResponse);
+
+                // Extract the "response" property
+                enemyResponse = $"\n{enemy.displayName}: " + jsonResponse["response"].ToString() + "\n";
+
                 makePeace();
 
                 // Display enemy's response in chat history
                 chats.Add(new ChatMessage()
                 {
                     Role = RoleType.Assistant,
-                    Content = response.Choices.First().Message.ToolChoice.First().Function.Argument
+                    Content = enemyResponse
                 });
 
                 // Display enemy message in chat history and add peace message
-                chatHistory.Add($"\n{enemy.displayName}:");
-                chatHistory.Add(chats.Last().Content
-                    .Substring(chats.Last().Content.IndexOf(':') + 1)
-                    .TrimStart('\n')
-                    .TrimEnd('}')
-                    .Replace("\"", ""));
-                chatHistory.Add("\nPEACE ESTABLISHED. YOU MAY LEAVE AT ANYTIME");
-                textboxChatHistory.Lines = chatHistory.ToArray();
+                textboxChatHistory.AppendText(enemyResponse);
+                textboxChatHistory.AppendText("\nPEACE ESTABLISHED. YOU MAY LEAVE AT ANYTIME");
 
                 // Change player stats
-                if (this.enemyName.Contains("enemy_cheetos"))
-                {
-                    Game.Instance.player.MaxHealth += 20;
-                    Game.Instance.player.Health = Game.Instance.player.MaxHealth;
-                    Game.Instance.player.strength += 2;
-                    game.IsCheetosDefeated = true;
-                }
-                else if (this.enemyName.Contains("enemy_koolaid"))
-                {
-                    game.IsKoolAidDefeated = true;
-                }
-                else if (this.enemyName.Contains("enemy_poisonpacket"))
-                {
-                    Game.Instance.player.MaxHealth += 20;
-                    Game.Instance.player.Health = Game.Instance.player.MaxHealth;
-                    Game.Instance.player.strength += 2;
-                    game.IsPoisonPacketDefeated = true;
-                }
+                Game.Instance.player.MaxHealth += 20;
+                Game.Instance.player.Health = Game.Instance.player.MaxHealth;
+                Game.Instance.player.strength += 2;
+                enemy.Defeated = true;
+                enemy.Collider = null;
 
                 // Disable attack button and change leave text
                 btnAttack.Enabled = false;
@@ -366,14 +357,15 @@ namespace Fall2020_CSC403_Project
                     Content = enemyResponse
                 });
 
-            enemy.chatHistory.Add(new EnemyDialogue()
-            {
-                UserName = enemy.displayName,
-                Text = enemyResponse,
-            });
+                enemy.chatHistory.Add(new EnemyDialogue()
+                {
+                    UserName = enemy.displayName,
+                    Text = enemyResponse,
+                });
 
-            // Enable chat button
-            btnChat.Enabled = true;
+                // Enable chat button
+                btnChat.Enabled = true;
+            }
         }
 
         public void SetPlayerImage()
