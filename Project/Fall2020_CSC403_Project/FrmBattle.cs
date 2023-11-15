@@ -65,6 +65,16 @@ namespace Fall2020_CSC403_Project
             // show health
             UpdateHealthBars();
 
+            if (!checkedMessages)
+            {
+                List<string> chatLines = enemy.chatHistory
+                    .Select(dialogue => $"{dialogue.Text}")
+                    .ToList();
+
+                textboxChatHistory.Lines = chatLines.ToArray();
+                checkedMessages = true;
+            }
+
             // Setup OpenAI
             chats = new List<ChatMessage>()
             {
@@ -228,15 +238,6 @@ namespace Fall2020_CSC403_Project
         /// <param name="e"></param>
         private async void btnChat_Click(object sender, EventArgs e)
         {
-            if (!checkedMessages)
-            {
-                List<string> chatLines = enemy.chatHistory
-                    .Select(dialogue => $"{dialogue.Text}")
-                    .ToList();
-
-                textboxChatHistory.Lines = chatLines.ToArray();
-                checkedMessages = true;
-            }
 
             if (string.IsNullOrEmpty(textboxChatInput.Text))
             {
@@ -275,18 +276,8 @@ namespace Fall2020_CSC403_Project
                     Messages = chats
                 });
 
-            // Display enemy's response in chat history
             string enemyResponse = response.Choices.First().Message.Content;
-
-            // Remove enemy name if chatGPT sent it
-            if (enemyResponse.Count(a => a == ':') >= 2)
-            {
-                enemyResponse = enemyResponse
-                    .Substring(enemyResponse.IndexOf(':') + 2)
-                    .TrimStart('\n');
-            }
             textboxChatHistory.AppendText($"\n{enemyResponse}");
-
             chats.Add(new ChatMessage()
             {
                 Role = RoleType.Assistant,
