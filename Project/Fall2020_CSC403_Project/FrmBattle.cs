@@ -156,6 +156,7 @@ namespace Fall2020_CSC403_Project
                 }
                 battleForm.UpdateHealthBars();
 
+                // Defeat enemy upon health hitting 0
                 if (enemy.Health <= 0)
                 {
                     Game.Instance.player.MaxHealth += 20;
@@ -163,6 +164,7 @@ namespace Fall2020_CSC403_Project
                     Game.Instance.player.strength += 2;
                     enemy.Defeated = true;
                     enemy.Collider = null;
+                    FrmLevel.instance.DefeatEnemy(enemy.ID.ToString());
                     SendKeys.SendWait("{ESC}");
                 }
                 if (game.player.Health <= 0)
@@ -270,6 +272,7 @@ namespace Fall2020_CSC403_Project
                 Text = userMessage,
             });
 
+            // Create completion query
             ChatCompletionQuery query = new ChatCompletionQuery()
             {
                 Messages = chats,
@@ -382,9 +385,11 @@ namespace Fall2020_CSC403_Project
             }
         }
 
+        // "Defeat enemy" when peace is made
         public void makePeace()
         {
             this.enemy.isPeaceful = true;
+            FrmLevel.instance.DefeatEnemy(enemy.ID.ToString());
         }
     }
 }

@@ -34,6 +34,8 @@ namespace Fall2020_CSC403_Project
 
         public IOpenAIApi _openAIApi;
 
+        public static FrmLevel instance;
+
 
         private bool isUpPressed = false;
         private bool isDownPressed = false;
@@ -58,6 +60,19 @@ namespace Fall2020_CSC403_Project
             SetPlayerImage();
             _openAIApi = openAIApi;
             instanceForDeath = this;
+            if (instance == null)
+            {
+                instance = this;
+            }
+        }
+
+        // Return current instance of window
+        public static FrmLevel Instance
+        {
+            get
+            {
+                return instance;
+            }
         }
 
         public void ResetMovementBooleans()
@@ -498,7 +513,7 @@ namespace Fall2020_CSC403_Project
                     enemyPictureBox.Location = new Point(enemyX, enemyY);
                     enemyPictureBox.BackgroundImage = enemy.Img;
                     enemyPictureBox.BackgroundImageLayout = ImageLayout.Stretch;
-                    enemyPictureBox.Tag = "Enemy" + enemy.ID;
+                    enemyPictureBox.Tag = "Enemy" + enemy.ID.ToString();
                     enemyPictureBox.Visible = true;
 
                     enemy.Position = CreatePosition(enemyPictureBox, false);
@@ -512,6 +527,7 @@ namespace Fall2020_CSC403_Project
                     enemyLabel.Text = enemyData.displayName;
                     enemyLabel.Location = new Point(enemyX - 20, enemyY - 20);
                     enemyLabel.BackColor = Color.Transparent;
+                    enemyLabel.Tag = "Enemy" + enemy.ID.ToString();
 
                     this.Controls.Add(enemyPictureBox);
                     this.Controls.Add(enemyLabel);
@@ -873,6 +889,19 @@ namespace Fall2020_CSC403_Project
             {
                 picPlayer.BackgroundImage = System.Drawing.Image.FromFile(playerImagePath);
             }
+        }
+
+        // Upon defeating an enemy, hide image and label
+        public void DefeatEnemy(string Id)
+        {
+            // Get picture box then hide
+            PictureBox enemyPictureBox = Controls.OfType<PictureBox>().FirstOrDefault(pb => (string)pb.Tag == "Enemy" + Id);
+            enemyPictureBox.BackgroundImage = Resources.transparent;
+            enemyPictureBox.Hide();
+
+            // Get label then hide
+            System.Windows.Forms.Label enemyLabel = Controls.OfType<System.Windows.Forms.Label>().FirstOrDefault(l => (string)l.Tag == "Enemy" + Id);
+            enemyLabel.Hide();
         }
     }
 }

@@ -57,6 +57,7 @@ namespace Fall2020_CSC403_Project.OpenAIApi
 
                 public class ParameterModel
                 {
+                    // Always object
                     [JsonProperty("type")]
                     public string Type { get; set; }
 
@@ -72,14 +73,17 @@ namespace Fall2020_CSC403_Project.OpenAIApi
 
                         public class PropertyStuff
                         {
+                            // Describes parameter type
                             [JsonProperty("type")]
                             public string Type { get; set; }
 
+                            // Describes what AI should fill in this parameter with
                             [JsonProperty("description")]
                             public string Description { get; set; }
                         }
                     }
 
+                    // Defines what properties are required
                     [JsonProperty("required")]
                     public List<string> Required { get; set; }
                 }
