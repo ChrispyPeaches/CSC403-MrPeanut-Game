@@ -30,7 +30,6 @@ namespace Fall2020_CSC403_Project
             InitializeComponent();
 
             GetAvailableHats();
-            DisplayCurrentHat();
         }
 
         /// <summary>
@@ -77,6 +76,7 @@ namespace Fall2020_CSC403_Project
         private void DisplayCurrentHat()
         {
             btnSelectedHat.BackgroundImage = hats.ElementAt(currentHatsIndex).Image;
+            btn_ChooseHat_Text.Text = hats.ElementAt(currentHatsIndex).Name;
         }
 
         /// <summary>

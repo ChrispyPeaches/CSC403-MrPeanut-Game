@@ -34,7 +34,7 @@
             this.btn_ChooseHat_DownArrow = new System.Windows.Forms.Button();
             this.btnSelectedHat = new System.Windows.Forms.Button();
             this.btnExit = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_ChooseHat_Text = new System.Windows.Forms.Button();
             this.btn_AdjustHat_Title = new System.Windows.Forms.Button();
             this.btn_AdjustHatHeight_DownArrow = new System.Windows.Forms.Button();
             this.btn_AdjustHatHeight_UpArrow = new System.Windows.Forms.Button();
@@ -113,18 +113,18 @@
             this.btnExit.UseVisualStyleBackColor = false;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // button1
+            // btn_ChooseHat_Text
             // 
-            this.button1.BackColor = System.Drawing.Color.White;
-            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(657, 149);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(250, 47);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Choose Hat";
-            this.button1.UseVisualStyleBackColor = false;
+            this.btn_ChooseHat_Text.BackColor = System.Drawing.Color.White;
+            this.btn_ChooseHat_Text.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btn_ChooseHat_Text.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_ChooseHat_Text.Location = new System.Drawing.Point(657, 149);
+            this.btn_ChooseHat_Text.Margin = new System.Windows.Forms.Padding(2);
+            this.btn_ChooseHat_Text.Name = "btn_ChooseHat_Text";
+            this.btn_ChooseHat_Text.Size = new System.Drawing.Size(250, 47);
+            this.btn_ChooseHat_Text.TabIndex = 5;
+            this.btn_ChooseHat_Text.Text = "Choose Hat";
+            this.btn_ChooseHat_Text.UseVisualStyleBackColor = false;
             // 
             // btn_AdjustHat_Title
             // 
@@ -132,7 +132,7 @@
             this.btn_AdjustHat_Title.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btn_AdjustHat_Title.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_AdjustHat_Title.Location = new System.Drawing.Point(526, 63);
-            this.btn_AdjustHat_Title.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btn_AdjustHat_Title.Margin = new System.Windows.Forms.Padding(2);
             this.btn_AdjustHat_Title.Name = "btn_AdjustHat_Title";
             this.btn_AdjustHat_Title.Size = new System.Drawing.Size(78, 64);
             this.btn_AdjustHat_Title.TabIndex = 6;
@@ -201,7 +201,7 @@
             this.button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button4.Location = new System.Drawing.Point(4, 460);
-            this.button4.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button4.Margin = new System.Windows.Forms.Padding(2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(275, 47);
             this.button4.TabIndex = 13;
@@ -222,7 +222,7 @@
             this.Controls.Add(this.btn_AdjustHatHeight_UpArrow);
             this.Controls.Add(this.btn_AdjustHatHeight_RightArrow);
             this.Controls.Add(this.btn_AdjustHat_Title);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btn_ChooseHat_Text);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.btn_ChooseHat_DownArrow);
             this.Controls.Add(this.btn_ChooseHat_UpArrow);
@@ -241,7 +241,7 @@
         private System.Windows.Forms.Button btn_ChooseHat_DownArrow;
         private System.Windows.Forms.Button btnSelectedHat;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_ChooseHat_Text;
         private System.Windows.Forms.Button btn_AdjustHat_Title;
         private System.Windows.Forms.Button btn_AdjustHatHeight_DownArrow;
         private System.Windows.Forms.Button btn_AdjustHatHeight_UpArrow;
