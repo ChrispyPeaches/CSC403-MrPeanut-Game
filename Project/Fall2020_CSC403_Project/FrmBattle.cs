@@ -66,8 +66,7 @@ namespace Fall2020_CSC403_Project
                     Role = RoleType.System,
                     Content = $"We are in a battle to the death." +
                                 $"You are playing the role of {enemy.displayName}. I am playing the role of {Game.Instance.player.Name}." +
-                                $"We will each send one message at a time to create a dialogue. If attempts at peace are made, you are abrasive at first but are eventually swayed." +
-                                $"You should only send messages from the Enemy's point of view."
+                                $"We will each send one message at a time to create a dialogue. You will only send messages as the role of {enemy.displayName}. If attempts at peace are made, you are open to negotiation."
                 }
             };
         }
@@ -293,11 +292,19 @@ namespace Fall2020_CSC403_Project
                         Function = new ChatCompletionQuery.Tool.FunctionModel
                         {
                             Name = "make_peace",
-                            Description = "Execute this function if you have decided to make peace with the enemy.",
+                            Description = "Execute this function if player expresses satisfaction about new truce",
                             Parameter = new ChatCompletionQuery.Tool.FunctionModel.ParameterModel
                             {
                                 Type = "object",
-                                Properties = new ChatCompletionQuery.Tool.FunctionModel.ParameterModel.Property {}
+                                Properties = new ChatCompletionQuery.Tool.FunctionModel.ParameterModel.Property
+                                {
+                                    Response = new ChatCompletionQuery.Tool.FunctionModel.ParameterModel.Property.PropertyStuff
+                                    {
+                                        Type = "string",
+                                        Description = "Final response about the new truce made between fighters."
+                                    }
+                                },
+                                Required = new List<string> {"response"}
                             }
                         }
                     }
@@ -309,27 +316,78 @@ namespace Fall2020_CSC403_Project
                 .GetChatCompletion(query);
 
             // Check if AI wants to make peace
-            //if (response.Choices.First().Message.ToolChoice != null)
-            //{
-            //    makePeace();
-            //}
-
-            // Display enemy's response in chat history
-            chats.Add(new ChatMessage()
+            if (response.Choices.First().Message.ToolChoice != null)
             {
-                Role = RoleType.Assistant,
-                Content = response.Choices.First().Message.Content
-            });
+                makePeace();
 
-            // Display enemy message in chat history
-            chatHistory.Add($"\n{enemy.displayName}:");
-            chatHistory.Add(chats.Last().Content
-                .Substring(chats.Last().Content.IndexOf(':') + 1)
-                .TrimStart('\n'));
-            textboxChatHistory.Lines = chatHistory.ToArray();
+                // Display enemy's response in chat history
+                chats.Add(new ChatMessage()
+                {
+                    Role = RoleType.Assistant,
+                    Content = response.Choices.First().Message.ToolChoice.First().Function.Argument
+                });
 
-            // Enable chat button
-            btnChat.Enabled = true;
+                // Display enemy message in chat history and add peace message
+                chatHistory.Add($"\n{enemy.displayName}:");
+                chatHistory.Add(chats.Last().Content
+                    .Substring(chats.Last().Content.IndexOf(':') + 1)
+                    .TrimStart('\n')
+                    .TrimEnd('}')
+                    .Replace("\"", ""));
+                chatHistory.Add("\nPEACE ESTABLISHED. YOU MAY LEAVE AT ANYTIME");
+                textboxChatHistory.Lines = chatHistory.ToArray();
+
+                // Change player stats
+                if (this.enemyName.Contains("enemy_cheetos"))
+                {
+                    Game.Instance.player.MaxHealth += 20;
+                    Game.Instance.player.Health = Game.Instance.player.MaxHealth;
+                    Game.Instance.player.strength += 2;
+                    game.IsCheetosDefeated = true;
+                }
+                else if (this.enemyName.Contains("enemy_koolaid"))
+                {
+                    game.IsKoolAidDefeated = true;
+                }
+                else if (this.enemyName.Contains("enemy_poisonpacket"))
+                {
+                    Game.Instance.player.MaxHealth += 20;
+                    Game.Instance.player.Health = Game.Instance.player.MaxHealth;
+                    Game.Instance.player.strength += 2;
+                    game.IsPoisonPacketDefeated = true;
+                }
+
+                // Disable attack button and change leave text
+                btnAttack.Enabled = false;
+                btnFlee.Text = "Leave";
+            }
+            else // If battle continues
+            {
+                // Remove parts where AI creates user text
+                if (response.Choices.First().Message.Content.Contains("Goliath:"))
+                {
+                    response.Choices.First().Message.Content = response.Choices.First().Message.Content
+                        .Remove(response.Choices.First().Message.Content.IndexOf("Goliath:") - 1);
+                }
+
+                // Display enemy's response in chat history
+                chats.Add(new ChatMessage()
+                {
+                    Role = RoleType.Assistant,
+                    Content = response.Choices.First().Message.Content
+                });
+
+                // Display enemy message in chat history
+                chatHistory.Add($"\n{enemy.displayName}:");
+                chatHistory.Add(chats.Last().Content
+                    .Substring(chats.Last().Content.IndexOf(':') + 1)
+                    .TrimStart('\n'));
+                textboxChatHistory.Lines = chatHistory.ToArray();
+
+                // Enable chat button
+                btnChat.Enabled = true;
+            }
+
         }
 
         public void makePeace()
