@@ -3,7 +3,7 @@
 <br> </br>
 [![contributors](https://img.shields.io/badge/Contributors-4-blue)](https://github.com/ChrispyPeaches/Fall2020_CSC403_Project)
 
-# CSC 403 002 - Fall 2023 (Software Design And Engineering)
+# Mr Peanut Game - CSC 403 Fall 2023 (Software Design And Engineering) Project
 
 ## Links
 
