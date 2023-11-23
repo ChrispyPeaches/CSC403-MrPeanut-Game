@@ -53,10 +53,10 @@
       <DependentUpon>CosmeticsResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Cosmetics\Hat.cs" />
-    <Compile Include="CharacterSelect.cs">
+    <Compile Include="Cosmetics\CharacterSelect.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="CharacterSelect.Designer.cs">
+    <Compile Include="Cosmetics\CharacterSelect.Designer.cs">
       <DependentUpon>CharacterSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="Dungeon.cs" />
@@ -73,13 +73,11 @@
     <Compile Include="Cosmetics\CosmeticsShop.Designer.cs">
       <DependentUpon>CosmeticsShop.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dungeon.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Dungeon.cs" />
     <Compile Include="QuickStartMenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -123,7 +121,7 @@
       <DependentUpon>SavesSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
-    <EmbeddedResource Include="CharacterSelect.resx">
+    <EmbeddedResource Include="Cosmetics\CharacterSelect.resx">
       <DependentUpon>CharacterSelect.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DeathScreen.resx">
