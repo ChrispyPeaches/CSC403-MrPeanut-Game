@@ -193,7 +193,7 @@ namespace Fall2020_CSC403_Project
         /// <summary>
         /// 
         /// </summary>
-        private async void SaveNewPlayerImage(Bitmap playerImage)
+        private void SaveNewPlayerImage(Bitmap playerImage)
         {
             if (!Directory.Exists(Settings.Default.AppDataDirectory))
             {

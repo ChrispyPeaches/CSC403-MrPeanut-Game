@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Fall2020_CSC403_Project.Controller;
-using Fall2020_CSC403_Project.code;
 using System.IO;
-using Refit;
 using Fall2020_CSC403_Project.Properties;
 
 namespace Fall2020_CSC403_Project

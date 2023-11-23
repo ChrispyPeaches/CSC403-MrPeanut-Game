@@ -1,22 +1,13 @@
 ﻿using Fall2020_CSC403_Project.code;
-using Fall2020_CSC403_Project.OpenAIApi;
 using Fall2020_CSC403_Project.Properties;
 using System;
 using System.Media;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using static Fall2020_CSC403_Project.OpenAIApi.ChatCompletionQuery;
-using Fall2020_CSC403_Project.Properties;
-using System.Numerics;
 using Vector2 = Fall2020_CSC403_Project.code.Vector2;
-using System.Web.UI.WebControls;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using static Fall2020_CSC403_Project.Controller;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace Fall2020_CSC403_Project
 {

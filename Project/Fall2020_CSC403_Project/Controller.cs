@@ -1,23 +1,11 @@
 ﻿// imports
 using Fall2020_CSC403_Project.code;
-using Fall2020_CSC403_Project.OpenAIApi;
 using Fall2020_CSC403_Project.Properties;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
-using Refit;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Net.Http;
-using System.Numerics;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.WebControls;
-using static Fall2020_CSC403_Project.code.Game;
-using static Fall2020_CSC403_Project.OpenAIApi.ChatCompletionQuery;
-using Vector2 = Fall2020_CSC403_Project.code.Vector2;
 
 namespace Fall2020_CSC403_Project
 {

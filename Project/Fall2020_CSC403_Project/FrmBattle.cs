@@ -8,10 +8,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Fall2020_CSC403_Project
 {
