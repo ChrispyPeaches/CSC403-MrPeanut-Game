@@ -195,11 +195,11 @@ namespace Fall2020_CSC403_Project
         /// </summary>
         private async void SaveNewPlayerImage(Bitmap playerImage)
         {
-            if (!Directory.Exists(Settings.Default.SavesDirectory))
+            if (!Directory.Exists(Settings.Default.AppDataDirectory))
             {
-                Directory.CreateDirectory(Settings.Default.SavesDirectory);
+                Directory.CreateDirectory(Settings.Default.AppDataDirectory);
             }
-            using (FileStream playerImageStream = File.Create(Path.Combine(Settings.Default.SavesDirectory, "playerImage.png")))
+            using (FileStream playerImageStream = File.Create(Path.Combine(Settings.Default.AppDataDirectory, "playerImage.png")))
             {
                 playerImage.Save(
                     playerImageStream,

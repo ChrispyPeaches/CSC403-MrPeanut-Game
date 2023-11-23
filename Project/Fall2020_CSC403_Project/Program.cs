@@ -27,8 +27,7 @@ namespace Fall2020_CSC403_Project
                     "https://api.openai.com/",
                     GlobalRefitSettings);
 
-            Settings.Default.AppDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            Settings.Default.SavesDirectory = Path.Combine(Settings.Default.AppDirectory, "..", "..", "Saves");
+            SetupSettings();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
@@ -40,7 +39,15 @@ namespace Fall2020_CSC403_Project
                 {
                 }
             }
+        }
 
+        private static void SetupSettings()
+        {
+            Settings.Default.AppDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            string systemAppDataPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            Settings.Default.AppDataDirectory = Path.Combine(systemAppDataPath, "CSC_403_Game");
+            Settings.Default.SavesDirectory = Path.Combine(Settings.Default.AppDataDirectory, "Saves");
         }
     }
 }

@@ -39,8 +39,7 @@ namespace Fall2020_CSC403_Project
 
         private void InitializeForExistingSave()
         {
-            string savesDirectory = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "..", "..", "Saves");
-            string[] fileNames = Directory.GetFiles(savesDirectory, "*.json");
+            string[] fileNames = Directory.GetFiles(Settings.Default.SavesDirectory, "*.json");
 
             int buttonWidth = 175;
             int buttonHeight = 40;
@@ -68,7 +67,7 @@ namespace Fall2020_CSC403_Project
 
         private void InitializeForNewSave()
         {
-            string imageLocation = Path.GetFullPath(Path.Combine(Settings.Default.SavesDirectory, "playerImage.png"));
+            string imageLocation = Path.GetFullPath(Path.Combine(Settings.Default.AppDataDirectory, "playerImage.png"));
             
             Image playerImage = null;
             if (File.Exists(imageLocation))

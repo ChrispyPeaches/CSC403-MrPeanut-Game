@@ -17,23 +17,35 @@ namespace Fall2020_CSC403_Project
 {
     public partial class MainMenu : Form
     {
-        private string SavesDirectoryPath = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "..", "..", "Saves");
-
         private IOpenAIApi openAiApi;
         public MainMenu(IOpenAIApi openAiApi)
         {
             InitializeComponent();
             btnNew.Location = new Point((this.ClientSize.Width - btnNew.Width) / 2, (this.ClientSize.Height - btnNew.Height) / 2 - 60);
             btnContinue.Location = new Point((this.ClientSize.Width - btnContinue.Width) / 2, (this.ClientSize.Height - btnContinue.Height) / 2);
-            if (!Directory.Exists(SavesDirectoryPath))
+            btnExit.Location = new Point((this.ClientSize.Width - btnExit.Width) / 2, (this.ClientSize.Height - btnExit.Height) / 2 + 60);
+            btnCosmetics.Location = new Point((this.ClientSize.Width - btnCosmetics.Width) / 2, (this.ClientSize.Height - btnCosmetics.Height) / 2 + 120);
+
+            CheckEnableContinueButton();
+
+            this.openAiApi = openAiApi;
+        }
+
+        private void CheckEnableContinueButton()
+        {
+            if (Directory.Exists(Settings.Default.SavesDirectory))
+            {
+                if (Directory.GetFiles(Settings.Default.SavesDirectory).Length == 0)
+                {
+                    btnContinue.Enabled = false;
+                    btnContinue.Visible = false;
+                }
+            }
+            else
             {
                 btnContinue.Enabled = false;
                 btnContinue.Visible = false;
             }
-            btnExit.Location = new Point((this.ClientSize.Width - btnExit.Width) / 2, (this.ClientSize.Height - btnExit.Height) / 2 + 60);
-            btnCosmetics.Location = new Point((this.ClientSize.Width - btnCosmetics.Width) / 2, (this.ClientSize.Height - btnCosmetics.Height) / 2 + 120);
-
-            this.openAiApi = openAiApi;
         }
 
         private void btnNew_Click(object sender, EventArgs e)
@@ -58,7 +70,7 @@ namespace Fall2020_CSC403_Project
 
         private void btnContinue_Click(object sender, EventArgs e)
         {
-            if (Directory.Exists(SavesDirectoryPath))
+            if (Directory.Exists(Settings.Default.SavesDirectory))
             {
                 SavesSelect savesSelectForm = new SavesSelect(true);
                 savesSelectForm.StartPosition = FormStartPosition.Manual;

@@ -883,7 +883,7 @@ namespace Fall2020_CSC403_Project
 
         public void SetPlayerImage()
         {
-            string playerImagePath = Path.Combine(Settings.Default.SavesDirectory, "playerImage.png");
+            string playerImagePath = Path.Combine(Settings.Default.AppDataDirectory, "playerImage.png");
 
             if (File.Exists(playerImagePath))
             {
