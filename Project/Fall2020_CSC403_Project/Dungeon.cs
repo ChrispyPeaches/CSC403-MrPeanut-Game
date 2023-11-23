@@ -68,11 +68,11 @@ namespace Fall2020_CSC403_Project
         private Random random = new Random();
         List<string> enemyImages = new List<string>
         {
-            "enemy_cheetos.fw.png",
-            "enemy_koolaid.png",
-            "enemy_poisonpacket.fw.png",
-            "enemy_hotsauce.png",
-            "enemy_hamburglar.png"
+            "enemy_cheetos",
+            "enemy_koolaid",
+            "enemy_poisonpacket",
+            "enemy_hotsauce",
+            "enemy_hamburglar"
         };
 
         List<string> cheetosNames = new List<string>

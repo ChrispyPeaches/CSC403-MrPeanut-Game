@@ -8,6 +8,8 @@ using System.Windows.Forms;
 using Vector2 = Fall2020_CSC403_Project.code.Vector2;
 using System.IO;
 using System.Linq;
+using System.Globalization;
+using System.Collections;
 
 namespace Fall2020_CSC403_Project
 {
@@ -497,7 +499,7 @@ namespace Fall2020_CSC403_Project
                     int enemyY = (int)enemyData.Position.y;
 
                     Enemy enemy = new Enemy(null, new Vector2(enemyX, enemyY), null, enemyData.defeated, enemyData.ID);
-                    enemy.Img = LoadImage(enemyData.image);
+                    enemy.Img = GetImageFromResources(enemyData.image);
 
                     PictureBox enemyPictureBox = new PictureBox();
                     enemyPictureBox.Size = new Size(70, 70);
@@ -591,6 +593,8 @@ namespace Fall2020_CSC403_Project
 
         private void GenerateWalls(Fall2020_CSC403_Project.code.Game.DungeonRoom currentRoom)
         {
+            Bitmap wallImage = Resources.wall;
+
             const int PADDING = 4;
             int wallWidth = 50;
             this.walls = new List<Character>();
@@ -601,7 +605,7 @@ namespace Fall2020_CSC403_Project
                 PictureBox topWall = new PictureBox();
                 topWall.Size = new Size(this.Width, wallWidth);
                 topWall.Location = new Point(0, 0);
-                topWall.BackgroundImage = LoadImage("wall.jpg");
+                topWall.BackgroundImage = wallImage;
                 topWall.BackgroundImageLayout = ImageLayout.Stretch;
                 topWall.Visible = true;
                 this.Controls.Add(topWall);
@@ -615,7 +619,7 @@ namespace Fall2020_CSC403_Project
                 PictureBox topWall = new PictureBox();
                 topWall.Size = new Size(this.Width / 3, wallWidth);
                 topWall.Location = new Point(0, 0);
-                topWall.BackgroundImage = LoadImage("wall.jpg");
+                topWall.BackgroundImage = wallImage;
                 topWall.BackgroundImageLayout = ImageLayout.Stretch;
                 topWall.Visible = true;
                 this.Controls.Add(topWall);
@@ -642,7 +646,7 @@ namespace Fall2020_CSC403_Project
                 PictureBox topWall2 = new PictureBox();
                 topWall2.Size = new Size(this.Width / 3, wallWidth);
                 topWall2.Location = new Point(this.Width / 3 * 2, 0);
-                topWall2.BackgroundImage = LoadImage("wall.jpg");
+                topWall2.BackgroundImage = wallImage;
                 topWall2.BackgroundImageLayout = ImageLayout.Stretch;
                 topWall2.Visible = true;
                 this.Controls.Add(topWall2);
@@ -657,7 +661,7 @@ namespace Fall2020_CSC403_Project
                 PictureBox rightWall = new PictureBox();
                 rightWall.Size = new Size(wallWidth, this.Height);
                 rightWall.Location = new Point(this.Width - wallWidth, 0);
-                rightWall.BackgroundImage = LoadImage("wall.jpg");
+                rightWall.BackgroundImage = wallImage;
                 rightWall.BackgroundImageLayout = ImageLayout.Stretch;
                 rightWall.Visible = true;
                 this.Controls.Add(rightWall);
@@ -671,7 +675,7 @@ namespace Fall2020_CSC403_Project
                 PictureBox rightWall = new PictureBox();
                 rightWall.Size = new Size(wallWidth, this.Height / 3);
                 rightWall.Location = new Point(this.Width - wallWidth, 0);
-                rightWall.BackgroundImage = LoadImage("wall.jpg");
+                rightWall.BackgroundImage = wallImage;
                 rightWall.BackgroundImageLayout = ImageLayout.Stretch;
                 rightWall.Visible = true;
                 this.Controls.Add(rightWall);
@@ -698,7 +702,7 @@ namespace Fall2020_CSC403_Project
                 PictureBox rightWall2 = new PictureBox();
                 rightWall2.Size = new Size(wallWidth, this.Height / 3);
                 rightWall2.Location = new Point(this.Width - wallWidth, this.Height / 3 * 2);
-                rightWall2.BackgroundImage = LoadImage("wall.jpg");
+                rightWall2.BackgroundImage = wallImage;
                 rightWall2.BackgroundImageLayout = ImageLayout.Stretch;
                 rightWall2.Visible = true;
                 this.Controls.Add(rightWall2);
@@ -712,7 +716,7 @@ namespace Fall2020_CSC403_Project
                 PictureBox bottomWall = new PictureBox();
                 bottomWall.Size = new Size(this.Width, wallWidth);
                 bottomWall.Location = new Point(0, this.Height - wallWidth);
-                bottomWall.BackgroundImage = LoadImage("wall.jpg");
+                bottomWall.BackgroundImage = wallImage;
                 bottomWall.BackgroundImageLayout = ImageLayout.Stretch;
                 bottomWall.Visible = true;
                 this.Controls.Add(bottomWall);
@@ -726,7 +730,7 @@ namespace Fall2020_CSC403_Project
                 PictureBox bottomWall = new PictureBox();
                 bottomWall.Size = new Size(this.Width / 3, wallWidth);
                 bottomWall.Location = new Point(0, this.Height - wallWidth);
-                bottomWall.BackgroundImage = LoadImage("wall.jpg");
+                bottomWall.BackgroundImage = wallImage;
                 bottomWall.BackgroundImageLayout = ImageLayout.Stretch;
                 bottomWall.Visible = true;
                 this.Controls.Add(bottomWall);
@@ -753,7 +757,7 @@ namespace Fall2020_CSC403_Project
                 PictureBox bottomWall2 = new PictureBox();
                 bottomWall2.Size = new Size(this.Width / 3, wallWidth);
                 bottomWall2.Location = new Point(this.Width / 3 * 2, this.Height - wallWidth);
-                bottomWall2.BackgroundImage = LoadImage("wall.jpg");
+                bottomWall2.BackgroundImage = wallImage;
                 bottomWall2.BackgroundImageLayout = ImageLayout.Stretch;
                 bottomWall2.Visible = true;
                 this.Controls.Add(bottomWall2);
@@ -767,7 +771,7 @@ namespace Fall2020_CSC403_Project
             {                PictureBox leftWall = new PictureBox();
                 leftWall.Size = new Size(wallWidth, this.Height);
                 leftWall.Location = new Point(0, 0);
-                leftWall.BackgroundImage = LoadImage("wall.jpg");
+                leftWall.BackgroundImage = wallImage;
                 leftWall.BackgroundImageLayout = ImageLayout.Stretch;
                 leftWall.Visible = true;
                 this.Controls.Add(leftWall);
@@ -781,7 +785,7 @@ namespace Fall2020_CSC403_Project
                 PictureBox leftWall = new PictureBox();
                 leftWall.Size = new Size(wallWidth, this.Height / 3);
                 leftWall.Location = new Point(0, 0);
-                leftWall.BackgroundImage = LoadImage("wall.jpg");
+                leftWall.BackgroundImage = wallImage;
                 leftWall.BackgroundImageLayout = ImageLayout.Stretch;
                 leftWall.Visible = true;
                 this.Controls.Add(leftWall);
@@ -808,7 +812,7 @@ namespace Fall2020_CSC403_Project
                 PictureBox leftWall2 = new PictureBox();
                 leftWall2.Size = new Size(wallWidth, this.Height / 3);
                 leftWall2.Location = new Point(0, this.Height / 3 * 2);
-                leftWall2.BackgroundImage = LoadImage("wall.jpg");
+                leftWall2.BackgroundImage = wallImage;
                 leftWall2.BackgroundImageLayout = ImageLayout.Stretch;
                 leftWall2.Visible = true;
                 this.Controls.Add(leftWall2);
@@ -893,6 +897,17 @@ namespace Fall2020_CSC403_Project
             // Get label then hide
             System.Windows.Forms.Label enemyLabel = Controls.OfType<System.Windows.Forms.Label>().FirstOrDefault(l => (string)l.Tag == "Enemy" + Id);
             enemyLabel.Hide();
+        }
+
+        public static Bitmap GetImageFromResources(string resourceName)
+        {
+            return (Bitmap) Resources.ResourceManager
+                .GetResourceSet(CultureInfo.CurrentCulture, true, true)
+                .Cast<DictionaryEntry>()
+                .Where(resource => resource.Value.GetType().Equals(typeof(Bitmap)) &&
+                                   resource.Key.ToString() == resourceName)
+                .Select(resource => resource.Value)
+                .First();
         }
     }
 }
