@@ -17,12 +17,15 @@ namespace Fall2020_CSC403_Project
             btnExit.Location = new Point((this.ClientSize.Width - btnExit.Width) / 2, (this.ClientSize.Height - btnExit.Height) / 2 + 60);
             btnCosmetics.Location = new Point((this.ClientSize.Width - btnCosmetics.Width) / 2, (this.ClientSize.Height - btnCosmetics.Height) / 2 + 120);
 
-            CheckEnableContinueButton();
+            CheckToDisplayContinueButton();
 
             this.openAiApi = openAiApi;
         }
 
-        private void CheckEnableContinueButton()
+        /// <summary>
+        /// Disable the Continue button if there aren't any save files to choose from
+        /// </summary>
+        private void CheckToDisplayContinueButton()
         {
             if (Directory.Exists(Settings.Default.SavesDirectory))
             {

@@ -57,6 +57,13 @@ namespace Fall2020_CSC403_Project
             {
                 instance = this;
             }
+
+            // Remove borders and scroll bars
+            FormBorderStyle = FormBorderStyle.None;
+            WindowState = FormWindowState.Maximized;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            AutoScroll = false;
         }
 
         // Return current instance of window
@@ -253,7 +260,6 @@ namespace Fall2020_CSC403_Project
             });
         }
 
-
         private bool HitADoor(Character character, List<Character> doors)
         {
             foreach (Character door in doors)
@@ -330,7 +336,6 @@ namespace Fall2020_CSC403_Project
             }
             return false;
         }
-
 
         private void UpdatePlayerPictureBox()
         {
@@ -473,6 +478,7 @@ namespace Fall2020_CSC403_Project
                 player.ResetMoveSpeed();
             }
         }
+
         private void lblInGameTime_Click(object sender, EventArgs e)
         {
 
@@ -539,7 +545,7 @@ namespace Fall2020_CSC403_Project
                 int coinValue = (int)Math.Round(coinData.Amount);
                 Guid coinID = coinData.ID;
                 Coin coin = new Coin(new Vector2(coinX, coinY), null, coinValue, coinID);
-                coin.Img = LoadImage(coinData.Image);
+                coin.Img = Resources.coin1;
 
                 PictureBox coinPictureBox = new PictureBox();
                 coinPictureBox.Size = new Size(30, 30);
@@ -569,258 +575,255 @@ namespace Fall2020_CSC403_Project
             GenerateWalls(currentRoom);
         }
 
-
-        private System.Drawing.Image LoadImage(string imageName)
-        {
-            try
-            {
-                string imagePath = Path.Combine(Settings.Default.AppDirectory, "..", "..", "data", imageName);
-
-                if (File.Exists(imagePath))
-                {
-                    return System.Drawing.Image.FromFile(imagePath);
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            catch (Exception ex)
-            {
-                return null;
-            }
-        }
-
         private void GenerateWalls(Fall2020_CSC403_Project.code.Game.DungeonRoom currentRoom)
         {
             Bitmap wallImage = Resources.wall;
 
-            const int PADDING = 4;
             int wallWidth = 50;
             this.walls = new List<Character>();
             this.doors = new List<Character>();
 
+            int roomHeight = ClientRectangle.Height;
+            int roomWidth = ClientRectangle.Width;
+
+            #region North Wall
+
             if (!currentRoom.northDoor)
             {
                 PictureBox topWall = new PictureBox();
-                topWall.Size = new Size(this.Width, wallWidth);
+                topWall.Size = new Size(roomWidth, wallWidth);
                 topWall.Location = new Point(0, 0);
                 topWall.BackgroundImage = wallImage;
-                topWall.BackgroundImageLayout = ImageLayout.Stretch;
+                topWall.BackgroundImageLayout = ImageLayout.Tile;
                 topWall.Visible = true;
                 this.Controls.Add(topWall);
                 this.roomControls.Add(topWall);
 
-                Character topWallCharacter = new Character(CreatePosition(topWall, false), CreateCollider(topWall, PADDING));
+                Character topWallCharacter = new Character(CreatePosition(topWall, false), CreateCollider(topWall, 0));
                 this.walls.Add(topWallCharacter);
             }
             else
             {
                 PictureBox topWall = new PictureBox();
-                topWall.Size = new Size(this.Width / 3, wallWidth);
+                topWall.Size = new Size(roomWidth / 3, wallWidth);
                 topWall.Location = new Point(0, 0);
                 topWall.BackgroundImage = wallImage;
-                topWall.BackgroundImageLayout = ImageLayout.Stretch;
+                topWall.BackgroundImageLayout = ImageLayout.Tile;
                 topWall.Visible = true;
                 this.Controls.Add(topWall);
                 this.roomControls.Add(topWall);
 
-                Character topWallCharacter = new Character(CreatePosition(topWall, false), CreateCollider(topWall, PADDING));
+                Character topWallCharacter = new Character(CreatePosition(topWall, false), CreateCollider(topWall, 0));
                 this.walls.Add(topWallCharacter);
 
                 PictureBox door = new PictureBox();
-                door.Size =new Size(this.Width / 3, wallWidth);
-                door.Location = new Point(this.Width /3, 0);
+                door.Size =new Size(roomWidth / 3, wallWidth);
+                door.Location = new Point(roomWidth /3, 0);
                 door.BackColor = Color.Brown;
-                door.BackgroundImageLayout = ImageLayout.Stretch;
+                door.BackgroundImageLayout = ImageLayout.Tile;
                 door.Visible = true;
                 this.Controls.Add(door);
                 this.roomControls.Add(door);
 
-                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING))
+                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, 0))
                 {
                     Tag = "North"
                 };
                 this.doors.Add(doorCharacter);
 
                 PictureBox topWall2 = new PictureBox();
-                topWall2.Size = new Size(this.Width / 3, wallWidth);
-                topWall2.Location = new Point(this.Width / 3 * 2, 0);
+                topWall2.Size = new Size(roomWidth / 3, wallWidth);
+                topWall2.Location = new Point(roomWidth / 3 * 2, 0);
                 topWall2.BackgroundImage = wallImage;
-                topWall2.BackgroundImageLayout = ImageLayout.Stretch;
+                topWall2.BackgroundImageLayout = ImageLayout.Tile;
                 topWall2.Visible = true;
                 this.Controls.Add(topWall2);
                 this.roomControls.Add(topWall2);
 
-                Character topWallCharacter2 = new Character(CreatePosition(topWall2, false), CreateCollider(topWall2, PADDING));
+                Character topWallCharacter2 = new Character(CreatePosition(topWall2, false), CreateCollider(topWall2, 0));
                 this.walls.Add(topWallCharacter2);
             }
+
+            #endregion
+
+            #region East Wall
 
             if (!currentRoom.eastDoor)
             {
                 PictureBox rightWall = new PictureBox();
-                rightWall.Size = new Size(wallWidth, this.Height);
-                rightWall.Location = new Point(this.Width - wallWidth, 0);
+                rightWall.Size = new Size(wallWidth, roomHeight);
+                rightWall.Location = new Point(roomWidth - wallWidth, 0);
                 rightWall.BackgroundImage = wallImage;
-                rightWall.BackgroundImageLayout = ImageLayout.Stretch;
+                rightWall.BackgroundImageLayout = ImageLayout.Tile;
                 rightWall.Visible = true;
                 this.Controls.Add(rightWall);
                 this.roomControls.Add(rightWall);
 
-                Character rightWallCharacter = new Character(CreatePosition(rightWall, false), CreateCollider(rightWall, PADDING));
+                Character rightWallCharacter = new Character(CreatePosition(rightWall, false), CreateCollider(rightWall, 0));
                 this.walls.Add(rightWallCharacter);
             }
             else
             {
                 PictureBox rightWall = new PictureBox();
-                rightWall.Size = new Size(wallWidth, this.Height / 3);
-                rightWall.Location = new Point(this.Width - wallWidth, 0);
+                rightWall.Size = new Size(wallWidth, roomHeight / 3);
+                rightWall.Location = new Point(roomWidth - wallWidth, 0);
                 rightWall.BackgroundImage = wallImage;
-                rightWall.BackgroundImageLayout = ImageLayout.Stretch;
+                rightWall.BackgroundImageLayout = ImageLayout.Tile;
                 rightWall.Visible = true;
                 this.Controls.Add(rightWall);
                 this.roomControls.Add(rightWall);
 
-                Character rightWallCharacter = new Character(CreatePosition(rightWall, false), CreateCollider(rightWall, PADDING));
+                Character rightWallCharacter = new Character(CreatePosition(rightWall, false), CreateCollider(rightWall, 0));
                 this.walls.Add(rightWallCharacter);
 
                 PictureBox door = new PictureBox();
-                door.Size = new Size(wallWidth, this.Height / 3);
-                door.Location = new Point(this.Width - wallWidth, this.Height / 3);
+                door.Size = new Size(wallWidth, roomHeight / 3);
+                door.Location = new Point(roomWidth - wallWidth, roomHeight / 3);
                 door.BackColor = Color.Brown;
-                door.BackgroundImageLayout = ImageLayout.Stretch;
+                door.BackgroundImageLayout = ImageLayout.Tile;
                 door.Visible = true;
                 this.Controls.Add(door);
                 this.roomControls.Add(door);
 
-                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING))
+                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, 0))
                 {
                     Tag = "East"
                 };
                 this.doors.Add(doorCharacter);
 
                 PictureBox rightWall2 = new PictureBox();
-                rightWall2.Size = new Size(wallWidth, this.Height / 3);
-                rightWall2.Location = new Point(this.Width - wallWidth, this.Height / 3 * 2);
+                rightWall2.Size = new Size(wallWidth, roomHeight / 3);
+                rightWall2.Location = new Point(roomWidth - wallWidth, roomHeight / 3 * 2);
                 rightWall2.BackgroundImage = wallImage;
-                rightWall2.BackgroundImageLayout = ImageLayout.Stretch;
+                rightWall2.BackgroundImageLayout = ImageLayout.Tile;
                 rightWall2.Visible = true;
                 this.Controls.Add(rightWall2);
                 this.roomControls.Add(rightWall2);
 
-                Character rightWallCharacter2 = new Character(CreatePosition(rightWall2, false), CreateCollider(rightWall2, PADDING));
+                Character rightWallCharacter2 = new Character(CreatePosition(rightWall2, false), CreateCollider(rightWall2, 0));
                 this.walls.Add(rightWallCharacter2);
             }
+
+            #endregion
+
+            #region South Wall
+
             if (!currentRoom.southDoor)
             {
                 PictureBox bottomWall = new PictureBox();
-                bottomWall.Size = new Size(this.Width, wallWidth);
-                bottomWall.Location = new Point(0, this.Height - wallWidth);
+                bottomWall.Size = new Size(roomWidth, wallWidth);
+                bottomWall.Location = new Point(0, roomHeight - wallWidth);
                 bottomWall.BackgroundImage = wallImage;
-                bottomWall.BackgroundImageLayout = ImageLayout.Stretch;
+                bottomWall.BackgroundImageLayout = ImageLayout.Tile;
                 bottomWall.Visible = true;
                 this.Controls.Add(bottomWall);
                 this.roomControls.Add(bottomWall);
 
-                Character bottomWallCharacter = new Character(CreatePosition(bottomWall, false), CreateCollider(bottomWall, PADDING));
+                Character bottomWallCharacter = new Character(CreatePosition(bottomWall, false), CreateCollider(bottomWall, 0));
                 this.walls.Add(bottomWallCharacter);
             }
             else
             {
                 PictureBox bottomWall = new PictureBox();
-                bottomWall.Size = new Size(this.Width / 3, wallWidth);
-                bottomWall.Location = new Point(0, this.Height - wallWidth);
+                bottomWall.Size = new Size(roomWidth / 3, wallWidth);
+                bottomWall.Location = new Point(0, roomHeight - wallWidth - 0);
                 bottomWall.BackgroundImage = wallImage;
-                bottomWall.BackgroundImageLayout = ImageLayout.Stretch;
+                bottomWall.BackgroundImageLayout = ImageLayout.Tile;
                 bottomWall.Visible = true;
                 this.Controls.Add(bottomWall);
                 this.roomControls.Add(bottomWall);
 
-                Character bottomWallCharacter = new Character(CreatePosition(bottomWall, false), CreateCollider(bottomWall, PADDING));
+                Character bottomWallCharacter = new Character(CreatePosition(bottomWall, false), CreateCollider(bottomWall, 0));
                 this.walls.Add(bottomWallCharacter);
 
                 PictureBox door = new PictureBox();
-                door.Size = new Size(this.Width / 3, wallWidth);
-                door.Location = new Point(this.Width / 3, this.Height - wallWidth);
+                door.Size = new Size(roomWidth / 3, wallWidth);
+                door.Location = new Point(roomWidth / 3, roomHeight - wallWidth);
                 door.BackColor = Color.Brown;
-                door.BackgroundImageLayout = ImageLayout.Stretch;
+                door.BackgroundImageLayout = ImageLayout.Tile;
                 door.Visible = true;
                 this.Controls.Add(door);
                 this.roomControls.Add(door);
 
-                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING))
+                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, 0))
                 {
                     Tag = "South"
                 };
                 this.doors.Add(doorCharacter);
 
                 PictureBox bottomWall2 = new PictureBox();
-                bottomWall2.Size = new Size(this.Width / 3, wallWidth);
-                bottomWall2.Location = new Point(this.Width / 3 * 2, this.Height - wallWidth);
+                bottomWall2.Size = new Size(roomWidth / 3, wallWidth);
+                bottomWall2.Location = new Point(roomWidth / 3 * 2, roomHeight - wallWidth);
                 bottomWall2.BackgroundImage = wallImage;
-                bottomWall2.BackgroundImageLayout = ImageLayout.Stretch;
+                bottomWall2.BackgroundImageLayout = ImageLayout.Tile;
                 bottomWall2.Visible = true;
                 this.Controls.Add(bottomWall2);
                 this.roomControls.Add(bottomWall2);
 
-                Character bottomWallCharacter2 = new Character(CreatePosition(bottomWall2, false), CreateCollider(bottomWall2, PADDING));
+                Character bottomWallCharacter2 = new Character(CreatePosition(bottomWall2, false), CreateCollider(bottomWall2, 0));
                 this.walls.Add(bottomWallCharacter2);
             }
 
+            #endregion
+
+            #region West Wall
+
             if (!currentRoom.westDoor)
             {                PictureBox leftWall = new PictureBox();
-                leftWall.Size = new Size(wallWidth, this.Height);
+                leftWall.Size = new Size(wallWidth, roomHeight);
                 leftWall.Location = new Point(0, 0);
                 leftWall.BackgroundImage = wallImage;
-                leftWall.BackgroundImageLayout = ImageLayout.Stretch;
+                leftWall.BackgroundImageLayout = ImageLayout.Tile;
                 leftWall.Visible = true;
                 this.Controls.Add(leftWall);
                 this.roomControls.Add(leftWall);
 
-                Character leftWallCharacter = new Character(CreatePosition(leftWall, false), CreateCollider(leftWall, PADDING));
+                Character leftWallCharacter = new Character(CreatePosition(leftWall, false), CreateCollider(leftWall, 0));
                 this.walls.Add(leftWallCharacter);
             }
             else
             {
                 PictureBox leftWall = new PictureBox();
-                leftWall.Size = new Size(wallWidth, this.Height / 3);
+                leftWall.Size = new Size(wallWidth, roomHeight / 3);
                 leftWall.Location = new Point(0, 0);
                 leftWall.BackgroundImage = wallImage;
-                leftWall.BackgroundImageLayout = ImageLayout.Stretch;
+                leftWall.BackgroundImageLayout = ImageLayout.Tile;
                 leftWall.Visible = true;
                 this.Controls.Add(leftWall);
                 this.roomControls.Add(leftWall);
 
-                Character leftWallCharacter = new Character(CreatePosition(leftWall, false), CreateCollider(leftWall, PADDING));
+                Character leftWallCharacter = new Character(CreatePosition(leftWall, false), CreateCollider(leftWall, 0));
                 this.walls.Add(leftWallCharacter);
 
                 PictureBox door = new PictureBox();
-                door.Size = new Size(wallWidth, this.Height / 3);
-                door.Location = new Point(0, this.Height / 3);
+                door.Size = new Size(wallWidth, roomHeight / 3);
+                door.Location = new Point(0, roomHeight / 3);
                 door.BackColor = Color.Brown;
-                door.BackgroundImageLayout = ImageLayout.Stretch;
+                door.BackgroundImageLayout = ImageLayout.Tile;
                 door.Visible = true;
                 this.Controls.Add(door);
                 this.roomControls.Add(door);
 
-                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, PADDING))
+                Character doorCharacter = new Character(CreatePosition(door, false), CreateCollider(door, 0))
                 {
                     Tag = "West"
                 };
                 this.doors.Add(doorCharacter);
 
                 PictureBox leftWall2 = new PictureBox();
-                leftWall2.Size = new Size(wallWidth, this.Height / 3);
-                leftWall2.Location = new Point(0, this.Height / 3 * 2);
+                leftWall2.Size = new Size(wallWidth, roomHeight / 3);
+                leftWall2.Location = new Point(0, roomHeight / 3 * 2);
                 leftWall2.BackgroundImage = wallImage;
-                leftWall2.BackgroundImageLayout = ImageLayout.Stretch;
+                leftWall2.BackgroundImageLayout = ImageLayout.Tile;
                 leftWall2.Visible = true;
                 this.Controls.Add(leftWall2);
                 this.roomControls.Add(leftWall2);
 
-                Character leftWallCharacter2 = new Character(CreatePosition(leftWall2, false), CreateCollider(leftWall2, PADDING));
+                Character leftWallCharacter2 = new Character(CreatePosition(leftWall2, false), CreateCollider(leftWall2, 0));
                 this.walls.Add(leftWallCharacter2);
             }
+
+            #endregion
         }
 
         public void UpdateEnemyData(List<Enemy> enemyList)
